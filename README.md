@@ -4,7 +4,7 @@ Overview
 
 CITY STYLE is a web-based application designed to help users explore and navigate city fashion trends. Whether you're looking for the latest streetwear or classic urban styles, CITY STYLE provides curated collections and insights into modern city fashion.
 
-Features
+Features:
 
 Trendy Collections: Browse through various fashion styles inspired by different cities.
 
