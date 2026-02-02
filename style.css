@@ -9,10 +9,28 @@
   --max-width: 1200px;
 }
 
+/* Dark mode variables */
+[data-theme="dark"] {
+  --primary-color: #e5d241;
+  --text-dark: #ffffff;
+  --text-light: #cccccc;
+  --extra-light: #1a3333;
+  --white: #1e1e1e;
+  --bg-dark: #121212;
+  --card-bg: #2d2d2d;
+  --nav-bg: #1a1a1a;
+  --footer-bg: #0f0f0f;
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+/* Smooth transitions for theme changes */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .section__container {
@@ -80,6 +98,195 @@ body {
 
 body {
   font-family: "Poppins", sans-serif;
+  background-color: var(--white);
+  color: var(--text-dark);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode toggle styles */
+.theme-toggle {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--white);
+  border: 2px solid var(--text-dark);
+  border-radius: 50px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: var(--card-bg);
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 20px rgba(229, 210, 65, 0.3);
+}
+
+.toggle-switch {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: var(--text-light);
+  border-radius: 25px;
+  transition: background 0.3s ease;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: var(--white);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+[data-theme="dark"] .toggle-slider {
+  transform: translateX(30px);
+}
+
+.toggle-slider::before {
+  content: "☀️";
+}
+
+[data-theme="dark"] .toggle-slider::before {
+  content: "🌙";
+}
+
+/* Dark mode specific styles */
+[data-theme="dark"] body {
+  background-color: var(--bg-dark);
+}
+
+[data-theme="dark"] .nav__header {
+  background-color: var(--nav-bg);
+}
+
+[data-theme="dark"] .nav__logo a {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .nav__menu__btn {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .nav__links {
+  background-color: var(--nav-bg);
+}
+
+[data-theme="dark"] .nav__links a {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .nav__links a:hover {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .header__container {
+  background-color: var(--extra-light);
+}
+
+[data-theme="dark"] .arrival__card,
+[data-theme="dark"] .favourite__card {
+  background-color: var(--card-bg);
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+[data-theme="dark"] footer {
+  background-color: var(--footer-bg);
+}
+
+[data-theme="dark"] .footer__logo a {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .footer__col h4 {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .footer__col p {
+  color: var(--text-light);
+}
+
+[data-theme="dark"] .footer__links a {
+  color: var(--text-light);
+}
+
+[data-theme="dark"] .footer__links a:hover {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .footer__socials a {
+  background-color: var(--primary-color);
+  color: var(--footer-bg);
+}
+
+[data-theme="dark"] .footer__socials a:hover {
+  background-color: var(--text-dark);
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .footer__bar {
+  color: var(--text-light);
+  background-color: var(--footer-bg);
+}
+
+[data-theme="dark"] .promo {
+  background-color: var(--card-bg);
+}
+
+[data-theme="dark"] .promo__container .section__header {
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .promo__container p {
+  color: var(--text-light);
+}
+
+[data-theme="dark"] .promo__container form {
+  background-color: var(--white);
+}
+
+[data-theme="dark"] .promo__container input {
+  background-color: var(--white);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .btn {
+  background-color: var(--primary-color);
+  color: var(--footer-bg);
+}
+
+[data-theme="dark"] .btn:hover {
+  background-color: var(--text-dark);
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .banner {
+  background-color: var(--primary-color);
+}
+
+[data-theme="dark"] .sale {
+  background-color: var(--primary-color);
 }
 
 nav {
@@ -251,12 +458,42 @@ header {
 .arrival__card {
   max-width: 400px;
   margin-inline: auto;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.arrival__card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .arrival__card:hover {
+  box-shadow: 0 15px 30px rgba(229, 210, 65, 0.3);
 }
 
 .arrival__image {
   margin-bottom: 1rem;
   border-radius: 1rem;
   overflow: hidden;
+  position: relative;
+}
+
+.arrival__image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(229, 210, 65, 0.1), rgba(55, 152, 152, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.arrival__card:hover .arrival__image::after {
+  opacity: 1;
 }
 
 .arrival__image img {
@@ -272,6 +509,13 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.arrival__card:hover .arrival__content {
+  background: linear-gradient(135deg, rgba(229, 210, 65, 0.1), rgba(55, 152, 152, 0.1));
+  border-radius: 0.5rem;
 }
 
 .arrival__content h4 {
@@ -293,6 +537,12 @@ header {
 .arrival__content span {
   font-size: 1.5rem;
   color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+.arrival__card:hover .arrival__content span {
+  transform: translateX(5px);
+  color: var(--primary-color);
 }
 
 .sale {
@@ -379,12 +629,42 @@ header {
 .favourite__card {
   max-width: 575px;
   margin-inline: auto;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.favourite__card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .favourite__card:hover {
+  box-shadow: 0 15px 30px rgba(229, 210, 65, 0.3);
 }
 
 .favourite__image {
   margin-bottom: 1rem;
   border-radius: 1rem;
   overflow: hidden;
+  position: relative;
+}
+
+.favourite__image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(229, 210, 65, 0.1), rgba(55, 152, 152, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.favourite__card:hover .favourite__image::after {
+  opacity: 1;
 }
 
 .favourite__image img {
@@ -400,6 +680,13 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.favourite__card:hover .favourite__content {
+  background: linear-gradient(135deg, rgba(229, 210, 65, 0.1), rgba(55, 152, 152, 0.1));
+  border-radius: 0.5rem;
 }
 
 .favourite__content h4 {
@@ -421,6 +708,12 @@ header {
 .favourite__content span {
   font-size: 1.5rem;
   color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+.favourite__card:hover .favourite__content span {
+  transform: translateX(5px);
+  color: var(--primary-color);
 }
 
 .download__container {
@@ -579,6 +872,11 @@ footer {
   .footer__container {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .theme-toggle {
+    bottom: 40px;
+    right: 40px;
+  }
 }
 
 @media (width > 768px) {
@@ -603,6 +901,10 @@ footer {
     color: var(--text-dark);
   }
 
+  [data-theme="dark"] .nav__logo a {
+    color: var(--primary-color);
+  }
+
   .nav__menu__btn {
     display: none;
   }
@@ -621,6 +923,14 @@ footer {
   }
 
   .nav__links a:hover {
+    color: var(--primary-color);
+  }
+
+  [data-theme="dark"] .nav__links a {
+    color: var(--text-dark);
+  }
+
+  [data-theme="dark"] .nav__links a:hover {
     color: var(--primary-color);
   }
 

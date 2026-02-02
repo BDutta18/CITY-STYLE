@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,6 +11,20 @@
     <title>CITY STYLE</title>
   </head>
   <body>
+    <!-- Dark Mode Toggle -->
+    <div
+      class="theme-toggle"
+      onclick="toggleTheme()"
+      role="button"
+      tabindex="0"
+      aria-label="Toggle dark mode"
+      onkeydown="handleToggleKeydown(event)"
+    >
+      <div class="toggle-switch">
+        <div class="toggle-slider"></div>
+      </div>
+    </div>
+
     <nav>
       <div class="nav__header">
         <div class="nav__logo">
@@ -36,7 +50,7 @@
           <h1>
             <span>EXPERIENCE</span>
             <br />
-            THE 
+            THE
             <br />
             <span>ART OF</span>
             <br />
@@ -244,6 +258,6 @@
     </footer>
 
     <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="main.js"></script>
+    <script src="hello.js"></script>
   </body>
 </html>
