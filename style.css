@@ -696,3 +696,7 @@ footer {
     grid-column: 1/3;
   }
 }
+
+.social-links{
+  text-align: center;
+}
