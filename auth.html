@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login / Sign Up - City Style</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  
+  <style>
+    :root {
+      --neon-start: #eaff00;
+      --neon-end: #e5d241;
+      
+      --bg-body: #f8fafc;
+      --bg-white: #ffffff;
+      --input-bg: #f1f5f9;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-body);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      z-index: 10;
+      transition: color 0.3s;
+    }
+    .close-btn:hover { color: #000; }
+
+    .auth-wrapper {
+      background: var(--bg-white);
+      width: 100%;
+      max-width: 950px;
+      min-height: 600px;
+      border-radius: 24px;
+      display: flex;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .left-panel {
+      flex: 1;
+      background: linear-gradient(135deg, var(--neon-start) 0%, var(--neon-end) 100%);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .left-panel h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: #0f172a; 
+    }
+    
+    .left-panel p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #334155; 
+    }
+
+    .right-panel {
+      flex: 1;
+      padding: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--bg-white);
+    }
+
+    .form-header h2 {
+      font-size: 2rem;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    input {
+      width: 100%;
+      background-color: var(--input-bg);
+      border: 2px solid transparent;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      color: var(--text-main);
+      font-family: inherit;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input::placeholder { color: var(--text-muted); }
+
+    input:focus {
+      background-color: #fff;
+      border-color: #000; 
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(to right, #d4ec1b, #e5d241); 
+      color: #0f172a; 
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(229, 210, 65, 0.3);
+      filter: brightness(1.05);
+    }
+
+    .toggle-text {
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .toggle-text a {
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+    .toggle-text a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .auth-wrapper { flex-direction: column; min-height: auto; }
+      .left-panel { padding: 2.5rem; min-height: 200px; }
+      .left-panel h1 { font-size: 2.2rem; }
+      .right-panel { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="close-btn">✕ Close</a>
+
+  <div class="auth-wrapper">
+    
+    <div class="left-panel">
+      <h1>Where<br>Style<br>Begins.</h1>
+      <p>Join the movement.</p>
+    </div>
+
+    <div class="right-panel">
+      
+      <div class="form-header">
+        <h2 id="auth-title">Sign Up</h2>
+      </div>
+
+      <form id="auth-form">
+        <div class="form-group">
+          <input type="text" placeholder="Full Name" required />
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Username" required />
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Email Address" required />
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" required />
+        </div>
+        <button class="btn-submit" type="submit">Create Account</button>
+      </form>
+
+      <div class="toggle-text">
+        Already have an account? <a id="toggle-link">Login</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const title = document.getElementById("auth-title");
+    const form = document.getElementById("auth-form");
+    const toggle = document.getElementById("toggle-link");
+
+    let isLogin = false;
+
+    toggle.addEventListener("click", () => {
+      isLogin = !isLogin;
+
+      if (isLogin) {
+        title.textContent = "Welcome Back";
+        form.innerHTML = `
+          <div class="form-group">
+            <input type="text" placeholder="Username or Email" required />
+          </div>
+          <div class="form-group">
+            <input type="password" placeholder="Password" required />
+          </div>
+          <button class="btn-submit" type="submit">Log In</button>
+        `;
+        toggle.textContent = "Sign Up";
+        toggle.parentElement.childNodes[0].textContent = "Don't have an account? ";
+      } else {
+        title.textContent = "Sign Up";
+        form.innerHTML = `
+          <div class="form-group">
+            <input type="text" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <input type="text" placeholder="Username" required />
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Email Address" required />
+          </div>
+          <div class="form-group">
+            <input type="password" placeholder="Password" required />
+          </div>
+          <button class="btn-submit" type="submit">Create Account</button>
+        `;
+        toggle.textContent = "Login";
+        toggle.parentElement.childNodes[0].textContent = "Already have an account? ";
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert(isLogin ? "Welcome back!" : "Account created!");
+    });
+  </script>
+
+</body>
+</html>
