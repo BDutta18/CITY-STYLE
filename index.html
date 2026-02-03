@@ -11,27 +11,27 @@
     <title>CITY STYLE</title>
   </head>
   <body>
-    <!-- Dark Mode Toggle -->
-    <div
-      class="theme-toggle"
-      onclick="toggleTheme()"
-      role="button"
-      tabindex="0"
-      aria-label="Toggle dark mode"
-      onkeydown="handleToggleKeydown(event)"
-    >
-      <div class="toggle-switch">
-        <div class="toggle-slider"></div>
-      </div>
-    </div>
-
     <nav>
       <div class="nav__header">
         <div class="nav__logo">
           <a href="#">CITY STYLE</a>
         </div>
-        <div class="nav__menu__btn" id="menu-btn">
-          <i class="ri-menu-line"></i>
+        <div class="nav__header__controls">
+          <div
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            role="button"
+            tabindex="0"
+            aria-label="Toggle dark mode"
+            onkeydown="handleToggleKeydown(event)"
+          >
+            <div class="toggle-switch">
+              <div class="toggle-slider"></div>
+            </div>
+          </div>
+          <div class="nav__menu__btn" id="menu-btn">
+            <i class="ri-menu-line"></i>
+          </div>
         </div>
       </div>
       <ul class="nav__links" id="nav-links">
@@ -39,6 +39,20 @@
         <li><a href="#fashion">FASHION</a></li>
         <li><a href="#favourite">FAVOURITE</a></li>
         <li><a href="#lifestyle">LIFESTYLE</a></li>
+        <li>
+          <div
+            class="theme-toggle desktop-toggle"
+            onclick="toggleTheme()"
+            role="button"
+            tabindex="0"
+            aria-label="Toggle dark mode"
+            onkeydown="handleToggleKeydown(event)"
+          >
+            <div class="toggle-switch">
+              <div class="toggle-slider"></div>
+            </div>
+          </div>
+        </li>
         <li>
           <button class="btn">SIGN UP</button>
         </li>
