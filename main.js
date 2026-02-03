@@ -77,3 +77,51 @@ ScrollReveal().reveal(".favourite__card", {
   ...scrollRevealOption,
   interval: 500,
 });
+
+// Additional Animation Triggers
+ScrollReveal().reveal(".download__image", {
+  ...scrollRevealOption,
+  origin: "left",
+});
+
+ScrollReveal().reveal(".download__content", {
+  ...scrollRevealOption,
+  origin: "right",
+  delay: 300,
+});
+
+ScrollReveal().reveal(".promo__container .section__header", {
+  ...scrollRevealOption,
+  delay: 200,
+});
+
+ScrollReveal().reveal(".promo__container form", {
+  ...scrollRevealOption,
+  delay: 500,
+});
+
+// Add animate class to cards on scroll for CSS animations
+const animateOnScroll = () => {
+  const cards = document.querySelectorAll('.arrival__card, .favourite__card');
+  
+  cards.forEach(card => {
+    const cardTop = card.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    
+    if (cardTop < windowHeight * 0.85) {
+      card.classList.add('animate');
+    }
+  });
+};
+
+window.addEventListener('scroll', animateOnScroll);
+window.addEventListener('load', animateOnScroll);
+
+// Parallax effect for header
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('.header__image img');
+  if (header) {
+    const scrolled = window.pageYOffset;
+    header.style.transform = `translateY(${scrolled * 0.1}px)`;
+  }
+});
