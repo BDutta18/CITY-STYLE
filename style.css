@@ -87,6 +87,27 @@ nav {
   isolation: isolate;
   width: 100%;
   z-index: 9;
+  animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(229, 210, 65, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(229, 210, 65, 0.8), 0 0 30px rgba(55, 152, 152, 0.4);
+  }
 }
 
 .nav__header {
@@ -95,19 +116,48 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color) 0%, #c9b82e 50%, var(--extra-light) 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .nav__logo a {
   font-size: 1.5rem;
   font-weight: 800;
   color: var(--white);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.nav__logo a:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(229, 210, 65, 0.6);
 }
 
 .nav__menu__btn {
   font-size: 1.5rem;
   color: var(--white);
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav__menu__btn:hover {
+  transform: rotate(90deg) scale(1.1);
+  color: var(--text-dark);
 }
 
 .nav__links {
@@ -121,23 +171,66 @@ nav {
   flex-direction: column;
   gap: 2rem;
   padding: 2rem;
-  background-color: var(--primary-color);
-  transition: transform 0.5s;
+  background: linear-gradient(180deg, var(--primary-color) 0%, #c9b82e 100%);
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   z-index: -1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .nav__links.open {
   transform: translateY(100%);
 }
 
+.nav__links li {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: fadeInLeft 0.5s ease forwards;
+}
+
+.nav__links.open li:nth-child(1) { animation-delay: 0.1s; }
+.nav__links.open li:nth-child(2) { animation-delay: 0.2s; }
+.nav__links.open li:nth-child(3) { animation-delay: 0.3s; }
+.nav__links.open li:nth-child(4) { animation-delay: 0.4s; }
+.nav__links.open li:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .nav__links a {
   font-weight: 500;
   color: var(--white);
   white-space: nowrap;
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block;
+}
+
+.nav__links a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--white), var(--extra-light));
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.nav__links a:hover::before {
+  width: 100%;
 }
 
 .nav__links a:hover {
   color: var(--text-dark);
+  transform: translateY(-3px);
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 header {
@@ -591,16 +684,38 @@ footer {
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
+    background: linear-gradient(90deg, transparent 0%, rgba(229, 210, 65, 0.1) 50%, transparent 100%);
+    border-radius: 0 0 20px 20px;
   }
 
   .nav__header {
     padding: 0;
-    background-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    animation: none;
   }
 
   .nav__logo a {
     font-size: 1.75rem;
     color: var(--text-dark);
+    text-shadow: none;
+    background: linear-gradient(135deg, var(--text-dark) 0%, var(--extra-light) 50%, var(--primary-color) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientText 3s ease infinite;
+  }
+
+  @keyframes gradientText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .nav__logo a:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(229, 210, 65, 0.5));
   }
 
   .nav__menu__btn {
@@ -612,16 +727,79 @@ footer {
     padding: 0;
     flex-direction: row;
     justify-content: flex-end;
-    background-color: transparent;
+    background: transparent;
     transform: none;
+    box-shadow: none;
+  }
+
+  .nav__links li {
+    opacity: 1;
+    transform: translateX(0);
+    animation: none;
   }
 
   .nav__links a {
     color: var(--text-dark);
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    overflow: hidden;
+  }
+
+  .nav__links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(229, 210, 65, 0.4), transparent);
+    transition: left 0.5s ease;
+    border-radius: 25px;
+  }
+
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--extra-light), var(--primary-color));
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 3px;
+  }
+
+  .nav__links a:hover::before {
+    left: 100%;
+  }
+
+  .nav__links a:hover::after {
+    width: 100%;
   }
 
   .nav__links a:hover {
     color: var(--primary-color);
+    transform: translateY(-5px) scale(1.05);
+    text-shadow: 0 10px 20px rgba(229, 210, 65, 0.3);
+  }
+
+  .nav__links .btn {
+    background: linear-gradient(135deg, var(--text-dark) 0%, #333 100%);
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+  }
+
+  .nav__links .btn:hover {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--extra-light) 100%);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(229, 210, 65, 0.4);
+    border-color: var(--primary-color);
+  }
+
+  .nav__links .btn::before,
+  .nav__links .btn::after {
+    display: none;
   }
 
   header {
