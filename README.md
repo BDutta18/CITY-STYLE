@@ -313,8 +313,8 @@ If CITY STYLE helps you discover your style, please consider:
 
 - 📋 **Issues**: [GitHub Issues](https://github.com/BDutta18/CITY-STYLE/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/BDutta18/CITY-STYLE/discussions)
-- 📧 **Email**: bdutta18@example.com *(replace with actual email)*
-- 🐦 **Twitter**: [@BDutta18](https://twitter.com/BDutta18) *(if available)*
+- 📧 **Email**: workwithbd18@gmail.com
+- 🐦 **Twitter**: [@BDutta18](https://twitter.com/BDutta27070014) 
 
 ### 🏆 Hall of Fame
 
@@ -343,3 +343,4 @@ Thank you to all our amazing contributors! 🎉
 </p>
 
 </div>
+
