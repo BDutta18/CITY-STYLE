@@ -1,257 +1,474 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Login / Sign Up - City Style</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
   <style>
     :root {
-      --neon-start: #eaff00;
-      --neon-end: #e5d241;
-      
-      --bg-body: #f8fafc;
-      --bg-white: #ffffff;
-      --input-bg: #f1f5f9;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
+      --neon-yellow: #E5D241;
+      --neon-glow: rgba(229, 210, 65, 0.4);
+      --bg-dark: #0F172A;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --glass-border: rgba(255, 255, 255, 0.1);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-body);
+      background-color: var(--bg-dark);
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(229, 210, 65, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(55, 152, 152, 0.1) 0%, transparent 40%);
+      color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 1rem;
+      overflow-x: hidden;
+      /* Prevent horizontal scroll only */
+      position: relative;
+    }
+
+    /* Grid overlay for futuristic feel */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .close-btn {
       position: absolute;
-      top: 25px;
-      right: 30px;
+      top: 30px;
+      right: 40px;
       text-decoration: none;
       color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.9rem;
-      z-index: 10;
-      transition: color 0.3s;
-    }
-    .close-btn:hover { color: #000; }
-
-    .auth-wrapper {
-      background: var(--bg-white);
-      width: 100%;
-      max-width: 950px;
-      min-height: 600px;
-      border-radius: 24px;
+      font-size: 1.5rem;
+      z-index: 100;
+      transition: all 0.3s;
       display: flex;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .left-panel {
-      flex: 1;
-      background: linear-gradient(135deg, var(--neon-start) 0%, var(--neon-end) 100%);
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .close-btn:hover {
+      color: var(--neon-yellow);
+      text-shadow: 0 0 10px var(--neon-glow);
+    }
+
+    .container {
       position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      height: 80vh;
+      gap: 2rem;
+      padding: 2rem;
+      align-items: center;
     }
 
-    .left-panel h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      color: #0f172a; 
-    }
-    
-    .left-panel p {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #334155; 
-    }
-
-    .right-panel {
-      flex: 1;
-      padding: 3.5rem;
+    /* Left Panel: Clock and Branding */
+    .visual-panel {
+      flex: 1.2;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: var(--bg-white);
+      height: 100%;
+      padding-left: 2rem;
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #fff 30%, var(--neon-yellow) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(229, 210, 65, 0.2);
+    }
+
+    .clock-container {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 3rem;
+    }
+
+    .clock-time {
+      font-size: 7rem;
+      font-weight: 700;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 20px var(--neon-glow);
+      line-height: 0.9;
+    }
+
+    .clock-date {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      padding-left: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 400px;
+      line-height: 1.6;
+      border-left: 3px solid var(--neon-yellow);
+      padding-left: 1.5rem;
+    }
+
+    /* Right Panel: Auth Form */
+    .form-panel {
+      flex: 0.8;
+      background: rgba(20, 20, 30, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 30px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+      max-width: 500px;
+      width: 100%;
+      margin: auto;
+    }
+
+    /* Decorative border glow */
+    .form-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-yellow), transparent);
+    }
+
+    .form-header {
+      margin-bottom: 2rem;
+      text-align: center;
     }
 
     .form-header h2 {
+      font-family: 'Orbitron', sans-serif;
       font-size: 2rem;
       color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .input-group {
+      position: relative;
       margin-bottom: 1.5rem;
-      font-weight: 800;
     }
 
-    .form-group { margin-bottom: 1rem; }
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      transition: 0.3s;
+    }
 
-    input {
+    .input-group input {
       width: 100%;
-      background-color: var(--input-bg);
-      border: 2px solid transparent;
-      padding: 1rem 1.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      padding: 1rem 1rem 1rem 3rem;
       border-radius: 12px;
-      font-size: 1rem;
       color: var(--text-main);
-      font-family: inherit;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
       outline: none;
-      transition: 0.3s ease;
+      transition: all 0.3s ease;
     }
 
-    input::placeholder { color: var(--text-muted); }
+    .input-group input:focus {
+      border-color: var(--neon-yellow);
+      background: rgba(229, 210, 65, 0.05);
+      box-shadow: 0 0 15px rgba(229, 210, 65, 0.1);
+    }
 
-    input:focus {
-      background-color: #fff;
-      border-color: #000; 
-      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+    .input-group input:focus+i {
+      color: var(--neon-yellow);
     }
 
     .btn-submit {
       width: 100%;
-      background: linear-gradient(to right, #d4ec1b, #e5d241); 
-      color: #0f172a; 
       padding: 1rem;
+      background: var(--neon-yellow);
+      color: #000;
       border: none;
       border-radius: 12px;
       font-size: 1rem;
       font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       cursor: pointer;
-      margin-top: 1rem;
-      transition: 0.3s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px var(--neon-glow);
     }
 
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(229, 210, 65, 0.3);
-      filter: brightness(1.05);
+      box-shadow: 0 0 25px var(--neon-glow);
+      background: #fff;
     }
 
     .toggle-text {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
+      text-align: center;
       color: var(--text-muted);
       font-size: 0.9rem;
-      text-align: center;
     }
 
     .toggle-text a {
-      color: #000;
-      font-weight: 700;
+      color: var(--neon-yellow);
       cursor: pointer;
       text-decoration: none;
+      font-weight: 600;
       margin-left: 5px;
+      transition: 0.3s;
     }
-    .toggle-text a:hover { text-decoration: underline; }
 
-    @media (max-width: 768px) {
-      .auth-wrapper { flex-direction: column; min-height: auto; }
-      .left-panel { padding: 2.5rem; min-height: 200px; }
-      .left-panel h1 { font-size: 2.2rem; }
-      .right-panel { padding: 2rem; }
+    .toggle-text a:hover {
+      text-shadow: 0 0 8px var(--neon-glow);
+      color: #fff;
+    }
+
+    /* Animation */
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .slide-up {
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+        padding-top: 5rem;
+      }
+
+      .visual-panel {
+        padding-left: 0;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .tagline {
+        border-left: none;
+        border-top: 3px solid var(--neon-yellow);
+        padding-left: 0;
+        padding-top: 1rem;
+      }
+
+      .form-panel {
+        padding: 2rem;
+        width: 100%;
+      }
+
+      .brand-title {
+        font-size: 3rem;
+      }
+
+      .clock-time {
+        font-size: 4rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <a href="index.html" class="close-btn">✕ Close</a>
+  <a href="index.html" class="close-btn">
+    <i class="ri-close-circle-line"></i> Close
+  </a>
 
-  <div class="auth-wrapper">
-    
-    <div class="left-panel">
-      <h1>Where<br>Style<br>Begins.</h1>
-      <p>Join the movement.</p>
+  <div class="container">
+
+    <div class="visual-panel slide-up" style="animation-delay: 0.2s;">
+      <h1 class="brand-title">CITY<br>STYLE</h1>
+
+      <div class="clock-container">
+        <div class="clock-time" id="clock">00:00:00</div>
+        <div class="clock-date" id="date">LOADING DATE...</div>
+      </div>
+
+      <p class="tagline">Experience the future of fashion. Join our community and define your own style.</p>
     </div>
 
-    <div class="right-panel">
-      
+    <div class="form-panel slide-up" style="animation-delay: 0.4s;">
       <div class="form-header">
-        <h2 id="auth-title">Sign Up</h2>
+        <h2 id="auth-title">INITIATE ACCESS</h2>
+        <p id="auth-subtitle">Create your digital identity</p>
       </div>
 
       <form id="auth-form">
-        <div class="form-group">
-          <input type="text" placeholder="Full Name" required />
-        </div>
-        <div class="form-group">
-          <input type="text" placeholder="Username" required />
-        </div>
-        <div class="form-group">
-          <input type="email" placeholder="Email Address" required />
-        </div>
-        <div class="form-group">
-          <input type="password" placeholder="Password" required />
-        </div>
-        <button class="btn-submit" type="submit">Create Account</button>
+        <!-- Fields injected by JS -->
       </form>
 
       <div class="toggle-text">
-        Already have an account? <a id="toggle-link">Login</a>
+        <span id="toggle-prompt">Already have an ID?</span>
+        <a id="toggle-link">LOGIN SYSTEM</a>
       </div>
-
     </div>
+
   </div>
 
   <script>
-    const title = document.getElementById("auth-title");
+    /* --- Real-Time Clock --- */
+    function updateClock() {
+      const now = new Date();
+
+      // Time
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+
+      // Date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('date').textContent = now.toLocaleDateString('en-US', options).toUpperCase();
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial call
+
+
+    /* --- Auth Toggle Logic --- */
     const form = document.getElementById("auth-form");
-    const toggle = document.getElementById("toggle-link");
+    const title = document.getElementById("auth-title");
+    const subTitle = document.getElementById("auth-subtitle");
+    const toggleLink = document.getElementById("toggle-link");
+    const togglePrompt = document.getElementById("toggle-prompt");
 
     let isLogin = false;
 
-    toggle.addEventListener("click", () => {
-      isLogin = !isLogin;
+    function renderForm() {
+      form.innerHTML = ""; // Clear current fields
+
+      // Animations for smooth transition
+      form.classList.remove("fade-in");
+      void form.offsetWidth; // Trigger reflow
+      form.classList.add("fade-in");
 
       if (isLogin) {
-        title.textContent = "Welcome Back";
+        title.textContent = "SYSTEM LOGIN";
+        subTitle.textContent = "Enter your credentials";
+        toggleLink.textContent = "CREATE ID";
+        togglePrompt.textContent = "New user?";
+
         form.innerHTML = `
-          <div class="form-group">
-            <input type="text" placeholder="Username or Email" required />
+          <div class="input-group">
+            <i class="ri-user-3-line"></i>
+            <input type="text" placeholder="Username / Email" required>
           </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" required />
+          <div class="input-group">
+            <i class="ri-lock-2-line"></i>
+            <input type="password" placeholder="Password key" required>
           </div>
-          <button class="btn-submit" type="submit">Log In</button>
+          <button class="btn-submit" type="submit">ACCESS SYSTEM</button>
         `;
-        toggle.textContent = "Sign Up";
-        toggle.parentElement.childNodes[0].textContent = "Don't have an account? ";
       } else {
-        title.textContent = "Sign Up";
+        title.textContent = "INITIATE ACCESS";
+        subTitle.textContent = "Join the future today";
+        toggleLink.textContent = "LOGIN SYSTEM";
+        togglePrompt.textContent = "Already have an ID?";
+
         form.innerHTML = `
-          <div class="form-group">
-            <input type="text" placeholder="Full Name" required />
+          <div class="input-group">
+            <i class="ri-user-smile-line"></i>
+            <input type="text" placeholder="Full Identity Name" required>
           </div>
-          <div class="form-group">
-            <input type="text" placeholder="Username" required />
+          <div class="input-group">
+            <i class="ri-shield-user-line"></i>
+            <input type="text" placeholder="Choose Username" required>
           </div>
-          <div class="form-group">
-            <input type="email" placeholder="Email Address" required />
+          <div class="input-group">
+            <i class="ri-mail-send-line"></i>
+            <input type="email" placeholder="Contact Email" required>
           </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" required />
+          <div class="input-group">
+            <i class="ri-lock-2-line"></i>
+            <input type="password" placeholder="Create Password" required>
           </div>
-          <button class="btn-submit" type="submit">Create Account</button>
+          <button class="btn-submit" type="submit">REGISTER ID</button>
         `;
-        toggle.textContent = "Login";
-        toggle.parentElement.childNodes[0].textContent = "Already have an account? ";
       }
+    }
+
+    toggleLink.addEventListener("click", () => {
+      isLogin = !isLogin;
+      renderForm();
     });
 
-    form.addEventListener('submit', (e) => {
+    // Initial Render
+    renderForm();
+
+    // Submit Handler
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      alert(isLogin ? "Welcome back!" : "Account created!");
+      alert(isLogin ? "System Access Granted" : "Identity Registered Successfully");
     });
   </script>
 
 </body>
+
 </html>
