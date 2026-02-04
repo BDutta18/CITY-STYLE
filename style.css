@@ -812,9 +812,9 @@ footer {
     isolation: isolate;
   }
 
-  .header__content :is(h1, p, .header__btns) {
+  /* .header__content :is(h1, p, .header__btns) { */
     /* text-align: left; */
-  }
+  /* } */
 
   .header__image {
     position: relative;
