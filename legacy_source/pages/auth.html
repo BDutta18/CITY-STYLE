@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Login / Sign Up - City Style</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-yellow: #FFC107;
+      --primary-hover: #FFB300;
+      --text-dark: #333333;
+      --text-muted: #666666;
+      --bg-cream: #FFFDE7;
+      --white: #ffffff;
+      --input-bg: #F5F5F5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-cream);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Background decoration (Top buildings silhouette idea - simplified gradient) */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(180deg, rgba(255, 193, 7, 0.2) 0%, transparent 100%);
+      z-index: -1;
+    }
+
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      background: var(--bg-cream);
+      overflow: hidden;
+    }
+
+    /* Left Side - Form */
+    .form-section {
+      flex: 1;
+      padding: 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      max-width: 600px;
+      z-index: 10;
+    }
+
+    .brand-logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-logo span {
+      color: var(--primary-yellow);
+    }
+
+    .welcome-text h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-text span {
+      color: var(--primary-yellow);
+    }
+
+    .welcome-text p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .input-group label i {
+      color: var(--primary-yellow);
+      font-size: 1.2rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 1rem;
+      background: var(--white);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: var(--text-dark);
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .input-wrapper input:focus {
+      border-color: var(--primary-yellow);
+      box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
+    }
+
+    .input-wrapper i.check-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
+    }
+
+    .forgot-password {
+      text-align: right;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: -1rem;
+    }
+
+    .forgot-password a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .btn-submit {
+      background: linear-gradient(90deg, #FFC107, #FF9800);
+      color: var(--white);
+      border: none;
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+      transition: 0.3s;
+      margin-top: 1rem;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 2rem 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .divider span {
+      padding: 0 1rem;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: 0.3s;
+    }
+
+    .social-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .social-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .toggle-section {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-dark);
+    }
+
+    .toggle-section a {
+      color: var(--primary-hover);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 2px solid var(--primary-yellow);
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .footer-links {
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding-top: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--primary-hover);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Right Side - Image */
+    .image-section {
+      flex: 1.2;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      background: url('../assets/header-bg.png') no-repeat center bottom;
+      background-size: contain;
+    }
+
+    /* Decorative yellow swoops */
+    .image-section::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 70% 50%, rgba(255, 253, 231, 0.5) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    .model-image {
+      max-width: 90%;
+      max-height: 95vh;
+      object-fit: contain;
+      z-index: 2;
+      filter: drop-shadow(-10px 10px 20px rgba(0, 0, 0, 0.1));
+    }
+
+    .floating-icon {
+      position: absolute;
+      font-size: 2rem;
+      color: rgba(255, 193, 7, 0.8);
+      z-index: 1;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 968px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .image-section {
+        display: none;
+        /* Hide image on mobile for better focus */
+      }
+
+      .form-section {
+        max-width: 100%;
+        padding: 2rem;
+        flex: 1;
+      }
+
+      body::before {
+        height: 100vh;
+        /* Gradient bg for mobile */
+      }
+    }
+
+    /* Scroller Styles */
+    .brand-scroller {
+      width: 100%;
+      overflow: hidden;
+      margin: 2rem 0;
+      padding: 1rem 0;
+      background: rgba(255, 193, 7, 0.1);
+      /* Light yellow tint */
+      border-radius: 10px;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .scroller-track {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      width: max-content;
+      animation: authScroll 20s linear infinite;
+    }
+
+    .scroller-track img {
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.6;
+      filter: grayscale(100%);
+      transition: 0.3s;
+    }
+
+    .scroller-track img:hover {
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+
+    @keyframes authScroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Form Section -->
+    <div class="form-section">
+
+
+      <div class="welcome-text">
+        <h1 id="header-title">Welcome to CITY<span>STYLE</span>!</h1>
+        <p id="header-subtitle">Sign in to your account</p>
+      </div>
+
+      <form class="auth-form" id="auth-form">
+        <!-- Form Content Injected via JS -->
+      </form>
+
+      <div class="brand-scroller">
+        <div class="scroller-track">
+          <!-- Duplicated for seamless loop -->
+          <img src="../assets/banner-1.png" alt="brand">
+          <img src="../assets/banner-2.png" alt="brand">
+          <img src="../assets/banner-3.png" alt="brand">
+          <img src="../assets/banner-4.png" alt="brand">
+          <img src="../assets/banner-5.png" alt="brand">
+          <img src="../assets/banner-6.png" alt="brand">
+          <img src="../assets/banner-1.png" alt="brand">
+          <img src="../assets/banner-2.png" alt="brand">
+          <img src="../assets/banner-3.png" alt="brand">
+          <img src="../assets/banner-4.png" alt="brand">
+        </div>
+      </div>
+
+      <div class="toggle-section">
+        <span id="toggle-text">New to CityStyle?</span>
+        <a id="toggle-link">Create an Account</a>
+      </div>
+
+      <div class="footer-links">
+        By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </div>
+    </div>
+
+    <!-- Image Section -->
+    <div class="image-section">
+      <!-- Decor icons -->
+      <i class="ri-handbag-line floating-icon" style="top: 20%; left: 10%;"></i>
+      <i class="ri-t-shirt-line floating-icon" style="top: 15%; right: 20%;"></i>
+      <i class="ri-glasses-line floating-icon" style="bottom: 40%; left: 5%;"></i>
+
+      <img src="../assets/women.png" alt="Fashion Model" class="model-image">
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("auth-form");
+    const headerTitle = document.getElementById("header-title");
+    const headerSubtitle = document.getElementById("header-subtitle");
+    const toggleLink = document.getElementById("toggle-link");
+    const toggleText = document.getElementById("toggle-text");
+    const submitBtnBase = document.getElementById("auth-submit");
+
+    let isLogin = true;
+
+    function renderForm() {
+      form.innerHTML = "";
+
+      if (isLogin) {
+        // Login View
+        headerTitle.innerHTML = `Welcome to CITY<span>STYLE</span>!`;
+        headerSubtitle.textContent = "Sign in to your account";
+        toggleText.textContent = "New to CityStyle?";
+        toggleLink.textContent = "Create an Account";
+
+        form.innerHTML = `
+          <div class="input-group">
+            <label><i class="ri-mail-line"></i> Email</label>
+            <div class="input-wrapper">
+              <input type="text" placeholder="Enter your email or username" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <label><i class="ri-lock-fill"></i> Password</label>
+            <div class="input-wrapper">
+              <input type="password" placeholder="Enter your password" required>
+              <i class="ri-check-line check-icon"></i>
+            </div>
+            <div class="forgot-password"><a href="#">Forgot Password?</a></div>
+          </div>
+          <button type="submit" class="btn-submit">Sign In</button>
+        `;
+      } else {
+        // Register View
+        headerTitle.innerHTML = `Create Account`;
+        headerSubtitle.textContent = "Join the community";
+        toggleText.textContent = "Already have an account?";
+        toggleLink.textContent = "Sign In instead";
+
+        form.innerHTML = `
+           <div class="input-group">
+            <label><i class="ri-user-line"></i> Full Name</label>
+            <div class="input-wrapper">
+              <input type="text" placeholder="Enter your full name" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <label><i class="ri-mail-line"></i> Email</label>
+            <div class="input-wrapper">
+              <input type="email" placeholder="Enter your email" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <label><i class="ri-lock-fill"></i> Password</label>
+            <div class="input-wrapper">
+              <input type="password" placeholder="Create a password" required>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">Create Account</button>
+        `;
+      }
+    }
+
+    // Toggle Handler
+    toggleLink.addEventListener("click", () => {
+      isLogin = !isLogin;
+      renderForm();
+    });
+
+    // Initial Render
+    renderForm();
+
+    // Submit Handler preserved from previous version
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const inputs = form.querySelectorAll('input');
+      // Logic to grab username differs by mode
+      // Login: use first input (Email/User)
+      // Register: use first input (Full Name) as "username" for display
+      const username = inputs[0].value;
+
+      localStorage.setItem("currentUser", username);
+
+      // Animation or delay could go here
+      window.location.href = "../index.html";
+    });
+
+  </script>
+</body>
+
+</html>
