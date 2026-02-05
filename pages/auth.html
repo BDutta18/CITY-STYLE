@@ -5,19 +5,18 @@
   <meta charset="UTF-8" />
   <title>Login / Sign Up - City Style</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;800&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
   <style>
     :root {
-      --neon-yellow: #E5D241;
-      --neon-glow: rgba(229, 210, 65, 0.4);
-      --bg-dark: #0F172A;
-      --bg-card: rgba(255, 255, 255, 0.03);
-      --text-main: #ffffff;
-      --text-muted: #94a3b8;
-      --glass-border: rgba(255, 255, 255, 0.1);
+      --primary-yellow: #FFC107;
+      --primary-hover: #FFB300;
+      --text-dark: #333333;
+      --text-muted: #666666;
+      --bg-cream: #FFFDE7;
+      --white: #ffffff;
+      --input-bg: #F5F5F5;
     }
 
     * {
@@ -28,308 +27,342 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-dark);
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(229, 210, 65, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(55, 152, 152, 0.1) 0%, transparent 40%);
-      color: var(--text-main);
+      background-color: var(--bg-cream);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
-      /* Prevent horizontal scroll only */
-      position: relative;
+      overflow: hidden;
     }
 
-    /* Grid overlay for futuristic feel */
+    /* Background decoration (Top buildings silhouette idea - simplified gradient) */
     body::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 50px 50px;
-      pointer-events: none;
-      z-index: 0;
+      height: 200px;
+      background: linear-gradient(180deg, rgba(255, 193, 7, 0.2) 0%, transparent 100%);
+      z-index: -1;
     }
 
-    .close-btn {
-      position: absolute;
-      top: 30px;
-      right: 40px;
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 1.5rem;
-      z-index: 100;
-      transition: all 0.3s;
+    .container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      background: var(--bg-cream);
+      overflow: hidden;
+    }
+
+    /* Left Side - Form */
+    .form-section {
+      flex: 1;
+      padding: 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      max-width: 600px;
+      z-index: 10;
+    }
+
+    .brand-logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    .close-btn:hover {
-      color: var(--neon-yellow);
-      text-shadow: 0 0 10px var(--neon-glow);
+    .brand-logo span {
+      color: var(--primary-yellow);
     }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      width: 100%;
-      max-width: 1200px;
-      height: 80vh;
-      gap: 2rem;
-      padding: 2rem;
-      align-items: center;
-    }
-
-    /* Left Panel: Clock and Branding */
-    .visual-panel {
-      flex: 1.2;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100%;
-      padding-left: 2rem;
-    }
-
-    .brand-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 4rem;
+    .welcome-text h1 {
+      font-size: 2.5rem;
       font-weight: 700;
-      line-height: 1;
-      margin-bottom: 2rem;
-      background: linear-gradient(135deg, #fff 30%, var(--neon-yellow) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(229, 210, 65, 0.2);
-    }
-
-    .clock-container {
-      font-family: 'Orbitron', sans-serif;
-      margin-bottom: 3rem;
-    }
-
-    .clock-time {
-      font-size: 7rem;
-      font-weight: 700;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 20px var(--neon-glow);
-      line-height: 0.9;
-    }
-
-    .clock-date {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-top: 1rem;
-      padding-left: 0.5rem;
-    }
-
-    .tagline {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
-      max-width: 400px;
-      line-height: 1.6;
-      border-left: 3px solid var(--neon-yellow);
-      padding-left: 1.5rem;
-    }
-
-    /* Right Panel: Auth Form */
-    .form-panel {
-      flex: 0.8;
-      background: rgba(20, 20, 30, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 3rem;
-      border-radius: 30px;
-      border: 1px solid var(--glass-border);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      position: relative;
-      overflow: hidden;
-      max-width: 500px;
-      width: 100%;
-      margin: auto;
-    }
-
-    /* Decorative border glow */
-    .form-panel::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--neon-yellow), transparent);
-    }
-
-    .form-header {
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .form-header h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      color: var(--text-main);
+      color: var(--text-dark);
       margin-bottom: 0.5rem;
     }
 
-    .form-header p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    .welcome-text span {
+      color: var(--primary-yellow);
     }
 
-    .input-group {
-      position: relative;
-      margin-bottom: 1.5rem;
+    .welcome-text p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
     }
 
-    .input-group i {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .input-group label i {
+      color: var(--primary-yellow);
       font-size: 1.2rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 1rem;
+      background: var(--white);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: var(--text-dark);
+      font-family: 'Poppins', sans-serif;
+      outline: none;
       transition: 0.3s;
     }
 
-    .input-group input {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--glass-border);
-      padding: 1rem 1rem 1rem 3rem;
-      border-radius: 12px;
-      color: var(--text-main);
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      outline: none;
-      transition: all 0.3s ease;
+    .input-wrapper input:focus {
+      border-color: var(--primary-yellow);
+      box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
     }
 
-    .input-group input:focus {
-      border-color: var(--neon-yellow);
-      background: rgba(229, 210, 65, 0.05);
-      box-shadow: 0 0 15px rgba(229, 210, 65, 0.1);
+    .input-wrapper i.check-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
     }
 
-    .input-group input:focus+i {
-      color: var(--neon-yellow);
+    .forgot-password {
+      text-align: right;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: -1rem;
+    }
+
+    .forgot-password a {
+      color: var(--text-muted);
+      text-decoration: none;
     }
 
     .btn-submit {
-      width: 100%;
-      padding: 1rem;
-      background: var(--neon-yellow);
-      color: #000;
+      background: linear-gradient(90deg, #FFC107, #FF9800);
+      color: var(--white);
       border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 700;
-      font-family: 'Orbitron', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px var(--neon-glow);
+      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+      transition: 0.3s;
+      margin-top: 1rem;
     }
 
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 25px var(--neon-glow);
-      background: #fff;
+      box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
     }
 
-    .toggle-text {
-      margin-top: 2rem;
-      text-align: center;
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 2rem 0;
       color: var(--text-muted);
       font-size: 0.9rem;
     }
 
-    .toggle-text a {
-      color: var(--neon-yellow);
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .divider span {
+      padding: 0 1rem;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      text-decoration: none;
-      font-weight: 600;
-      margin-left: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       transition: 0.3s;
     }
 
-    .toggle-text a:hover {
-      text-shadow: 0 0 8px var(--neon-glow);
-      color: #fff;
+    .social-btn:hover {
+      transform: scale(1.1);
     }
 
-    /* Animation */
-    .fade-in {
-      animation: fadeIn 0.5s ease forwards;
+    .social-btn img {
+      width: 24px;
+      height: 24px;
     }
 
-    .slide-up {
-      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-      transform: translateY(20px);
+    .toggle-section {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-dark);
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
+    .toggle-section a {
+      color: var(--primary-hover);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 2px solid var(--primary-yellow);
+      margin-left: 5px;
+      cursor: pointer;
     }
 
-    @keyframes slideUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .footer-links {
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding-top: 2rem;
     }
 
-    @media (max-width: 900px) {
+    .footer-links a {
+      color: var(--primary-hover);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Right Side - Image */
+    .image-section {
+      flex: 1.2;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      background: url('../assets/header-bg.png') no-repeat center bottom;
+      background-size: contain;
+    }
+
+    /* Decorative yellow swoops */
+    .image-section::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 70% 50%, rgba(255, 253, 231, 0.5) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    .model-image {
+      max-width: 90%;
+      max-height: 95vh;
+      object-fit: contain;
+      z-index: 2;
+      filter: drop-shadow(-10px 10px 20px rgba(0, 0, 0, 0.1));
+    }
+
+    .floating-icon {
+      position: absolute;
+      font-size: 2rem;
+      color: rgba(255, 193, 7, 0.8);
+      z-index: 1;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 968px) {
       .container {
         flex-direction: column;
         height: auto;
-        padding-top: 5rem;
+        min-height: 100vh;
       }
 
-      .visual-panel {
-        padding-left: 0;
-        align-items: center;
-        text-align: center;
-        margin-bottom: 2rem;
+      .image-section {
+        display: none;
+        /* Hide image on mobile for better focus */
       }
 
-      .tagline {
-        border-left: none;
-        border-top: 3px solid var(--neon-yellow);
-        padding-left: 0;
-        padding-top: 1rem;
-      }
-
-      .form-panel {
+      .form-section {
+        max-width: 100%;
         padding: 2rem;
-        width: 100%;
+        flex: 1;
       }
 
-      .brand-title {
-        font-size: 3rem;
+      body::before {
+        height: 100vh;
+        /* Gradient bg for mobile */
+      }
+    }
+
+    /* Scroller Styles */
+    .brand-scroller {
+      width: 100%;
+      overflow: hidden;
+      margin: 2rem 0;
+      padding: 1rem 0;
+      background: rgba(255, 193, 7, 0.1);
+      /* Light yellow tint */
+      border-radius: 10px;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .scroller-track {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      width: max-content;
+      animation: authScroll 20s linear infinite;
+    }
+
+    .scroller-track img {
+      height: 25px;
+      object-fit: contain;
+      opacity: 0.6;
+      filter: grayscale(100%);
+      transition: 0.3s;
+    }
+
+    .scroller-track img:hover {
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+
+    @keyframes authScroll {
+      from {
+        transform: translateX(0);
       }
 
-      .clock-time {
-        font-size: 4rem;
+      to {
+        transform: translateX(-50%);
       }
     }
   </style>
@@ -337,123 +370,126 @@
 
 <body>
 
-  <a href="index.html" class="close-btn">
-    <i class="ri-close-circle-line"></i> Close
-  </a>
-
   <div class="container">
+    <!-- Form Section -->
+    <div class="form-section">
 
-    <div class="visual-panel slide-up" style="animation-delay: 0.2s;">
-      <h1 class="brand-title">CITY<br>STYLE</h1>
 
-      <div class="clock-container">
-        <div class="clock-time" id="clock">00:00:00</div>
-        <div class="clock-date" id="date">LOADING DATE...</div>
+      <div class="welcome-text">
+        <h1 id="header-title">Welcome to CITY<span>STYLE</span>!</h1>
+        <p id="header-subtitle">Sign in to your account</p>
       </div>
 
-      <p class="tagline">Experience the future of fashion. Join our community and define your own style.</p>
-    </div>
-
-    <div class="form-panel slide-up" style="animation-delay: 0.4s;">
-      <div class="form-header">
-        <h2 id="auth-title">INITIATE ACCESS</h2>
-        <p id="auth-subtitle">Create your digital identity</p>
-      </div>
-
-      <form id="auth-form">
-        <!-- Fields injected by JS -->
+      <form class="auth-form" id="auth-form">
+        <!-- Form Content Injected via JS -->
       </form>
 
-      <div class="toggle-text">
-        <span id="toggle-prompt">Already have an ID?</span>
-        <a id="toggle-link">LOGIN SYSTEM</a>
+      <div class="brand-scroller">
+        <div class="scroller-track">
+          <!-- Duplicated for seamless loop -->
+          <img src="../assets/banner-1.png" alt="brand">
+          <img src="../assets/banner-2.png" alt="brand">
+          <img src="../assets/banner-3.png" alt="brand">
+          <img src="../assets/banner-4.png" alt="brand">
+          <img src="../assets/banner-5.png" alt="brand">
+          <img src="../assets/banner-6.png" alt="brand">
+          <img src="../assets/banner-1.png" alt="brand">
+          <img src="../assets/banner-2.png" alt="brand">
+          <img src="../assets/banner-3.png" alt="brand">
+          <img src="../assets/banner-4.png" alt="brand">
+        </div>
+      </div>
+
+      <div class="toggle-section">
+        <span id="toggle-text">New to CityStyle?</span>
+        <a id="toggle-link">Create an Account</a>
+      </div>
+
+      <div class="footer-links">
+        By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
       </div>
     </div>
 
+    <!-- Image Section -->
+    <div class="image-section">
+      <!-- Decor icons -->
+      <i class="ri-handbag-line floating-icon" style="top: 20%; left: 10%;"></i>
+      <i class="ri-t-shirt-line floating-icon" style="top: 15%; right: 20%;"></i>
+      <i class="ri-glasses-line floating-icon" style="bottom: 40%; left: 5%;"></i>
+
+      <img src="../assets/women.png" alt="Fashion Model" class="model-image">
+    </div>
   </div>
 
   <script>
-    /* --- Real-Time Clock --- */
-    function updateClock() {
-      const now = new Date();
-
-      // Time
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-
-      // Date
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('date').textContent = now.toLocaleDateString('en-US', options).toUpperCase();
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock(); // Initial call
-
-
-    /* --- Auth Toggle Logic --- */
     const form = document.getElementById("auth-form");
-    const title = document.getElementById("auth-title");
-    const subTitle = document.getElementById("auth-subtitle");
+    const headerTitle = document.getElementById("header-title");
+    const headerSubtitle = document.getElementById("header-subtitle");
     const toggleLink = document.getElementById("toggle-link");
-    const togglePrompt = document.getElementById("toggle-prompt");
+    const toggleText = document.getElementById("toggle-text");
+    const submitBtnBase = document.getElementById("auth-submit");
 
-    let isLogin = false;
+    let isLogin = true;
 
     function renderForm() {
-      form.innerHTML = ""; // Clear current fields
-
-      // Animations for smooth transition
-      form.classList.remove("fade-in");
-      void form.offsetWidth; // Trigger reflow
-      form.classList.add("fade-in");
+      form.innerHTML = "";
 
       if (isLogin) {
-        title.textContent = "SYSTEM LOGIN";
-        subTitle.textContent = "Enter your credentials";
-        toggleLink.textContent = "CREATE ID";
-        togglePrompt.textContent = "New user?";
+        // Login View
+        headerTitle.innerHTML = `Welcome to CITY<span>STYLE</span>!`;
+        headerSubtitle.textContent = "Sign in to your account";
+        toggleText.textContent = "New to CityStyle?";
+        toggleLink.textContent = "Create an Account";
 
         form.innerHTML = `
           <div class="input-group">
-            <i class="ri-user-3-line"></i>
-            <input type="text" placeholder="Username / Email" required>
+            <label><i class="ri-mail-line"></i> Email</label>
+            <div class="input-wrapper">
+              <input type="text" placeholder="Enter your email or username" required>
+            </div>
           </div>
           <div class="input-group">
-            <i class="ri-lock-2-line"></i>
-            <input type="password" placeholder="Password key" required>
+            <label><i class="ri-lock-fill"></i> Password</label>
+            <div class="input-wrapper">
+              <input type="password" placeholder="Enter your password" required>
+              <i class="ri-check-line check-icon"></i>
+            </div>
+            <div class="forgot-password"><a href="#">Forgot Password?</a></div>
           </div>
-          <button class="btn-submit" type="submit">ACCESS SYSTEM</button>
+          <button type="submit" class="btn-submit">Sign In</button>
         `;
       } else {
-        title.textContent = "INITIATE ACCESS";
-        subTitle.textContent = "Join the future today";
-        toggleLink.textContent = "LOGIN SYSTEM";
-        togglePrompt.textContent = "Already have an ID?";
+        // Register View
+        headerTitle.innerHTML = `Create Account`;
+        headerSubtitle.textContent = "Join the community";
+        toggleText.textContent = "Already have an account?";
+        toggleLink.textContent = "Sign In instead";
 
         form.innerHTML = `
-          <div class="input-group">
-            <i class="ri-user-smile-line"></i>
-            <input type="text" placeholder="Full Identity Name" required>
+           <div class="input-group">
+            <label><i class="ri-user-line"></i> Full Name</label>
+            <div class="input-wrapper">
+              <input type="text" placeholder="Enter your full name" required>
+            </div>
           </div>
           <div class="input-group">
-            <i class="ri-shield-user-line"></i>
-            <input type="text" placeholder="Choose Username" required>
+            <label><i class="ri-mail-line"></i> Email</label>
+            <div class="input-wrapper">
+              <input type="email" placeholder="Enter your email" required>
+            </div>
           </div>
           <div class="input-group">
-            <i class="ri-mail-send-line"></i>
-            <input type="email" placeholder="Contact Email" required>
+            <label><i class="ri-lock-fill"></i> Password</label>
+            <div class="input-wrapper">
+              <input type="password" placeholder="Create a password" required>
+            </div>
           </div>
-          <div class="input-group">
-            <i class="ri-lock-2-line"></i>
-            <input type="password" placeholder="Create Password" required>
-          </div>
-          <button class="btn-submit" type="submit">REGISTER ID</button>
+          <button type="submit" class="btn-submit">Create Account</button>
         `;
       }
     }
 
+    // Toggle Handler
     toggleLink.addEventListener("click", () => {
       isLogin = !isLogin;
       renderForm();
@@ -462,13 +498,23 @@
     // Initial Render
     renderForm();
 
-    // Submit Handler
+    // Submit Handler preserved from previous version
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      alert(isLogin ? "System Access Granted" : "Identity Registered Successfully");
-    });
-  </script>
 
+      const inputs = form.querySelectorAll('input');
+      // Logic to grab username differs by mode
+      // Login: use first input (Email/User)
+      // Register: use first input (Full Name) as "username" for display
+      const username = inputs[0].value;
+
+      localStorage.setItem("currentUser", username);
+
+      // Animation or delay could go here
+      window.location.href = "../index.html";
+    });
+
+  </script>
 </body>
 
 </html>
