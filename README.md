@@ -165,16 +165,34 @@ git push origin feature/amazing-feature
 
 ```
 CITY-STYLE/
-├── 📄 index.html              # Main HTML file & entry point
-├── 🎨 style.css               # Main stylesheet & responsive design
-├── ⚡ hello.js                # Core JavaScript functionality
-├── 📁 assets/                 # Static assets & media files
-│   ├── 🖼️ images/            # Image assets
-│   ├── 🎵 audio/             # Audio files (if any)
-│   └── 📹 videos/            # Video content (if any)
-├── 📚 docs/                   # Documentation files
-├── 🧪 tests/                  # Test files (future)
-└── 📖 README.md               # Project documentation
+├── .github                         # Issue templates
+├── assets                          # Static assets (images, fonts, etc.)
+├── pages                           # All secondary pages & related files
+│   ├── About.html
+│   ├── auth.html
+│   ├── carrer.html
+│   ├── Coats&Parkas.html
+│   ├── contact.html
+│   ├── FAQ.html
+│   ├── Hoodies&Sweatshirts.html
+│   ├── instagram_trending.html
+│   ├── order_tracking.html
+│   ├── Oversized-T-shirt.html
+│   ├── privacy&policy.html
+│   ├── shop.html
+│   ├── size_guide.html
+│   ├── Store_location.html
+│   ├── support.html
+│   ├── terms-conditions.css        # Terms & Conditions styles
+│   ├── terms-conditions.js         # Terms & Conditions logic
+│   ├── Terms&conditions.html
+│   └── under_40_dollar.html
+│
+├── CONTRIBUTING.md                 # Contribution guidelines
+├── index.html                      # Main landing page
+├── main.js                         # Core JavaScript logic
+├── README.md                       # Project documentation
+└── style.css                       # Global stylesheet
 ```
 
 ## 🌐 Deployment
