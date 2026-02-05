@@ -935,7 +935,7 @@ footer {
 
 /* Enhanced Button Effects */
 .btn {
-  position: relative;
+  position: fixed;
   overflow: hidden;
   z-index: 1;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -1334,7 +1334,7 @@ footer {
 
 /* Ripple Effect for Buttons */
 .btn {
-  position: relative;
+  position: fixed;
   overflow: hidden;
 }
 
@@ -1394,4 +1394,36 @@ footer {
   animation: none;
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+}
+
+.login-form {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* Fix #48: Responsive auth page layout */
+body {
+  padding: 20px !important;  /* Safe spacing all devices */
+}
+
+.auth-wrapper {
+  margin: 0 auto !important;     /* Always center */
+  min-height: auto !important;   /* Don't stretch tall */
+}
+
+@media (max-width: 768px) {
+  .auth-wrapper {
+    flex-direction: column !important;
+    width: 95% !important;
+    max-width: 400px !important;
+  }
+  
+  body {
+    padding: 10px !important;
+    justify-content: flex-start !important;  /* Top-aligned mobile */
+    padding-top: 60px !important;            /* Space for fixed close btn */
+  }
 }
