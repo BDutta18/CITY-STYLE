@@ -32,7 +32,7 @@
     }
 
     .close-btn {
-      position: absolute;
+      position: fixed;
       top: 25px;
       right: 30px;
       text-decoration: none;
@@ -154,12 +154,41 @@
     }
     .toggle-text a:hover { text-decoration: underline; }
 
+    /* Issue #48: Mobile UX + Auth enhancements */
+        /* Issue #48: Mobile UX + Auth enhancements */
     @media (max-width: 768px) {
-      .auth-wrapper { flex-direction: column; min-height: auto; }
-      .left-panel { padding: 2.5rem; min-height: 200px; }
-      .left-panel h1 { font-size: 2.2rem; }
-      .right-panel { padding: 2rem; }
+      .auth-wrapper {
+        margin: 1rem;
+        max-width: calc(100vw - 2rem);
+      }
+      
+      .left-panel h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2;
+      }
+      
+      .right-panel {
+        padding: 1.5rem !important;
+      }
+      
+      input {
+        padding: 14px 16px !important;
+        font-size: 16px !important; /* iOS zoom fix */
+      }
     }
+
+    /* Better focus states */
+    input:focus {
+      border-color: #e5d241 !important;
+      box-shadow: 0 0 0 3px rgba(229, 210, 65, 0.1);
+    }
+
+    /* Loading state for buttons */
+    .btn-submit:active {
+      transform: translateY(0);
+      opacity: 0.9;
+    }
+
   </style>
 </head>
 <body>
