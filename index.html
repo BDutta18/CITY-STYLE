@@ -183,10 +183,19 @@
           JOIN SHOPPING COMMUNITY TO GET MONTHLY PROMO
         </h2>
         <p>Type your email down below and be young wild generation</p>
-        <form action="/">
-          <input type="text" placeholder="Add your email here" />
-          <button class="btn">SEND</button>
+        <form id="promo-form">
+          <input
+            type="email"
+            id="promo-email"
+            placeholder="Add your email here"
+            required
+          />
+          <button class="btn" type="submit">SEND</button>
         </form>
+
+        <p id="promo-message" style="display: none; margin-top: 1rem">
+          Thanks for subscribing!!
+        </p>
       </div>
     </section>
 

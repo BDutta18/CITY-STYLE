@@ -77,3 +77,21 @@ ScrollReveal().reveal(".favourite__card", {
   ...scrollRevealOption,
   interval: 500,
 });
+// ===============================
+// Promo Email Form Handling
+// ===============================
+const promoForm = document.getElementById("promo-form");
+const promoEmail = document.getElementById("promo-email");
+const promoMessage = document.getElementById("promo-message");
+
+if (promoForm) {
+  promoForm.addEventListener("submit", (e) => {
+    e.preventDefault(); // stop page reload
+
+    const email = promoEmail.value.trim();
+    if (!email) return;
+
+    promoMessage.style.display = "block";
+    promoForm.reset();
+  });
+}
