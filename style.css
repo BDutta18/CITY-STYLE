@@ -313,8 +313,14 @@ header {
   display: flex;
   align-items: center;
   gap: 8rem;
+  animation: scroll 20s linear infinite;
+  position: relative;
+}
 
-  animation: scroll 45s linear infinite;
+.banner__container::after {
+  content: "";
+  display: block;
+  width: 100%;
 }
 
 .banner__container img {
@@ -322,8 +328,11 @@ header {
 }
 
 @keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
   to {
-    transform: translateX(calc(-50% - 4rem));
+    transform: translateX(-50%);
   }
 }
 
