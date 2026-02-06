@@ -2986,6 +2986,6 @@ footer {
     animation: none;
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
-    /* >>>>>>> upstream/main:legacy_source/style.css */
+
   }
 }
