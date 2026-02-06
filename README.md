@@ -56,25 +56,19 @@ Before you begin, ensure you have the following installed:
 
 2. **Launch the application**
    
-   **Option A: Live Server (Recommended)**
-   - Install [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) VS Code extension
-   - Right-click on `index.html` → "Open with Live Server"
-   
-   **Option B: Python Server**
+   **Step 1: Install dependencies**
    ```bash
-   # Python 3
-   python -m http.server 8000
-   # Then visit http://localhost:8000
+   npm install
    ```
    
-   **Option C: Direct Browser**
+   **Step 2: Start the development server**
    ```bash
-   # Simply open the file
-   start index.html  # Windows
-   open index.html   # macOS
+   npm run dev
    ```
 
 3. **Start exploring!** 🎉
+   
+   Open [http://localhost:5173](http://localhost:5173) in your browser to view the app.
 
 ### 🔧 Development Setup
 
