@@ -1,31 +1,27 @@
 # 🏙️ CITY STYLE
 
-<div align="center">
+A modern, responsive web application designed to explore and discover urban fashion trends from cities around the world. It brings together city-inspired styles, curated collections, and a smooth user experience across all devices. Perfect for staying updated with global street fashion.
+
+## Current size
+<div align="left">
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/BDutta18/CITY-STYLE?style=for-the-badge)
-![GitHub contributors](https://img.shields.io/github/contributors/BDutta18/CITY-STYLE?style=for-the-badge)
-![GitHub stars](https://img.shields.io/github/stars/BDutta18/CITY-STYLE?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/BDutta18/CITY-STYLE?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues/BDutta18/CITY-STYLE?style=for-the-badge)
-
 </div>
 
-> 🌟 A modern, responsive web application for exploring and discovering urban fashion trends across different cities worldwide.
 
-## 📋 Table of Contents
+## 📋 Elements of Project
 
-- [🏙️ Demo](#-demo)
-- [📖 Overview](#-overview)
-- [✨ Features](#-features)
-- [🚀 Getting Started](#-getting-started)
-- [🛠️ Technologies Used](#️-technologies-used)
-- [📁 Project Structure](#-project-structure)
-- [🌐 Deployment](#-deployment)
-- [🤝 Contributing](#-contributing)
-- [❓ FAQ](#-faq)
-- [📄 License](#-license)
-- [👨‍💻 Author](#-author)
-- [🆘 Support & Contact](#-support--contact)
+This table created into 3 phase undestand project in better way.
+
+
+| I                |       II     | III        |
+|---------------------------|------------------|----------------|
+| [📖 Overview](#-overview) | [🏙️ Demo](#-demo) | [📄 License](#-license) |
+| [🛠️ Technologies Used](#️-technologies-used) | [🌐 Deployment](#-deployment) | [🤝 Contributing](#-contributing) |
+| [📁 Project Structure](#-project-structure) | [❓ FAQ](#-faq) | [👨‍💻 Author](#-author) |
+| [🚀 Getting Started](#-getting-started) | [🆘 Support & Contact](#-support--contact) | |
+
+
 
 ## 🏙️ Demo
 
@@ -39,52 +35,6 @@
 
 Perfect for fashion bloggers, style enthusiasts, designers, and anyone passionate about urban culture!
 
-## ✨ Features
-
-<details>
-<summary><strong>🎨 Trendy Collections</strong></summary>
-
-- Explore fashion styles from **New York**, **Paris**, **Tokyo**, **Milan**, and more
-- Filter by season, style category, and color palette
-- Daily updated collections from street style photographers
-- Vintage and contemporary urban fashion blend
-</details>
-
-<details>
-<summary><strong>👤 Smart User Profiles</strong></summary>
-
-- Personalized style dashboard with saved favorites
-- Style preference quiz for tailored recommendations
-- Fashion mood board creation tools
-- Share your style journey with the community
-</details>
-
-<details>
-<summary><strong>🎯 AI-Powered Recommendations</strong></summary>
-
-- Machine learning algorithms analyze your preferences
-- Seasonal trend predictions
-- Color coordination suggestions
-- Budget-friendly alternatives to designer pieces
-</details>
-
-<details>
-<summary><strong>🤝 Vibrant Community</strong></summary>
-
-- Style challenges and competitions
-- Expert fashion advice from industry professionals
-- User-generated content and reviews
-- Fashion event notifications and meetups
-</details>
-
-<details>
-<summary><strong>📱 Progressive Web App</strong></summary>
-
-- **Mobile-first** responsive design
-- **Offline browsing** capability
-- **Push notifications** for new trends
-- **Fast loading** with optimized performance
-</details>
 
 ## 🚀 Getting Started
 
@@ -106,25 +56,19 @@ Before you begin, ensure you have the following installed:
 
 2. **Launch the application**
    
-   **Option A: Live Server (Recommended)**
-   - Install [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) VS Code extension
-   - Right-click on `index.html` → "Open with Live Server"
-   
-   **Option B: Python Server**
+   **Step 1: Install dependencies**
    ```bash
-   # Python 3
-   python -m http.server 8000
-   # Then visit http://localhost:8000
+   npm install
    ```
    
-   **Option C: Direct Browser**
+   **Step 2: Start the development server**
    ```bash
-   # Simply open the file
-   start index.html  # Windows
-   open index.html   # macOS
+   npm run dev
    ```
 
 3. **Start exploring!** 🎉
+   
+   Open [http://localhost:5173](http://localhost:5173) in your browser to view the app.
 
 ### 🔧 Development Setup
 
