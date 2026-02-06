@@ -25,7 +25,8 @@
       <li><a href="#favourite">FAVOURITE</a></li>
       <li><a href="#lifestyle">LIFESTYLE</a></li>
       <li>
-        <a href="auth.html" class="btn" style="color: white;">SIGN UP</a>
+        <a href="pages/auth.html" id="signin-link" class="btn" style="color: white;">SIGN UP</a>
+        <div id="user-avatar" class="nav__user"></div>
       </li>
     </ul>
   </nav>
@@ -42,6 +43,10 @@
           FASHION.
         </h1>
         <p>Live for influential and innovative fashion!</p>
+        <div class="search__bar">
+          <input type="text" id="product-search" placeholder="Search for products..." />
+          <button id="search-btn"><i class="ri-search-line"></i></button>
+        </div>
         <div class="header__btns">
           <button class="btn">Shop Now</button>
         </div>
@@ -104,6 +109,9 @@
           <span><i class="ri-arrow-right-line"></i></span>
         </div>
       </div>
+      <div class="no-results" id="arrival-no-results">
+        No "New Arrivals" found matching your search.
+      </div>
     </div>
   </section>
 
@@ -152,6 +160,9 @@
           </div>
           <span><i class="ri-arrow-right-line"></i></span>
         </div>
+      </div>
+      <div class="no-results" id="favourite-no-results">
+        No "Favourites" found matching your search.
       </div>
     </div>
   </section>
@@ -243,7 +254,7 @@
   </footer>
 
   <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="hello.js"></script>
+  <script src="main.js"></script>
 </body>
 
 </html>
