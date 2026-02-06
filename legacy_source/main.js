@@ -103,11 +103,11 @@ ScrollReveal().reveal(".promo__container form", {
 // Add animate class to cards on scroll for CSS animations
 const animateOnScroll = () => {
   const cards = document.querySelectorAll('.arrival__card, .favourite__card');
-  
+
   cards.forEach(card => {
     const cardTop = card.getBoundingClientRect().top;
     const windowHeight = window.innerHeight;
-    
+
     if (cardTop < windowHeight * 0.85) {
       card.classList.add('animate');
     }
@@ -125,3 +125,94 @@ window.addEventListener('scroll', () => {
     header.style.transform = `translateY(${scrolled * 0.1}px)`;
   }
 });
+
+/* --- Auth State Logic --- */
+const currentUser = localStorage.getItem("currentUser");
+const signinLink = document.getElementById("signin-link");
+const userAvatar = document.getElementById("user-avatar");
+const getStartedBtn = document.querySelector(".nav__btn");
+
+if (currentUser && signinLink && userAvatar) {
+  // User is logged in
+  signinLink.style.display = "none";
+  if (getStartedBtn) getStartedBtn.style.display = "none";
+  userAvatar.style.display = "flex";
+
+  // Set Initial
+  const initial = currentUser.charAt(0).toUpperCase();
+  userAvatar.textContent = initial;
+
+  // Redirect to Profile on click
+  userAvatar.addEventListener("click", () => {
+    window.location.href = "pages/profile.html";
+  });
+}
+
+/* --- Dark Mode Logic --- */
+const desktopToggle = document.getElementById("theme-toggle-desktop");
+const mobileToggle = document.getElementById("theme-toggle-mobile");
+const toggleIcons = document.querySelectorAll(".theme-toggle i");
+
+// Function to set theme
+const setTheme = (isDark) => {
+  if (isDark) {
+    document.body.classList.add("dark-theme");
+    toggleIcons.forEach(icon => icon.setAttribute("class", "ri-sun-line"));
+  } else {
+    document.body.classList.remove("dark-theme");
+    toggleIcons.forEach(icon => icon.setAttribute("class", "ri-moon-line"));
+  }
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+}
+
+// Check local storage
+const currentTheme = localStorage.getItem("theme");
+if (currentTheme === "dark") {
+  setTheme(true);
+}
+
+// Event Listeners
+[desktopToggle, mobileToggle].forEach(toggle => {
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const isDark = !document.body.classList.contains("dark-theme");
+      setTheme(isDark);
+    });
+  }
+});
+
+/* --- Product Search Logic --- */
+const searchInput = document.getElementById("product-search");
+
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    const arrivalCards = document.querySelectorAll(".arrival__card");
+    const favouriteCards = document.querySelectorAll(".favourite__card");
+
+    // Helper to filter cards
+    const filterCards = (cards, noResultsId) => {
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const titleH4 = card.querySelector("h4");
+        if (titleH4) {
+          const title = titleH4.textContent.toLowerCase();
+          if (title.includes(query)) {
+            card.style.display = "block";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        }
+      });
+
+      const noResultsMsg = document.getElementById(noResultsId);
+      if (noResultsMsg) {
+        noResultsMsg.style.display = visibleCount === 0 ? "block" : "none";
+      }
+    }
+
+    filterCards(arrivalCards, "arrival-no-results");
+    filterCards(favouriteCards, "favourite-no-results");
+  });
+}
