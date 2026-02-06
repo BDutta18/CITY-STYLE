@@ -183,36 +183,86 @@ if (currentTheme === "dark") {
 
 /* --- Product Search Logic --- */
 const searchInput = document.getElementById("product-search");
+const searchResultsContainer = document.getElementById("search-results");
 
-if (searchInput) {
+// Mock Data
+const products = [
+  { name: "Hoodies & Sweatshirts", image: "assets/hoodie.jpg", category: "Apparel" },
+  { name: "Coats & Parkas", image: "assets/arrival-2.jpg", category: "Outerwear" },
+  { name: "Oversized T-Shirt", image: "assets/OVRSIZED.webp", category: "Apparel" },
+  { name: "Trending on Instagram", image: "assets/Selena Gomez.webp", category: "Collections" },
+  { name: "All under $40", image: "assets/favourite-2.jpg", category: "Collections" },
+  { name: "Denim Jacket", image: "assets/arrival-2.jpg", category: "Outerwear" }, // Mock item
+  { name: "Urban Sneakers", image: "assets/hoodie.jpg", category: "Footwear" }, // Mock item
+  { name: "Leather Bag", image: "assets/sale.png", category: "Accessories" }, // Mock item
+];
+
+if (searchInput && searchResultsContainer) {
   searchInput.addEventListener("input", (e) => {
     const query = e.target.value.toLowerCase().trim();
-    const arrivalCards = document.querySelectorAll(".arrival__card");
-    const favouriteCards = document.querySelectorAll(".favourite__card");
 
-    // Helper to filter cards
-    const filterCards = (cards, noResultsId) => {
-      let visibleCount = 0;
-      cards.forEach(card => {
-        const titleH4 = card.querySelector("h4");
-        if (titleH4) {
-          const title = titleH4.textContent.toLowerCase();
-          if (title.includes(query)) {
-            card.style.display = "block";
-            visibleCount++;
-          } else {
-            card.style.display = "none";
-          }
-        }
-      });
+    // Clear previous results
+    searchResultsContainer.innerHTML = "";
 
-      const noResultsMsg = document.getElementById(noResultsId);
-      if (noResultsMsg) {
-        noResultsMsg.style.display = visibleCount === 0 ? "block" : "none";
+    if (query.length > 0) {
+      const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query)
+      );
+
+      if (filteredProducts.length > 0) {
+        searchResultsContainer.style.display = "block";
+
+        filteredProducts.forEach(product => {
+          const item = document.createElement("div");
+          item.classList.add("search__result-item");
+          item.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="search__result-image" />
+            <div class="search__result-info">
+              <h4>${product.name}</h4>
+              <p>${product.category}</p>
+            </div>
+          `;
+
+          item.addEventListener("click", () => {
+            // In a real app, navigate to product page
+            // For now, perhaps scroll to a section or go to shop
+            window.location.href = "pages/shop.html";
+            searchInput.value = "";
+            searchResultsContainer.style.display = "none";
+          });
+
+          searchResultsContainer.appendChild(item);
+        });
+      } else {
+        searchResultsContainer.style.display = "block";
+        searchResultsContainer.innerHTML = `
+          <div class="search__result-item" style="cursor: default;">
+            <div class="search__result-info">
+              <h4>No results found</h4>
+            </div>
+          </div>
+        `;
+      }
+    } else {
+      searchResultsContainer.style.display = "none";
+    }
+  });
+
+  // Hide dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
+      searchResultsContainer.style.display = "none";
+    }
+  });
+
+  // Handle Enter key
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const firstItem = searchResultsContainer.querySelector(".search__result-item");
+      if (firstItem && !firstItem.textContent.includes("No results found")) {
+        firstItem.click();
       }
     }
-
-    filterCards(arrivalCards, "arrival-no-results");
-    filterCards(favouriteCards, "favourite-no-results");
   });
 }
