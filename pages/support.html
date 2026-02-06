@@ -1,13 +1,237 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <!-- Main Styles (Navbar + Footer) -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <!-- Support Page Styles -->
+  <link rel="stylesheet" href="../support.css" />
+
+  <title>Support | CITY STYLE</title>
 </head>
+
 <body>
-    <h1 style="text-align: center;">Support</h1>
-  
+  <!-- ================= NAVBAR (FROM INDEX) ================= -->
+  <nav>
+    <div class="nav__header">
+      <div class="nav__logo">
+        <a href="#">CITY STYLE</a>
+      </div>
+      <div class="nav__menu__btn" id="menu-btn">
+        <i class="ri-menu-line"></i>
+      </div>
+    </div>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="../index.html#catalogue">CATALOGUE</a></li>
+      <li><a href="../index.html#fashion">FASHION</a></li>
+      <li><a href="../index.html#favourite">FAVOURITE</a></li>
+      <li><a href="../index.html#lifestyle">LIFESTYLE</a></li>
+      <li>
+        <a href="../pages/auth.html" class="btn" style="color: white;">SIGN UP</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ================= HERO ================= -->
+  <header class="support__hero reveal">
+    <h1>NEED <span>HELP?</span></h1>
+    <p>
+      CITY STYLE Support is here 24/7 to assist you with orders,
+      payments, returns, and more.
+    </p>
+  </header>
+
+  <!-- ================= QUICK HELP ================= -->
+  <section class="section__container support__quick">
+    <div class="quick__grid">
+      <div class="quick__card reveal">
+        <i class="ri-truck-line"></i>
+        <h3>Order Tracking</h3>
+        <p>Track your orders in real-time.</p>
+      </div>
+
+      <div class="quick__card reveal">
+        <i class="ri-refresh-line"></i>
+        <h3>Easy Returns</h3>
+        <p>7-day hassle-free returns.</p>
+      </div>
+
+      <div class="quick__card reveal">
+        <i class="ri-secure-payment-line"></i>
+        <h3>Secure Payments</h3>
+        <p>100% secure checkout experience.</p>
+      </div>
+
+      <div class="quick__card reveal">
+        <i class="ri-customer-service-2-line"></i>
+        <h3>24/7 Support</h3>
+        <p>Always available for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ (ACCORDION) ================= -->
+  <section class="faq">
+    <div class="section__container">
+      <h2 class="section__header">FREQUENTLY ASKED QUESTIONS</h2>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          How can I track my order?
+          <i class="ri-add-line"></i>
+        </button>
+        <div class="faq__answer">
+          You can track your order using the Order Tracking page
+          with your Order ID.
+        </div>
+      </div>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          What is your return policy?
+          <i class="ri-add-line"></i>
+        </button>
+        <div class="faq__answer">
+          Returns are accepted within 7 days of delivery
+          in original condition.
+        </div>
+      </div>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          How long does refund take?
+          <i class="ri-add-line"></i>
+        </button>
+        <div class="faq__answer">
+          Refunds are processed within 5–7 working days.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section__container contact">
+    <h2 class="section__header">CONTACT SUPPORT</h2>
+
+    <form class="contact__form reveal">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <input type="text" placeholder="Order ID (optional)" />
+      <textarea placeholder="Describe your issue..." required></textarea>
+      <button class="btn">Submit Request</button>
+    </form>
+  </section>
+
+  <!-- ================= FOOTER (FROM INDEX) ================= -->
+  <footer>
+    <div class="section__container footer__container">
+      <div class="footer__col">
+        <div class="footer__logo">
+          <a href="#">FASHION</a>
+        </div>
+        <p>Complete your style with awesome clothes from us.</p>
+        <ul class="footer__socials">
+          <li>
+            <a href="#"><i class="ri-facebook-fill"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="ri-instagram-line"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="ri-twitter-fill"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="ri-linkedin-fill"></i></a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Company</h4>
+        <ul class="footer__links">
+          <li><a href="pages/About.html">About</a></li>
+          <li><a href="pages/contact.html">Contact Us</a></li>
+          <li><a href="pages/support.html">Support</a></li>
+          <li><a href="pages/carrer.html">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Quick Links</h4>
+        <ul class="footer__links">
+          <li><a href="pages/Store_location.html">Store Location</a></li>
+          <li><a href="pages/order_tracking.html">Order Tracking</a></li>
+          <li><a href="pages/size_guide.html">Size Guide</a></li>
+          <li><a href="pages/FAQ.html">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul class="footer__links">
+          <li><a href="pages/Terms&conditons.html">Terms & Conditions</a></li>
+          <li><a href="pages/privacy&policy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bar">
+      Copyright © Bodhisatwa Dutta 2024. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- ================= JS ================= -->
+  <script>
+    /* Navbar Toggle */
+    const menuBtn = document.getElementById("menu-btn");
+    const navLinks = document.getElementById("nav-links");
+    menuBtn.addEventListener("click", () =>
+      navLinks.classList.toggle("open")
+    );
+
+    /* FAQ Accordion */
+    document.querySelectorAll(".faq__question").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const icon = btn.querySelector("i");
+        const answer = btn.nextElementSibling;
+
+        // Close other FAQs (optional but clean UX)
+        document.querySelectorAll(".faq__question").forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.classList.remove("active");
+            otherBtn.querySelector("i").className = "ri-add-line";
+            otherBtn.nextElementSibling.style.maxHeight = null;
+          }
+        });
+
+        btn.classList.toggle("active");
+
+        if (btn.classList.contains("active")) {
+          answer.style.maxHeight = answer.scrollHeight + "px";
+          icon.className = "ri-subtract-line"; // minus
+        } else {
+          answer.style.maxHeight = null;
+          icon.className = "ri-add-line"; // plus
+        }
+      });
+    });
+
+    /* Scroll Reveal Animation */
+    const reveals = document.querySelectorAll(".reveal");
+    const revealOnScroll = () => {
+      reveals.forEach((el) => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+          el.classList.add("active");
+        }
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+  </script>
 </body>
+
 </html>
