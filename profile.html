@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Profile - City Style</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+  
+  <style>
+    /* --- CSS VARIABLES --- */
+    :root {
+      --primary: #e5d241;
+      --primary-hover: #ffe101;
+      --yellow-highlight: #e5d241;
+      --text-dark: #333;
+      --text-light: #7e818c;
+      --border-color: #eaeaec;
+      --bg-page: #fff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: var(--bg-page);
+      color: var(--text-dark);
+    }
+
+    /* --- NAVBAR --- */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #000;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #000;
+      font-weight: 500;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: #e3d352;
+    }
+
+    /* --- NAV BUTTON (Profile) --- */
+    .btn-icon-mode {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem !important;
+        background-color: #000;
+        color: white;
+        border: 1px solid #000;
+        transition: 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-icon-mode:hover {
+        background-color: var(--yellow-highlight) !important;
+        border-color: var(--yellow-highlight) !important;
+        color: #000 !important;
+        transform: scale(1.1);
+    }
+
+    /* --- LAYOUT CONTAINER --- */
+    .profile-wrapper {
+      max-width: 1100px;
+      margin: 3rem auto;
+      display: flex;
+      gap: 3rem;
+      padding: 0 2rem;
+    }
+
+    /* --- LEFT SIDEBAR --- */
+    .sidebar {
+      flex: 1;
+      max-width: 250px;
+      border-right: 1px solid var(--border-color);
+      padding-right: 1rem;
+    }
+
+    .user-mini-card {
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .user-mini-card small { color: var(--text-light); font-size: 0.8rem; }
+    .user-mini-card strong { display: block; font-size: 1.1rem; margin-top: 5px; }
+
+    .sidebar-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+        border: 3px solid var(--primary);
+        align-self: flex-start; 
+    }
+
+    .menu-group { margin-bottom: 2rem; }
+    .menu-title {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .menu-link {
+      display: block;
+      color: var(--text-dark);
+      text-decoration: none;
+      padding: 0.6rem 0;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .menu-link:hover { color: var(--primary); }
+    
+    .menu-link.active {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* --- RIGHT CONTENT AREA --- */
+    .main-content {
+      flex: 3;
+      border: 1px solid var(--border-color);
+      padding: 2.5rem;
+      border-radius: 4px;
+    }
+
+    .content-header {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    /* --- FORM TABLE LAYOUT --- */
+    .row {
+      display: flex;
+      padding: 1.2rem 0;
+      align-items: center;
+      border-bottom: 1px dashed #f0f0f0;
+    }
+    
+    .row:last-child { border-bottom: none; }
+
+    .label-col {
+      width: 200px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .value-col {
+      flex: 1;
+      color: var(--text-dark);
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    /* Edit Inputs */
+    .edit-input {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      display: none;
+      background: #fafafa;
+    }
+
+    .edit-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    /* --- ACTION BUTTON --- */
+    .btn-action {
+      background-color: var(--primary);
+      color: white;
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .btn-action:hover {
+      background-color: var(--primary-hover);
+    }
+
+    @media (max-width: 768px) {
+      .profile-wrapper { flex-direction: column; padding: 0 1rem; }
+      .sidebar { max-width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+      nav { padding: 1rem; }
+      .nav-links { display: none; }
+      .label-col { width: 120px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+ <nav>
+      <a href="index.html" class="logo">CITY STYLE</a>
+      <ul class="nav-links">
+        <li><a href="#">Catalogue</a></li>
+        <li><a href="#">Fashion</a></li>
+        <li><a href="#">Favourite</a></li>
+        <li><a href="#">Lifestyle</a></li>
+      </ul>
+      
+      <a href="#" id="nav-action-btn" class="nav-btn btn-icon-mode">
+          <i class="fa-solid fa-user"></i>
+      </a>
+  </nav>
+
+  <!-- MAIN LAYOUT -->
+  <div class="profile-wrapper">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="user-mini-card">
+        
+        <small>Hello,</small>
+        <strong id="sidebar-name">User</strong>
+      </div>
+
+      <div class="menu-group">
+        <a href="#" class="menu-link">Overview</a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-title">Orders</div>
+        <a href="#" class="menu-link">Orders & Returns</a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-title">Account</div>
+        <a href="#" class="menu-link active">Profile</a>
+        <a href="#" class="menu-link">Saved Cards</a>
+        <a href="#" class="menu-link">Addresses</a>
+        <a href="#" class="menu-link">Delete Account</a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-title">Legal</div>
+        <a href="#" class="menu-link">Terms of Use</a>
+        <a href="#" class="menu-link">Privacy Policy</a>
+      </div>
+
+      <div class="menu-group">
+        <a onclick="logout()" style="cursor: pointer; color: #dc2626; font-weight: 600;" class="menu-link">Logout</a>
+      </div>
+    </aside>
+
+    <!-- RIGHT CONTENT -->
+    <main class="main-content">
+      <div class="content-header">Profile Details</div>
+
+      <div class="details-list">
+        
+        <div class="row">
+          <div class="label-col">Full Name</div>
+          <div class="value-col">
+            <span class="view-mode" id="view-name">- not added -</span>
+            <input type="text" class="edit-input" id="input-name">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label-col">Mobile Number</div>
+          <div class="value-col">
+            <span class="view-mode" id="view-mobile">- not added -</span>
+            <input type="tel" class="edit-input" id="input-mobile">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label-col">Email ID</div>
+          <div class="value-col">
+            <span class="view-mode" id="view-email">- not added -</span>
+            <input type="email" class="edit-input" id="input-email">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label-col">Gender</div>
+          <div class="value-col">
+            <span class="view-mode" id="view-gender">- not added -</span>
+            <select class="edit-input" id="input-gender">
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label-col">Date of Birth</div>
+          <div class="value-col">
+            <span class="view-mode" id="view-dob">- not added -</span>
+            <input type="date" class="edit-input" id="input-dob">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="label-col">Location</div>
+          <div class="value-col">
+            <span class="view-mode" id="view-location">- not added -</span>
+            <input type="text" class="edit-input" id="input-location">
+          </div>
+        </div>
+
+      </div>
+
+      <button id="edit-btn" class="btn-action">EDIT</button>
+
+    </main>
+  </div>
+
+  <script>
+    // 1. Load Data
+    const storedUser = localStorage.getItem('cityStyleUser') || "Guest";
+    const userProfile = JSON.parse(localStorage.getItem('cityStyleProfile')) || {};
+
+    // Elements
+    const sidebarName = document.getElementById('sidebar-name');
+    const inputName = document.getElementById('input-name');
+    const inputMobile = document.getElementById('input-mobile');
+    const inputEmail = document.getElementById('input-email');
+    const inputGender = document.getElementById('input-gender');
+    const inputDob = document.getElementById('input-dob');
+    const inputLocation = document.getElementById('input-location');
+
+    // Display Elements
+    const viewName = document.getElementById('view-name');
+    const viewMobile = document.getElementById('view-mobile');
+    const viewEmail = document.getElementById('view-email');
+    const viewGender = document.getElementById('view-gender');
+    const viewDob = document.getElementById('view-dob');
+    const viewLocation = document.getElementById('view-location');
+
+    // --- HANDLE GOOGLE PHOTO ---
+    if (userProfile.photo && userProfile.photo !== "") {
+        const miniCard = document.querySelector('.user-mini-card');
+        
+        // Create Image Element
+        const img = document.createElement('img');
+        img.src = userProfile.photo;
+        img.alt = "Profile Photo";
+        img.className = "sidebar-avatar"; 
+        miniCard.insertBefore(img, miniCard.firstChild);
+    }
+
+    // Populate Data
+    sidebarName.textContent = userProfile.name || storedUser;
+    
+    viewName.textContent = userProfile.name || storedUser;
+    inputName.value = userProfile.name || storedUser;
+
+    viewMobile.textContent = userProfile.mobile || "- not added -";
+    inputMobile.value = userProfile.mobile || "";
+
+    viewEmail.textContent = userProfile.email || "- not added -";
+    inputEmail.value = userProfile.email || "";
+
+    viewGender.textContent = userProfile.gender || "- not added -";
+    inputGender.value = userProfile.gender || "Female";
+
+    viewDob.textContent = userProfile.dob || "- not added -";
+    inputDob.value = userProfile.dob || "";
+
+    viewLocation.textContent = userProfile.location || "- not added -";
+    inputLocation.value = userProfile.location || "";
+
+    // 2. Edit/Save Logic
+    const editBtn = document.getElementById('edit-btn');
+    const viewModes = document.querySelectorAll('.view-mode');
+    const editInputs = document.querySelectorAll('.edit-input');
+    let isEditing = false;
+
+    editBtn.addEventListener('click', () => {
+      if (!isEditing) {
+        // Switch to Edit
+        isEditing = true;
+        editBtn.textContent = "SAVE DETAILS";
+        viewModes.forEach(el => el.style.display = 'none');
+        editInputs.forEach(el => el.style.display = 'block');
+      } else {
+        // Save
+        isEditing = false;
+        editBtn.textContent = "EDIT";
+
+        viewName.textContent = inputName.value || "- not added -";
+        viewMobile.textContent = inputMobile.value || "- not added -";
+        viewEmail.textContent = inputEmail.value || "- not added -";
+        viewGender.textContent = inputGender.value || "- not added -";
+        viewDob.textContent = inputDob.value || "- not added -";
+        viewLocation.textContent = inputLocation.value || "- not added -";
+        
+        sidebarName.textContent = inputName.value;
+
+        const profileData = {
+            name: inputName.value,
+            mobile: inputMobile.value,
+            email: inputEmail.value,
+            gender: inputGender.value,
+            dob: inputDob.value,
+            location: inputLocation.value,
+            photo: userProfile.photo || "" 
+        };
+        localStorage.setItem('cityStyleProfile', JSON.stringify(profileData));
+        localStorage.setItem('cityStyleUser', inputName.value); 
+
+        viewModes.forEach(el => el.style.display = 'inline');
+        editInputs.forEach(el => el.style.display = 'none');
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem('cityStyleUser');
+      localStorage.removeItem('cityStyleProfile'); 
+      window.location.href = "index.html";
+    }
+
+  </script>
+
+</body>
+</html>

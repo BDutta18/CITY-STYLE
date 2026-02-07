@@ -7,6 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   
+  <!-- FIREBASE SDKs (Compat version for easiest HTML integration) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
   <style>
     :root {
       --neon-start: #eaff00;
@@ -128,7 +132,7 @@
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       transition: 0.3s ease;
     }
 
@@ -136,6 +140,48 @@
       transform: translateY(-2px);
       box-shadow: 0 10px 20px rgba(229, 210, 65, 0.3);
       filter: brightness(1.05);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .divider span { padding: 0 10px; }
+
+    .btn-google {
+      width: 100%;
+      background: white;
+      color: #333;
+      border: 1px solid #e2e8f0;
+      padding: 0.8rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: 0.2s;
+    }
+
+    .btn-google:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .google-icon {
+      width: 20px;
+      height: 20px;
     }
 
     .toggle-text {
@@ -179,6 +225,7 @@
         <h2 id="auth-title">Sign Up</h2>
       </div>
 
+      <!-- Main Form (Email/Password) -->
       <form id="auth-form">
         <div class="form-group">
           <input type="text" placeholder="Full Name" required />
@@ -195,6 +242,15 @@
         <button class="btn-submit" type="submit">Create Account</button>
       </form>
 
+      <!-- Divider -->
+      <div class="divider"><span>OR</span></div>
+
+      <!-- Google Button -->
+      <button class="btn-google" id="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="google-icon" alt="Google">
+        Sign in with Google
+      </button>
+
       <div class="toggle-text">
         Already have an account? <a id="toggle-link">Login</a>
       </div>
@@ -203,12 +259,35 @@
   </div>
 
   <script>
+    // FIREBASE CONFIGURATION
+     const firebaseConfig = {
+        apiKey: "AIzaSyAVr0U21jC-3u1-XiZaUGLWc04sZ_NGFNs",
+        authDomain: "city-style-d593a.firebaseapp.com",
+        projectId: "city-style-d593a",
+        storageBucket: "city-style-d593a.firebasestorage.app",
+        messagingSenderId: "444457481585",
+        appId: "1:444457481585:web:fbcfcb4cc8bdc26b93f2d0",
+        measurementId: "G-F9QWGBJGXF"
+      };
+
+    try {
+      firebase.initializeApp(firebaseConfig);
+    } catch(e) {
+      console.error("Firebase not initialized. Did you update the config?");
+    }
+
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    // DOM ELEMENTS
     const title = document.getElementById("auth-title");
     const form = document.getElementById("auth-form");
     const toggle = document.getElementById("toggle-link");
+    const googleBtn = document.getElementById("google-btn");
 
-    let isLogin = false;
+    let isLogin = false; // Default: Sign Up mode
 
+    //TOGGLE FORM LOGIC (Login vs Signup)
     toggle.addEventListener("click", () => {
       isLogin = !isLogin;
 
@@ -225,6 +304,9 @@
         `;
         toggle.textContent = "Sign Up";
         toggle.parentElement.childNodes[0].textContent = "Don't have an account? ";
+        
+        googleBtn.innerHTML = `<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="google-icon" alt="Google"> Sign in with Google`;
+
       } else {
         title.textContent = "Sign Up";
         form.innerHTML = `
@@ -244,13 +326,71 @@
         `;
         toggle.textContent = "Login";
         toggle.parentElement.childNodes[0].textContent = "Already have an account? ";
+        
+        googleBtn.innerHTML = `<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="google-icon" alt="Google"> Sign up with Google`;
       }
     });
 
+    // GOOGLE AUTHENTICATION HANDLER
+    googleBtn.addEventListener('click', () => {
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                const user = result.user;
+                // Save User data
+                saveUserAndRedirect(user.displayName, user.email, user.photoURL);
+            }).catch((error) => {
+                console.error("Login Failed:", error);
+                alert("Google Login Error: " + error.message);
+            });
+    });
+
+    // STANDARD FORM HANDLER (Manual Email/Pass)
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert(isLogin ? "Welcome back!" : "Account created!");
+      
+      const inputs = form.querySelectorAll('input');
+      let username = "Style Icon";
+      
+      // Basic extraction logic (Mockup for non-backend)
+      if (!isLogin && inputs[0]) {
+          username = inputs[0].value;
+      } else if (isLogin && inputs[0]) {
+          username = inputs[0].value.split('@')[0];
+      }
+      saveUserAndRedirect(username, null, null);
     });
+
+    // SAVE & REDIRECT FUNCTION (Shared)
+    function saveUserAndRedirect(name, email, photo) {
+        // Save Basic Name
+        localStorage.setItem('cityStyleUser', name);
+
+        // Save Detailed Profile 
+        const profileData = {
+            name: name,
+            email: email || "Not added",
+            photo: photo || "", // Google Photo URL
+            mobile: "",
+            gender: "",
+            dob: "",
+            location: ""
+        };
+        localStorage.setItem('cityStyleProfile', JSON.stringify(profileData));
+
+        // Visual Feedback
+        const btn = form.querySelector('.btn-submit');
+        if(btn) {
+            btn.textContent = "Redirecting...";
+            btn.style.opacity = "0.7";
+        } else {
+             googleBtn.textContent = "Redirecting...";
+        }
+
+        // Redirect
+        setTimeout(() => {
+            window.location.href = "profile.html"; 
+        }, 1000);
+    }
   </script>
 
 </body>

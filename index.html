@@ -7,6 +7,7 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css" />
     <title>CITY STYLE</title>
   </head>
@@ -245,5 +246,16 @@
 
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="main.js"></script>
+    <script>
+      // Check if user is logged in
+      const user = localStorage.getItem('cityStyleUser');
+      const navButton = document.querySelector('.btn'); 
+
+      if (user && navButton) {
+        navButton.innerHTML = '<i class="fa-solid fa-user"></i>';
+        navButton.href = "profile.html";
+        navButton.classList.add('btn-icon-mode');
+      }
+    </script>
   </body>
 </html>
