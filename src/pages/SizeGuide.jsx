@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./SizeGuide.css";
+import { Link } from "react-router-dom";
+import "../styles/SizeGuide.css";
 
 const tabData = [
   { id: "tops", label: "Tops & T-Shirts" },
@@ -16,19 +17,19 @@ const SizeGuide = () => {
       <nav>
         <div className="nav__header">
           <div className="nav__logo">
-            <a href="../index.html">CITY STYLE</a>
+            <Link to="/">CITY STYLE</Link>
           </div>
           <div className="nav__menu__btn" id="menu-btn">
             <i className="ri-menu-line"></i>
           </div>
         </div>
         <ul className="nav__links" id="nav-links">
-          <li><a href="../index.html#catalogue">CATALOGUE</a></li>
-          <li><a href="../index.html#fashion">FASHION</a></li>
-          <li><a href="../index.html#favourite">FAVOURITE</a></li>
-          <li><a href="../index.html#lifestyle">LIFESTYLE</a></li>
+          <li><Link to="/#catalogue">CATALOGUE</Link></li>
+          <li><Link to="/#fashion">FASHION</Link></li>
+          <li><Link to="/#favourite">FAVOURITE</Link></li>
+          <li><Link to="/#lifestyle">LIFESTYLE</Link></li>
           <li>
-            <a href="auth.html" className="btn" style={{ color: "white" }}>SIGN UP</a>
+            <Link to="/auth" className="btn" style={{ color: "white" }}>SIGN UP</Link>
           </li>
         </ul>
       </nav>
@@ -277,14 +278,14 @@ const SizeGuide = () => {
       <section className="size__help">
         <h2>Need More Help?</h2>
         <p>Our team is here to help you find your perfect fit!</p>
-        <a href="contact.html" className="btn">Contact Us</a>
+        <Link to="/contact" className="btn">Contact Us</Link>
       </section>
 
       <footer>
         <div className="section__container footer__container">
           <div className="footer__col">
             <div className="footer__logo">
-              <a href="../index.html">CITY STYLE</a>
+              <Link to="/">CITY STYLE</Link>
             </div>
             <p>Complete your style with awesome clothes from us.</p>
             <ul className="footer__socials">
@@ -297,26 +298,26 @@ const SizeGuide = () => {
           <div className="footer__col">
             <h4>Company</h4>
             <ul className="footer__links">
-              <li><a href="About.html">About</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="support.html">Support</a></li>
-              <li><a href="carrer.html">Careers</a></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact Us</Link></li>
+              <li><Link to="/support">Support</Link></li>
+              <li><Link to="/career">Careers</Link></li>
             </ul>
           </div>
           <div className="footer__col">
             <h4>Quick Links</h4>
             <ul className="footer__links">
-              <li><a href="Store_location.html">Store Location</a></li>
-              <li><a href="order_tracking.html">Order Tracking</a></li>
-              <li><a href="size_guide.html">Size Guide</a></li>
-              <li><a href="FAQ.html">FAQs</a></li>
+              <li><Link to="/store-location">Store Location</Link></li>
+              <li><Link to="/order-tracking">Order Tracking</Link></li>
+              <li><Link to="/size-guide">Size Guide</Link></li>
+              <li><Link to="/faq">FAQs</Link></li>
             </ul>
           </div>
           <div className="footer__col">
             <h4>Legal</h4>
             <ul className="footer__links">
-              <li><a href="Terms&conditons.html">Terms & Conditions</a></li>
-              <li><a href="privacy&policy.html">Privacy Policy</a></li>
+              <li><Link to="/terms">Terms & Conditions</Link></li>
+              <li><Link to="/privacy">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>
