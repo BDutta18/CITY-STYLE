@@ -103,11 +103,11 @@ ScrollReveal().reveal(".promo__container form", {
 // Add animate class to cards on scroll for CSS animations
 const animateOnScroll = () => {
   const cards = document.querySelectorAll('.arrival__card, .favourite__card');
-  
+
   cards.forEach(card => {
     const cardTop = card.getBoundingClientRect().top;
     const windowHeight = window.innerHeight;
-    
+
     if (cardTop < windowHeight * 0.85) {
       card.classList.add('animate');
     }
@@ -125,3 +125,144 @@ window.addEventListener('scroll', () => {
     header.style.transform = `translateY(${scrolled * 0.1}px)`;
   }
 });
+
+/* --- Auth State Logic --- */
+const currentUser = localStorage.getItem("currentUser");
+const signinLink = document.getElementById("signin-link");
+const userAvatar = document.getElementById("user-avatar");
+const getStartedBtn = document.querySelector(".nav__btn");
+
+if (currentUser && signinLink && userAvatar) {
+  // User is logged in
+  signinLink.style.display = "none";
+  if (getStartedBtn) getStartedBtn.style.display = "none";
+  userAvatar.style.display = "flex";
+
+  // Set Initial
+  const initial = currentUser.charAt(0).toUpperCase();
+  userAvatar.textContent = initial;
+
+  // Redirect to Profile on click
+  userAvatar.addEventListener("click", () => {
+    window.location.href = "pages/profile.html";
+  });
+}
+
+/* --- Dark Mode Logic --- */
+const desktopToggle = document.getElementById("theme-toggle-desktop");
+const mobileToggle = document.getElementById("theme-toggle-mobile");
+const toggleIcons = document.querySelectorAll(".theme-toggle i");
+
+// Function to set theme
+const setTheme = (isDark) => {
+  if (isDark) {
+    document.body.classList.add("dark-theme");
+    toggleIcons.forEach(icon => icon.setAttribute("class", "ri-sun-line"));
+  } else {
+    document.body.classList.remove("dark-theme");
+    toggleIcons.forEach(icon => icon.setAttribute("class", "ri-moon-line"));
+  }
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+}
+
+// Check local storage
+const currentTheme = localStorage.getItem("theme");
+if (currentTheme === "dark") {
+  setTheme(true);
+}
+
+// Event Listeners
+[desktopToggle, mobileToggle].forEach(toggle => {
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const isDark = !document.body.classList.contains("dark-theme");
+      setTheme(isDark);
+    });
+  }
+});
+
+/* --- Product Search Logic --- */
+const searchInput = document.getElementById("product-search");
+const searchResultsContainer = document.getElementById("search-results");
+
+// Mock Data
+const products = [
+  { name: "Hoodies & Sweatshirts", image: "assets/hoodie.jpg", category: "Apparel" },
+  { name: "Coats & Parkas", image: "assets/arrival-2.jpg", category: "Outerwear" },
+  { name: "Oversized T-Shirt", image: "assets/OVRSIZED.webp", category: "Apparel" },
+  { name: "Trending on Instagram", image: "assets/Selena Gomez.webp", category: "Collections" },
+  { name: "All under $40", image: "assets/favourite-2.jpg", category: "Collections" },
+  { name: "Denim Jacket", image: "assets/arrival-2.jpg", category: "Outerwear" }, // Mock item
+  { name: "Urban Sneakers", image: "assets/hoodie.jpg", category: "Footwear" }, // Mock item
+  { name: "Leather Bag", image: "assets/sale.png", category: "Accessories" }, // Mock item
+];
+
+if (searchInput && searchResultsContainer) {
+  searchInput.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase().trim();
+
+    // Clear previous results
+    searchResultsContainer.innerHTML = "";
+
+    if (query.length > 0) {
+      const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query)
+      );
+
+      if (filteredProducts.length > 0) {
+        searchResultsContainer.style.display = "block";
+
+        filteredProducts.forEach(product => {
+          const item = document.createElement("div");
+          item.classList.add("search__result-item");
+          item.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="search__result-image" />
+            <div class="search__result-info">
+              <h4>${product.name}</h4>
+              <p>${product.category}</p>
+            </div>
+          `;
+
+          item.addEventListener("click", () => {
+            // In a real app, navigate to product page
+            // For now, perhaps scroll to a section or go to shop
+            window.location.href = "pages/shop.html";
+            searchInput.value = "";
+            searchResultsContainer.style.display = "none";
+          });
+
+          searchResultsContainer.appendChild(item);
+        });
+      } else {
+        searchResultsContainer.style.display = "block";
+        searchResultsContainer.innerHTML = `
+          <div class="search__result-item" style="cursor: default;">
+            <div class="search__result-info">
+              <h4>No results found</h4>
+            </div>
+          </div>
+        `;
+      }
+    } else {
+      searchResultsContainer.style.display = "none";
+    }
+  });
+
+  // Hide dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !searchResultsContainer.contains(e.target)) {
+      searchResultsContainer.style.display = "none";
+    }
+  });
+
+  // Handle Enter key
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const firstItem = searchResultsContainer.querySelector(".search__result-item");
+      if (firstItem && !firstItem.textContent.includes("No results found")) {
+        firstItem.click();
+      }
+    }
+  });
+}
