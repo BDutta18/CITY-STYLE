@@ -305,7 +305,7 @@ const Home = () => {
             <ul className="footer__links">
               <li><a href="/store_location">Store Location</a></li>
               <li><a href="/order_tracking">Order Tracking</a></li>
-              <li><a href="/size_guide">Size Guide</a></li>
+              <li><a href="/size-guide">Size Guide</a></li>
               <li><a href="/faq">FAQs</a></li>
             </ul>
           </div>
