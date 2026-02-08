@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import NewsletterForm from '../components/NewsletterForm'
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -262,10 +263,7 @@ const Home = () => {
             JOIN SHOPPING COMMUNITY TO GET MONTHLY PROMO
           </h2>
           <p>Type your email down below and be young wild generation</p>
-          <form action="/">
-            <input type="text" placeholder="Add your email here" />
-            <button className="btn">SEND</button>
-          </form>
+          <NewsletterForm />
         </div>
       </section>
 
