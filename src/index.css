@@ -667,9 +667,13 @@ header {
 .newsletter-form__error-message {
   width: 100%;
   margin: 0;
-  font-size: 0.875rem;
-  color: #dc2626;
+  font-size: 0.9rem;
+  color: #b91c1c;
   text-align: left;
+  background: rgba(220, 38, 38, 0.15);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid rgba(220, 38, 38, 0.5);
 }
 
 .newsletter-form__success {
