@@ -101,3 +101,32 @@ Non-compliance with these rules may lead to PR closure without review.
 ## Community
 
 - Join the discussion on our community channels.
+
+## Active Development Areas (Pending Migration)
+
+We have created React shell components for the following pages. We need contributors to implement the logic and styling for these pages, based on the original HTML/CSS designs (which are no longer in the repo but can be inferred or designed anew).
+
+**Files to work on (in `src/pages/`):**
+
+- `About.jsx` (Route: `/about`)
+- `Auth.jsx` (Route: `/auth`)
+- `Career.jsx` (Route: `/career`)
+- `CoatsParkas.jsx` (Route: `/coats-parkas`)
+- `Contact.jsx` (Route: `/contact`)
+- `HoodiesSweatshirts.jsx` (Route: `/hoodies-sweatshirts`)
+- `InstagramTrending.jsx` (Route: `/instagram-trending`)
+- `OrderTracking.jsx` (Route: `/order-tracking`)
+- `OversizedTShirt.jsx` (Route: `/oversized-tshirt`)
+- `PrivacyPolicy.jsx` (Route: `/privacy`)
+- `Profile.jsx` (Route: `/profile`)
+- `Shop.jsx` (Route: `/shop`)
+- `StoreLocation.jsx` (Route: `/store-location`)
+- `Support.jsx` (Route: `/support`)
+- `TermsConditions.jsx` (Route: `/terms`)
+- `Under40.jsx` (Route: `/under-40`)
+
+**How to contribute:**
+1. Pick a file from the list above.
+2. Implement the component using standard React practices.
+3. Use the global styles in `index.css` or create a new CSS module.
+4. Submit a PR!
