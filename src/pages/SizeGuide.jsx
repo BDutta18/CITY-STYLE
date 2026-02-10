@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/SizeGuide.css";
+import Breadcrumb from "../components/Breadcrumb";
 
 const tabData = [
   { id: "tops", label: "Tops & T-Shirts" },
@@ -33,6 +34,7 @@ const SizeGuide = () => {
           </li>
         </ul>
       </nav>
+      <Breadcrumb />
 
       <section className="size__header">
         <h1>Size Guide</h1>
