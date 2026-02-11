@@ -79,6 +79,20 @@ To contribute to this project, you'll need Node.js installed on your machine.
     - `src/pages/`: For full page components.
     - `src/components/`: For reusable UI components (buttons, navbars, etc.).
 - **Images**: Reference images from the public folder (e.g., `/assets/image.png`).
+  
+### Issue Assignment
+- Do NOT start working on an issue unless it is explicitly assigned to you by a mentor or project admin.
+- Self-assigning or commenting “assign this to me” does not guarantee approval.
+
+### One Issue = One Pull Request
+- Each Pull Request must address ONLY ONE issue.
+- Closing or referencing multiple issues in a single PR is not allowed and may result in the PR being rejected.
+
+### Structural or Migration Changes
+- Any changes involving project structure, migrations, routing, or major refactors MUST be discussed and approved beforehand.
+- Do not assume permission based on prior contributions or experience.
+
+Non-compliance with these rules may lead to PR closure without review.
 
 ### Git Conventions
 
@@ -87,3 +101,32 @@ To contribute to this project, you'll need Node.js installed on your machine.
 ## Community
 
 - Join the discussion on our community channels.
+
+## Active Development Areas (Pending Migration)
+
+We have created React shell components for the following pages. We need contributors to implement the logic and styling for these pages, based on the original HTML/CSS designs (which are no longer in the repo but can be inferred or designed anew).
+
+**Files to work on (in `src/pages/`):**
+
+- `About.jsx` (Route: `/about`)
+- `Auth.jsx` (Route: `/auth`)
+- `Career.jsx` (Route: `/career`)
+- `CoatsParkas.jsx` (Route: `/coats-parkas`)
+- `Contact.jsx` (Route: `/contact`)
+- `HoodiesSweatshirts.jsx` (Route: `/hoodies-sweatshirts`)
+- `InstagramTrending.jsx` (Route: `/instagram-trending`)
+- `OrderTracking.jsx` (Route: `/order-tracking`)
+- `OversizedTShirt.jsx` (Route: `/oversized-tshirt`)
+- `PrivacyPolicy.jsx` (Route: `/privacy`)
+- `Profile.jsx` (Route: `/profile`)
+- `Shop.jsx` (Route: `/shop`)
+- `StoreLocation.jsx` (Route: `/store-location`)
+- `Support.jsx` (Route: `/support`)
+- `TermsConditions.jsx` (Route: `/terms`)
+- `Under40.jsx` (Route: `/under-40`)
+
+**How to contribute:**
+1. Pick a file from the list above.
+2. Implement the component using standard React practices.
+3. Use the global styles in `index.css` or create a new CSS module.
+4. Submit a PR!

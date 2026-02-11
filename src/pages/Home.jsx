@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import NewsletterForm from '../components/NewsletterForm'
 
 const Home = () => {
@@ -94,7 +95,7 @@ const Home = () => {
       <nav>
         <div className="nav__header">
           <div className="nav__logo">
-            <a href="#">CITY STYLE</a>
+            <Link to="/">CITY STYLE</Link>
           </div>
           <div className="nav__menu__btn" id="menu-btn" onClick={toggleMenu}>
             <i className={isMenuOpen ? "ri-close-line" : "ri-menu-line"}></i>
@@ -106,7 +107,7 @@ const Home = () => {
           <li><a href="#favourite">FAVOURITE</a></li>
           <li><a href="#lifestyle">LIFESTYLE</a></li>
           <li>
-            <a href="/auth" className="btn" style={{color: 'white'}}>SIGN UP</a>
+            <Link to="/auth" className="btn" style={{color: 'white'}}>SIGN UP</Link>
           </li>
         </ul>
       </nav>
@@ -124,7 +125,7 @@ const Home = () => {
             </h1>
             <p>Live for influential and innovative fashion!</p>
             <div className="header__btns">
-              <button className="btn">Shop Now</button>
+              <Link to="/shop" className="btn">Shop Now</Link>
             </div>
           </div>
           <div className="header__image">
@@ -156,7 +157,7 @@ const Home = () => {
             <div className="arrival__content">
               <div>
                 <h4>Hoodies & Sweatshirts</h4>
-                <a href="#">Explore Now</a>
+                <Link to="/hoodies-sweatshirts">Explore Now</Link>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -168,7 +169,7 @@ const Home = () => {
             <div className="arrival__content">
               <div>
                 <h4>Coats & Parkas</h4>
-                <a href="#">Explore Now</a>
+                <Link to="/coats-parkas">Explore Now</Link>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -180,7 +181,7 @@ const Home = () => {
             <div className="arrival__content">
               <div>
                 <h4>Oversized T-Shirt</h4>
-                <a href="#">Explore Now</a>
+                <Link to="/oversized-tshirt">Explore Now</Link>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -201,7 +202,7 @@ const Home = () => {
             <h4>18 NOV - 25 DEC 2024</h4>
             <p>Terms and conditions apply</p>
             <div className="sale__btn">
-              <a href="/shop" className="btn">Shop Now</a>
+              <Link to="/shop" className="btn">Shop Now</Link>
             </div>
           </div>
         </div>
@@ -217,7 +218,7 @@ const Home = () => {
             <div className="favourite__content">
               <div>
                 <h4>Trending on Instagram</h4>
-                <a href="/instagram_trending">Explore Now</a>
+                <Link to="/instagram-trending">Explore Now</Link>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -229,7 +230,7 @@ const Home = () => {
             <div className="favourite__content">
               <div>
                 <h4>All under $40</h4>
-                <a href="/under_40_dollar">Explore Now</a>
+                <Link to="/under-40">Explore Now</Link>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -271,7 +272,7 @@ const Home = () => {
         <div className="section__container footer__container">
           <div className="footer__col">
             <div className="footer__logo">
-              <a href="#">FASHION</a>
+              <Link to="/">FASHION</Link>
             </div>
             <p>Complete your style with awesome clothes from us.</p>
             <ul className="footer__socials">
@@ -292,26 +293,26 @@ const Home = () => {
           <div className="footer__col">
             <h4>Company</h4>
             <ul className="footer__links">
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact Us</a></li>
-              <li><a href="/support">Support</a></li>
-              <li><a href="/career">Careers</a></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact Us</Link></li>
+              <li><Link to="/support">Support</Link></li>
+              <li><Link to="/career">Careers</Link></li>
             </ul>
           </div>
           <div className="footer__col">
             <h4>Quick Links</h4>
             <ul className="footer__links">
-              <li><a href="/store_location">Store Location</a></li>
-              <li><a href="/order_tracking">Order Tracking</a></li>
-              <li><a href="/size-guide">Size Guide</a></li>
-              <li><a href="/faq">FAQs</a></li>
+              <li><Link to="/store-location">Store Location</Link></li>
+              <li><Link to="/order-tracking">Order Tracking</Link></li>
+              <li><Link to="/size-guide">Size Guide</Link></li>
+              <li><Link to="/faq">FAQs</Link></li>
             </ul>
           </div>
           <div className="footer__col">
             <h4>Legal</h4>
             <ul className="footer__links">
-              <li><a href="/terms">Terms & Conditions</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><Link to="/terms">Terms & Conditions</Link></li>
+              <li><Link to="/privacy">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>
