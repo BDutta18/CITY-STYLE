@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import '../styles/FAQ.css'
+import Breadcrumb from '../components/Breadcrumb'
 
 const FAQ = () => {
     React.useEffect(() => {
@@ -67,6 +68,7 @@ const FAQ = () => {
             </li>
         </ul>
     </nav>
+    <Breadcrumb />
 
     <section className="faq__header">
         <h1>Frequently Asked Questions</h1>

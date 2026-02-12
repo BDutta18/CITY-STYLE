@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import '../styles/Profile.css';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -58,6 +59,8 @@ const Profile = () => {
         </ul>
         <button onClick={handleLogout} className="logout-btn-nav">LOGOUT</button>
       </nav>
+      
+      <Breadcrumb />
 
       <div className="profile-content-grid">
         {/* SIDEBAR */}
