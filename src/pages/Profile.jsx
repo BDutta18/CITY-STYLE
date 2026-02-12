@@ -77,8 +77,14 @@ const Profile = () => {
           </div>
 
           <div className="navigation-menu">
+            {/* UPDATED ORDERS SECTION */}
             <div className="menu-group">
               <div className="menu-header"><i className="ri-shopping-bag-line"></i> MY ORDERS</div>
+              <ul className="sub-navigation">
+                <li>Order History</li>
+                <li>In Cart</li>
+                <li>Returns</li>
+              </ul>
             </div>
 
             <div className="menu-group active">
@@ -86,11 +92,8 @@ const Profile = () => {
               <ul className="sub-navigation">
                 <li className="active-link">Profile Information</li>
                 <li>Manage Addresses</li>
-                {}
               </ul>
             </div>
-
-            {}
 
             <div className="menu-group logout-trigger" onClick={handleLogout}>
               <div className="menu-header danger"><i className="ri-logout-circle-r-line"></i> Logout</div>
