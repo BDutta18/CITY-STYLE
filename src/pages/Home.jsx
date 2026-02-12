@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { auth } from '../firebase' 
+import { onAuthStateChanged } from 'firebase/auth'
 import NewsletterForm from '../components/NewsletterForm'
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
-
-  const closeMenu = () => {
-    setIsMenuOpen(false)
-  }
+  const [user, setUser] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    // ScrollReveal animation
+
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
     const scrollRevealOption = {
       origin: "bottom",
       distance: "50px",
@@ -22,64 +22,25 @@ const Home = () => {
     }
 
     if (window.ScrollReveal) {
-      window.ScrollReveal().reveal(".header__image img", {
-        ...scrollRevealOption,
-        origin: "right",
-      })
-      window.ScrollReveal().reveal(".header__content h1", {
-        ...scrollRevealOption,
-        delay: 500,
-      })
-      window.ScrollReveal().reveal(".header__content p", {
-        ...scrollRevealOption,
-        delay: 1000,
-      })
-      window.ScrollReveal().reveal(".header__btns", {
-        ...scrollRevealOption,
-        delay: 1500,
-      })
-      window.ScrollReveal().reveal(".arrival__card", {
-        ...scrollRevealOption,
-        interval: 500,
-      })
-      window.ScrollReveal().reveal(".sale__image img", {
-        ...scrollRevealOption,
-        origin: "left",
-      })
-      window.ScrollReveal().reveal(".sale__content h2", {
-        ...scrollRevealOption,
-        delay: 500,
-      })
-      window.ScrollReveal().reveal(".sale__content p", {
-        ...scrollRevealOption,
-        delay: 1000,
-      })
-      window.ScrollReveal().reveal(".sale__content h4", {
-        ...scrollRevealOption,
-        delay: 1000,
-      })
-      window.ScrollReveal().reveal(".sale__btn", {
-        ...scrollRevealOption,
-        delay: 1500,
-      })
-      window.ScrollReveal().reveal(".favourite__card", {
-        ...scrollRevealOption,
-        interval: 500,
-      })
+      const sr = window.ScrollReveal();
+      sr.reveal(".header__image img", { ...scrollRevealOption, origin: "right" });
+      sr.reveal(".header__content h1", { ...scrollRevealOption, delay: 500 });
+      sr.reveal(".header__content p", { ...scrollRevealOption, delay: 1000 });
+      sr.reveal(".header__btns", { ...scrollRevealOption, delay: 1500 });
+      sr.reveal(".arrival__card", { ...scrollRevealOption, interval: 500 });
+      sr.reveal(".sale__image img", { ...scrollRevealOption, origin: "left" });
+      sr.reveal(".sale__content h2", { ...scrollRevealOption, delay: 500 });
+      sr.reveal(".sale__content p", { ...scrollRevealOption, delay: 1000 });
+      sr.reveal(".sale__content h4", { ...scrollRevealOption, delay: 1000 });
+      sr.reveal(".sale__btn", { ...scrollRevealOption, delay: 1500 });
+      sr.reveal(".favourite__card", { ...scrollRevealOption, interval: 500 });
     }
 
-    // Banner duplication logic
+    
     const banner = document.querySelector(".banner__container")
-    if (banner) {
-        // Clear previous duplicates if any to prevent infinite duplication on re-renders
-        // Actually, simple way is to check if we already have enough children
-        // Or just let it be, but React might re-render.
-        // Since React hydration, this manual DOM manipulation is risky.
-        // Better to list items in data and render them.
-        // But for migration:
+    if (banner && banner.children.length > 0) {
         const bannerContent = Array.from(banner.children);
-        // Check if we haven't duplicated yet (hacky check: count)
-        if(bannerContent.length <= 8) { // original has 8 images
+        if(bannerContent.length <= 8) { 
              bannerContent.forEach((item) => {
                 const duplicateNode = item.cloneNode(true);
                 duplicateNode.setAttribute("aria-hidden", true);
@@ -88,7 +49,11 @@ const Home = () => {
         }
     }
 
+    return () => unsubscribe(); 
   }, [])
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const closeMenu = () => setIsMenuOpen(false)
 
   return (
     <>
@@ -106,11 +71,18 @@ const Home = () => {
           <li><a href="#fashion">FASHION</a></li>
           <li><a href="#favourite">FAVOURITE</a></li>
           <li><a href="#lifestyle">LIFESTYLE</a></li>
-          <li>
-            <Link to="/auth" className="btn" style={{color: 'white'}}>SIGN UP</Link>
-          </li>
+           <li className="nav__auth-item">
+              {user ? (
+                <Link to="/profile" className="nav__profile-link">
+                  <i className="fa-solid fa-circle-user"></i>
+                </Link>
+              ) : (
+                <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
+              )}
+            </li>
         </ul>
       </nav>
+
       <header>
         <div className="section__container header__container">
           <div className="header__content">
@@ -276,18 +248,10 @@ const Home = () => {
             </div>
             <p>Complete your style with awesome clothes from us.</p>
             <ul className="footer__socials">
-              <li>
-                <a href="#"><i className="ri-facebook-fill"></i></a>
-              </li>
-              <li>
-                <a href="#"><i className="ri-instagram-line"></i></a>
-              </li>
-              <li>
-                <a href="#"><i className="ri-twitter-fill"></i></a>
-              </li>
-              <li>
-                <a href="#"><i className="ri-linkedin-fill"></i></a>
-              </li>
+              <li><a href="#"><i className="ri-facebook-fill"></i></a></li>
+              <li><a href="#"><i className="ri-instagram-line"></i></a></li>
+              <li><a href="#"><i className="ri-twitter-fill"></i></a></li>
+              <li><a href="#"><i className="ri-linkedin-fill"></i></a></li>
             </ul>
           </div>
           <div className="footer__col">
@@ -320,6 +284,29 @@ const Home = () => {
           Copyright © Bodhisatwa Dutta 2026. All rights reserved.
         </div>
       </footer>
+
+      <style>{`
+        .nav__auth-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .nav__profile-link {
+          font-size: 2rem;
+          color: #e5d241; /* Your brand gold */
+          display: flex;
+          align-items: center;
+          transition: 0.3s;
+        }
+        .nav__profile-link:hover {
+          color: #fff;
+          transform: scale(1.1);
+        }
+        /* Mobile fix */
+        @media (max-width: 768px) {
+          .nav__profile-link { font-size: 2.5rem; margin-top: 10px; }
+        }
+`     }</style>
     </>
   )
 }
