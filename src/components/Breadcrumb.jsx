@@ -2,6 +2,14 @@ import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './Breadcrumb.css';
 
+const shopCategories = [
+  { path: '/coats-parkas', label: 'Coats & Parkas' },
+  { path: '/hoodies-sweatshirts', label: 'Hoodies & Sweatshirts' },
+  { path: '/instagram-trending', label: 'Instagram Trending' },
+  { path: '/oversized-tshirt', label: 'Oversized T-Shirts' },
+  { path: '/under-40', label: 'Under $40' },
+];
+
 const routeMapping = {
   '/shop': { labels: ['Shop'], paths: ['/shop'] },
   '/faq': { labels: ['Support', 'FAQs'], paths: ['/support', '/faq'] },
@@ -9,19 +17,22 @@ const routeMapping = {
   '/about': { labels: ['About'], paths: ['/about'] },
   '/auth': { labels: ['My Account', 'Login'], paths: ['/profile', '/auth'] }, 
   '/career': { labels: ['Career'], paths: ['/career'] },
-  '/coats-parkas': { labels: ['Shop', 'Coats & Parkas'], paths: ['/shop', '/coats-parkas'] },
   '/contact': { labels: ['Contact'], paths: ['/contact'] },
-  '/hoodies-sweatshirts': { labels: ['Shop', 'Hoodies & Sweatshirts'], paths: ['/shop', '/hoodies-sweatshirts'] },
-  '/instagram-trending': { labels: ['Shop', 'Instagram Trending'], paths: ['/shop', '/instagram-trending'] },
   '/order-tracking': { labels: ['Support', 'Order Tracking'], paths: ['/support', '/order-tracking'] },
-  '/oversized-tshirt': { labels: ['Shop', 'Oversized T-Shirts'], paths: ['/shop', '/oversized-tshirt'] },
   '/privacy': { labels: ['Privacy Policy'], paths: ['/privacy'] },
   '/profile': { labels: ['My Account', 'Profile'], paths: ['/profile', '/profile'] }, 
   '/store-location': { labels: ['Store Location'], paths: ['/store-location'] },
   '/support': { labels: ['Support'], paths: ['/support'] },
   '/terms': { labels: ['Terms & Conditions'], paths: ['/terms'] },
-  '/under-40': { labels: ['Shop', 'Under $40'], paths: ['/shop', '/under-40'] },
 };
+
+// Dynamically add shop categories
+shopCategories.forEach(category => {
+  routeMapping[category.path] = { 
+    labels: ['Shop', category.label], 
+    paths: ['/shop', category.path] 
+  };
+});
 
 const Breadcrumb = () => {
     const location = useLocation();
