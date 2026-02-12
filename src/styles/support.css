@@ -1,0 +1,117 @@
+.support__hero {
+  padding-top: 3rem;
+  height: 40vh;
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--extra-light)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+}
+
+.support__hero h1 {
+  font-size: 4rem;
+  font-weight: 900;
+}
+
+.support__hero span {
+  background: var(--white);
+  padding: 0 10px;
+}
+
+.support__hero p {
+  max-width: 600px;
+  margin: 1rem auto 0;
+}
+
+/* QUICK HELP */
+.support__quick .quick__grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.quick__card {
+  background: var(--primary-color);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  transition: 
+    transform 0.35s ease;
+}
+
+.quick__card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.quick__card i {
+  font-size: 3rem;
+}
+
+
+/* FAQ */
+.faq {
+  background: #f9f9f9;
+}
+
+.faq__item {
+  margin-bottom: 1.5rem;
+}
+
+.faq__question {
+  width: 100%;
+  background: var(--primary-color);
+  border: none;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq__answer {
+  overflow: hidden;
+  max-height: 0;
+  background: white;
+  transition: max-height 0.4s ease;
+  padding: 0 1.2rem;
+}
+
+/* CONTACT */
+.contact__form {
+  max-width: 600px;
+  margin: auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.contact__form input,
+.contact__form textarea {
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* SCROLL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (width > 768px) {
+  .support__quick .quick__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
