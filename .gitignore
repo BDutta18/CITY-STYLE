@@ -113,3 +113,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Newsletter subscriber data (user emails)
+server/storage/subscribers.json
+
+# Vite
+.vite

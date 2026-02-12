@@ -79,6 +79,20 @@ To contribute to this project, you'll need Node.js installed on your machine.
     - `src/pages/`: For full page components.
     - `src/components/`: For reusable UI components (buttons, navbars, etc.).
 - **Images**: Reference images from the public folder (e.g., `/assets/image.png`).
+  
+### Issue Assignment
+- Do NOT start working on an issue unless it is explicitly assigned to you by a mentor or project admin.
+- Self-assigning or commenting “assign this to me” does not guarantee approval.
+
+### One Issue = One Pull Request
+- Each Pull Request must address ONLY ONE issue.
+- Closing or referencing multiple issues in a single PR is not allowed and may result in the PR being rejected.
+
+### Structural or Migration Changes
+- Any changes involving project structure, migrations, routing, or major refactors MUST be discussed and approved beforehand.
+- Do not assume permission based on prior contributions or experience.
+
+Non-compliance with these rules may lead to PR closure without review.
 
 ### Git Conventions
 
