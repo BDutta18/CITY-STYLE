@@ -1,13 +1,99 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../firebase' 
 import { onAuthStateChanged } from 'firebase/auth'
 import NewsletterForm from '../components/NewsletterForm'
+import ProductModal from '../components/ProductModal'
+
+const catalogueProducts = {
+  'hoodies-sweatshirts': {
+    slug: 'hoodies-sweatshirts',
+    name: 'Hoodies & Sweatshirts',
+    category: 'New Arrivals',
+    image: '/assets/hoodie.jpg',
+    price: 59.99,
+    originalPrice: 89.99,
+    badge: 'Trending',
+    rating: 4.5,
+    reviews: 128,
+    description: 'Premium quality hoodies and sweatshirts crafted for ultimate comfort and style. Made from soft, breathable cotton blend fabric with a modern oversized fit.',
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['#000000', '#2c3e50', '#8e44ad', '#e5d241', '#ecf0f1'],
+  },
+  'coats-parkas': {
+    slug: 'coats-parkas',
+    name: 'Coats & Parkas',
+    category: 'New Arrivals',
+    image: '/assets/arrival-2.jpg',
+    price: 129.99,
+    originalPrice: 179.99,
+    badge: 'Winter Essential',
+    rating: 4.7,
+    reviews: 96,
+    description: 'Stay warm in style with our premium coats and parkas collection. Featuring water-resistant outer shells, insulated lining, and contemporary silhouettes.',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['#000000', '#2c3e50', '#7f8c8d', '#c0392b'],
+  },
+  'oversized-tshirt': {
+    slug: 'oversized-tshirt',
+    name: 'Oversized T-Shirt',
+    category: 'New Arrivals',
+    image: '/assets/OVRSIZED.webp',
+    price: 34.99,
+    originalPrice: 49.99,
+    badge: 'Best Seller',
+    rating: 4.8,
+    reviews: 256,
+    description: 'The ultimate streetwear essential. Our oversized tees feature a dropped shoulder design, premium heavyweight cotton, and a relaxed silhouette.',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['#000000', '#ecf0f1', '#e5d241', '#2ecc71', '#3498db'],
+  },
+  'instagram-trending': {
+    slug: 'instagram-trending',
+    name: 'Trending on Instagram',
+    category: "Young's Favourite",
+    image: '/assets/Selena Gomez.webp',
+    price: 79.99,
+    originalPrice: null,
+    badge: 'Viral',
+    rating: 4.6,
+    reviews: 189,
+    description: 'Curated collection of the most-loved pieces trending on Instagram. Stay ahead of the curve with our hand-picked viral fits.',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['#000000', '#e5d241', '#e74c3c', '#9b59b6'],
+  },
+  'under-40': {
+    slug: 'under-40',
+    name: 'All Under $40',
+    category: "Young's Favourite",
+    image: '/assets/favourite-2.jpg',
+    price: 29.99,
+    originalPrice: 39.99,
+    badge: 'Value Pick',
+    rating: 4.3,
+    reviews: 312,
+    description: 'Style does not have to break the bank. Discover our collection of trend-right pieces all priced under $40.',
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['#000000', '#ecf0f1', '#2c3e50', '#e5d241'],
+  },
+}
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [user, setUser] = useState(null)
+  const [modalProduct, setModalProduct] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate()
+
+  const openProductModal = useCallback((productKey) => {
+    setModalProduct(catalogueProducts[productKey])
+    setIsModalOpen(true)
+  }, [])
+
+  const closeProductModal = useCallback(() => {
+    setIsModalOpen(false)
+    setModalProduct(null)
+  }, [])
 
   useEffect(() => {
 
@@ -122,38 +208,38 @@ const Home = () => {
       <section className="section__container arrival__container" id="catalogue">
         <h2 className="section__header">NEW ARRIVALS</h2>
         <div className="arrival__grid">
-          <div className="arrival__card">
+          <div className="arrival__card" onClick={() => openProductModal('hoodies-sweatshirts')} style={{cursor: 'pointer'}}>
             <div className="arrival__image">
               <img src="/assets/hoodie.jpg" alt="arrival" />
             </div>
             <div className="arrival__content">
               <div>
                 <h4>Hoodies & Sweatshirts</h4>
-                <Link to="/hoodies-sweatshirts">Explore Now</Link>
+                <span className="arrival__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
           </div>
-          <div className="arrival__card">
+          <div className="arrival__card" onClick={() => openProductModal('coats-parkas')} style={{cursor: 'pointer'}}>
             <div className="arrival__image">
               <img src="/assets/arrival-2.jpg" alt="arrival" />
             </div>
             <div className="arrival__content">
               <div>
                 <h4>Coats & Parkas</h4>
-                <Link to="/coats-parkas">Explore Now</Link>
+                <span className="arrival__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
           </div>
-          <div className="arrival__card">
+          <div className="arrival__card" onClick={() => openProductModal('oversized-tshirt')} style={{cursor: 'pointer'}}>
             <div className="arrival__image">
               <img src="/assets/OVRSIZED.webp" alt="arrival" />
             </div>
             <div className="arrival__content">
               <div>
                 <h4>Oversized T-Shirt</h4>
-                <Link to="/oversized-tshirt">Explore Now</Link>
+                <span className="arrival__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -183,26 +269,26 @@ const Home = () => {
       <section className="section__container favourite__container" id="favourite">
         <h2 className="section__header">YOUNG'S FAVOURITE</h2>
         <div className="favourite__grid">
-          <div className="favourite__card">
+          <div className="favourite__card" onClick={() => openProductModal('instagram-trending')} style={{cursor: 'pointer'}}>
             <div className="favourite__image">
               <img src="/assets/Selena Gomez.webp" alt="favourite" />
             </div>
             <div className="favourite__content">
               <div>
                 <h4>Trending on Instagram</h4>
-                <Link to="/instagram-trending">Explore Now</Link>
+                <span className="favourite__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
           </div>
-          <div className="favourite__card">
+          <div className="favourite__card" onClick={() => openProductModal('under-40')} style={{cursor: 'pointer'}}>
             <div className="favourite__image">
               <img src="/assets/favourite-2.jpg" alt="favourite" />
             </div>
             <div className="favourite__content">
               <div>
                 <h4>All under $40</h4>
-                <Link to="/under-40">Explore Now</Link>
+                <span className="favourite__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -284,6 +370,12 @@ const Home = () => {
           Copyright © Bodhisatwa Dutta 2026. All rights reserved.
         </div>
       </footer>
+
+      <ProductModal
+        product={modalProduct}
+        isOpen={isModalOpen}
+        onClose={closeProductModal}
+      />
 
       <style>{`
         .nav__auth-item {

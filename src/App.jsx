@@ -14,6 +14,7 @@ import OrderTracking from './pages/OrderTracking'
 import OversizedTShirt from './pages/OversizedTShirt'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Profile from './pages/Profile'
+import ProductDetail from './pages/ProductDetail'
 import Shop from './pages/Shop'
 import StoreLocation from './pages/StoreLocation'
 import Support from './pages/Support'
@@ -40,6 +41,7 @@ function App() {
         <Route path='/oversized-tshirt' element={<OversizedTShirt />} />
         <Route path='/privacy' element={<PrivacyPolicy />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/product/:slug' element={<ProductDetail />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/store-location' element={<StoreLocation />} />
         <Route path='/support' element={<Support />} />
