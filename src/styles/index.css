@@ -92,6 +92,77 @@ img {
   width: 100%;
 }
 
+.lazy-image__wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.lazy-image__wrapper picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lazy-image__placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.1));
+  animation: lazyShimmer 1.4s ease-in-out infinite;
+  transition: opacity 0.4s ease;
+}
+
+.lazy-image__wrapper.is-loaded .lazy-image__placeholder {
+  opacity: 0;
+}
+
+.lazy-image__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: blur(12px);
+  transform: scale(1.02);
+  transition: opacity 0.5s ease, filter 0.6s ease, transform 0.6s ease;
+}
+
+.lazy-image__img.is-loaded {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+.banner__container .lazy-image__wrapper,
+.download__links .lazy-image__wrapper {
+  width: auto;
+  background: transparent;
+}
+
+.banner__container .lazy-image__img {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+}
+
+.download__links .lazy-image__img {
+  max-width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+@keyframes lazyShimmer {
+  0% {
+    transform: translateX(-30%);
+  }
+  50% {
+    transform: translateX(30%);
+  }
+  100% {
+    transform: translateX(-30%);
+  }
+}
+
 a {
   text-decoration: none;
   transition: 0.3s;
