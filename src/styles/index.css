@@ -537,6 +537,18 @@ header {
   color: var(--primary-color);
 }
 
+.arrival__explore {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.arrival__explore:hover {
+  color: var(--primary-color);
+}
+
 .arrival__content span {
   font-size: 1.5rem;
   color: var(--text-light);
@@ -662,6 +674,18 @@ header {
 }
 
 .favourite__content a:hover {
+  color: var(--primary-color);
+}
+
+.favourite__explore {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.favourite__explore:hover {
   color: var(--primary-color);
 }
 
