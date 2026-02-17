@@ -208,9 +208,23 @@ const Home = () => {
       <section className="section__container arrival__container" id="catalogue">
         <h2 className="section__header">NEW ARRIVALS</h2>
         <div className="arrival__grid">
-          <div className="arrival__card" onClick={() => openProductModal('hoodies-sweatshirts')} style={{cursor: 'pointer'}}>
-            <div className="arrival__image">
-              <img src="/assets/hoodie.jpg" alt="arrival" />
+          <div className="arrival__card">
+            <div className="arrival__image" style={{position: 'relative'}}>
+              <img 
+                src="/assets/hoodie.jpg" 
+                alt="arrival" 
+                onClick={() => navigate('/product/hoodies-sweatshirts')}
+                style={{cursor: 'pointer'}}
+              />
+              <button 
+                className="quick-view-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openProductModal('hoodies-sweatshirts');
+                }}
+              >
+                Quick View
+              </button>
             </div>
             <div className="arrival__content">
               <div>
@@ -220,9 +234,23 @@ const Home = () => {
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
           </div>
-          <div className="arrival__card" onClick={() => openProductModal('coats-parkas')} style={{cursor: 'pointer'}}>
-            <div className="arrival__image">
-              <img src="/assets/arrival-2.jpg" alt="arrival" />
+          <div className="arrival__card">
+            <div className="arrival__image" style={{position: 'relative'}}>
+              <img 
+                src="/assets/arrival-2.jpg" 
+                alt="arrival" 
+                onClick={() => navigate('/product/coats-parkas')}
+                style={{cursor: 'pointer'}}
+              />
+              <button 
+                className="quick-view-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openProductModal('coats-parkas');
+                }}
+              >
+                Quick View
+              </button>
             </div>
             <div className="arrival__content">
               <div>
@@ -232,9 +260,23 @@ const Home = () => {
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
           </div>
-          <div className="arrival__card" onClick={() => openProductModal('oversized-tshirt')} style={{cursor: 'pointer'}}>
-            <div className="arrival__image">
-              <img src="/assets/OVRSIZED.webp" alt="arrival" />
+          <div className="arrival__card">
+            <div className="arrival__image" style={{position: 'relative'}}>
+              <img 
+                src="/assets/OVRSIZED.webp" 
+                alt="arrival" 
+                onClick={() => navigate('/product/oversized-tshirt')}
+                style={{cursor: 'pointer'}}
+              />
+              <button 
+                className="quick-view-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openProductModal('oversized-tshirt');
+                }}
+              >
+                Quick View
+              </button>
             </div>
             <div className="arrival__content">
               <div>
@@ -269,9 +311,23 @@ const Home = () => {
       <section className="section__container favourite__container" id="favourite">
         <h2 className="section__header">YOUNG'S FAVOURITE</h2>
         <div className="favourite__grid">
-          <div className="favourite__card" onClick={() => openProductModal('instagram-trending')} style={{cursor: 'pointer'}}>
-            <div className="favourite__image">
-              <img src="/assets/Selena Gomez.webp" alt="favourite" />
+          <div className="favourite__card">
+            <div className="favourite__image" style={{position: 'relative'}}>
+              <img 
+                src="/assets/Selena Gomez.webp" 
+                alt="favourite" 
+                onClick={() => navigate('/product/instagram-trending')}
+                style={{cursor: 'pointer'}}
+              />
+              <button 
+                className="quick-view-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openProductModal('instagram-trending');
+                }}
+              >
+                Quick View
+              </button>
             </div>
             <div className="favourite__content">
               <div>
@@ -281,9 +337,23 @@ const Home = () => {
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
           </div>
-          <div className="favourite__card" onClick={() => openProductModal('under-40')} style={{cursor: 'pointer'}}>
-            <div className="favourite__image">
-              <img src="/assets/favourite-2.jpg" alt="favourite" />
+          <div className="favourite__card">
+            <div className="favourite__image" style={{position: 'relative'}}>
+              <img 
+                src="/assets/favourite-2.jpg" 
+                alt="favourite" 
+                onClick={() => navigate('/product/under-40')}
+                style={{cursor: 'pointer'}}
+              />
+              <button 
+                className="quick-view-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openProductModal('under-40');
+                }}
+              >
+                Quick View
+              </button>
             </div>
             <div className="favourite__content">
               <div>
@@ -377,28 +447,7 @@ const Home = () => {
         onClose={closeProductModal}
       />
 
-      <style>{`
-        .nav__auth-item {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .nav__profile-link {
-          font-size: 2rem;
-          color: #e5d241; /* Your brand gold */
-          display: flex;
-          align-items: center;
-          transition: 0.3s;
-        }
-        .nav__profile-link:hover {
-          color: #fff;
-          transform: scale(1.1);
-        }
-        /* Mobile fix */
-        @media (max-width: 768px) {
-          .nav__profile-link { font-size: 2.5rem; margin-top: 10px; }
-        }
-`     }</style>
+      {/* moved styles into src/styles/index.css */}
     </>
   )
 }
