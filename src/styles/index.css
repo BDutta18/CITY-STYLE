@@ -549,8 +549,8 @@ header {
   color: var(--primary-color);
 }
 
-.arrival__content span {
-  font-size: 1.5rem;
+.arrival__content > span:last-child {
+  font-size: 1.2rem;
   color: var(--text-light);
 }
 
@@ -689,8 +689,8 @@ header {
   color: var(--primary-color);
 }
 
-.favourite__content span {
-  font-size: 1.5rem;
+.favourite__content > span:last-child {
+  font-size: 1.2rem;
   color: var(--text-light);
 }
 
@@ -1465,22 +1465,23 @@ footer {
   opacity: 1;
 }
 
-.arrival__content span {
+.arrival__content > span:last-child {
   transition: all 0.4s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: transparent;
+  font-size: 1.2rem;
 }
 
-.arrival__card:hover .arrival__content span {
+.arrival__card:hover .arrival__content > span:last-child {
   background: linear-gradient(135deg, var(--primary-color), var(--extra-light));
   color: var(--white);
   transform: translateX(5px);
-  box-shadow: 0 5px 20px rgba(229, 210, 65, 0.4);
+  box-shadow: 0 5px 15px rgba(229, 210, 65, 0.4);
 }
 
 /* Sale Section Effects */
@@ -1575,22 +1576,23 @@ footer {
   top: 100%;
 }
 
-.favourite__content span {
+.favourite__content > span:last-child {
   transition: all 0.4s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: transparent;
+  font-size: 1.2rem;
 }
 
-.favourite__card:hover .favourite__content span {
+.favourite__card:hover .favourite__content > span:last-child {
   background: linear-gradient(135deg, var(--extra-light), var(--primary-color));
   color: var(--white);
   transform: translateX(5px) rotate(360deg);
-  box-shadow: 0 5px 20px rgba(55, 152, 152, 0.4);
+  box-shadow: 0 5px 15px rgba(55, 152, 152, 0.4);
 }
 
 /* Download Section Effects */
