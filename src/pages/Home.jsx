@@ -160,7 +160,13 @@ const Home = () => {
            <li className="nav__auth-item">
               {user ? (
                 <Link to="/profile" className="nav__profile-link">
-                  <i className="fa-solid fa-circle-user"></i>
+                  {typeof user.photoURL === 'string' ? (
+                    <img 
+                      src={user.photoURL} 
+                      alt={user.displayName} 
+                      className="nav__avatar-img"
+                    />
+                  ) : <i className="fa-solid fa-circle-user"></i>}
                 </Link>
               ) : (
                 <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
@@ -394,9 +400,25 @@ const Home = () => {
           color: #fff;
           transform: scale(1.1);
         }
+        .nav__avatar-img {
+          width: 2.5rem;
+          height: 2.5rem;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #e5d241;
+          transition: 0.3s;
+        }
+        .nav__profile-link:hover .nav__avatar-img {
+          border-color: #fff;
+          transform: scale(1.1);
+        }
         /* Mobile fix */
         @media (max-width: 768px) {
           .nav__profile-link { font-size: 2.5rem; margin-top: 10px; }
+          .nav__avatar-img {
+            width: 3rem;
+            height: 3rem;
+          }
         }
 `     }</style>
     </>
