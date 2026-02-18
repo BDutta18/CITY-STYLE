@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import './ProductModal.css'
 
-const ProductModal = ({ product, isOpen, onClose }) => {
+const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
+  const modalRef = useRef(null)
+  const [selectedImage, setSelectedImage] = useState('')
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -15,33 +19,60 @@ const ProductModal = ({ product, isOpen, onClose }) => {
   }, [isOpen])
 
   useEffect(() => {
-    const handleEsc = (e) => {
+    setSelectedImage((product && (product.images || [product.image])[0]))
+  }, [product])
+
+  const handleKey = useCallback(
+    (e) => {
       if (e.key === 'Escape') onClose()
-    }
-    if (isOpen) window.addEventListener('keydown', handleEsc)
-    return () => window.removeEventListener('keydown', handleEsc)
-  }, [isOpen, onClose])
+    },
+    [onClose]
+  )
+
+  useEffect(() => {
+    if (isOpen) window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [isOpen, handleKey])
 
   if (!isOpen || !product) return null
 
-  return (
+  const images = product.images && product.images.length ? product.images : [product.image]
+
+  const content = (
     <div className="product-modal__overlay" onClick={onClose}>
-      <div className="product-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="product-modal__close" onClick={onClose}>
+      <div className="product-modal" onClick={(e) => e.stopPropagation()} ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
+        <button className="product-modal__close" onClick={onClose} aria-label="Close">
           <i className="ri-close-line"></i>
         </button>
 
         <div className="product-modal__body">
           <div className="product-modal__image">
-            <img src={product.image} alt={product.name} />
+            <img src={selectedImage || images[0]} alt={product.name} />
             {product.badge && (
               <span className="product-modal__badge">{product.badge}</span>
             )}
+
+            {images.length > 1 && (
+              <div className="product-modal__thumbnails">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`product-modal__thumbnail ${selectedImage === img ? 'active' : ''}`}
+                    onClick={() => setSelectedImage(img)}
+                    aria-label={`Show image ${i + 1}`}
+                  >
+                    <img src={img} alt={`${product.name} ${i + 1}`} />
+                  </button>
+                ))}
+              </div>
+            )}
+            {/* image dots removed per request */}
           </div>
 
           <div className="product-modal__info">
             <span className="product-modal__category">{product.category}</span>
-            <h2 className="product-modal__name">{product.name}</h2>
+            <h2 id="product-modal-title" className="product-modal__name">{product.name}</h2>
 
             <div className="product-modal__rating">
               {[...Array(5)].map((_, i) => (
@@ -60,13 +91,9 @@ const ProductModal = ({ product, isOpen, onClose }) => {
             </div>
 
             <div className="product-modal__price">
-              <span className="product-modal__current-price">
-                ${product.price}
-              </span>
+              <span className="product-modal__current-price">${product.price}</span>
               {product.originalPrice && (
-                <span className="product-modal__original-price">
-                  ${product.originalPrice}
-                </span>
+                <span className="product-modal__original-price">${product.originalPrice}</span>
               )}
             </div>
 
@@ -77,9 +104,7 @@ const ProductModal = ({ product, isOpen, onClose }) => {
                 <h4>Available Sizes</h4>
                 <div className="product-modal__size-options">
                   {product.sizes.map((size) => (
-                    <span key={size} className="product-modal__size">
-                      {size}
-                    </span>
+                    <button key={size} type="button" className="product-modal__size">{size}</button>
                   ))}
                 </div>
               </div>
@@ -102,18 +127,22 @@ const ProductModal = ({ product, isOpen, onClose }) => {
             )}
 
             <div className="product-modal__actions">
-              <Link
-                to={`/product/${product.slug}`}
-                className="btn product-modal__detail-btn"
+              <button
+                className="btn add-to-cart-btn"
+                onClick={() => (onAddToCart ? onAddToCart(product) : console.log('Add to cart', product))}
               >
-                View Full Details
-              </Link>
+                Add to Cart
+              </button>
+
+              <Link to={`/product/${product.slug}`} className="btn product-modal__detail-btn">View Full Details</Link>
             </div>
           </div>
         </div>
       </div>
     </div>
   )
+
+  return createPortal(content, document.body)
 }
 
 export default ProductModal
