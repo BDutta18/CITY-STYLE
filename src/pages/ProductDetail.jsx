@@ -3,6 +3,9 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { auth } from '../firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import Breadcrumb from '../components/Breadcrumb'
+import ReviewForm from '../components/Reviews/ReviewForm'
+import ReviewList from '../components/Reviews/ReviewList'
+import StarRating from '../components/Reviews/StarRating'
 import '../styles/ProductDetail.css'
 
 const productData = {
@@ -154,6 +157,35 @@ const ProductDetail = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const product = productData[slug]
+
+  const [reviews, setReviews] = useState([
+    {
+      id: 1,
+      userName: 'Alex M.',
+      rating: 5,
+      date: '2025-01-15T10:00:00Z',
+      title: 'Absolutely love it!',
+      content: 'I was skeptical at first, but this product exceeded my expectations. The quality is top-notch and it arrived faster than expected.',
+      verified: true,
+      recommended: true,
+      size: 'L'
+    },
+    {
+      id: 2,
+      userName: 'Sarah K.',
+      rating: 4,
+      date: '2025-02-02T14:30:00Z',
+      title: 'Great, but size runs small',
+      content: 'Really nice material. I usually wear M but ordered L for an oversized fit and it was perfect. Just keep in mind check the size guide.',
+      verified: true,
+      recommended: true,
+      size: 'L'
+    }
+  ]);
+
+  const handleReviewSubmit = (newReview) => {
+    setReviews([newReview, ...reviews]);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -358,6 +390,18 @@ const ProductDetail = () => {
               ))}
             </ul>
           </div>
+        </div>
+
+        <div className="section__container" id="reviews">
+            <h2 className="section__header">Customer Reviews</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', justifyContent: 'center' }}>
+                <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
+                  <ReviewList reviews={reviews} />
+                </div>
+                <div style={{ flex: '1 1 300px', minWidth: '300px' }}>
+                  <ReviewForm onSubmit={handleReviewSubmit} />
+                </div>
+            </div>
         </div>
 
         <div className="product-detail__back">

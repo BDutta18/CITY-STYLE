@@ -4,6 +4,7 @@ import { auth } from '../firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import NewsletterForm from '../components/NewsletterForm'
 import ProductModal from '../components/ProductModal'
+import StarRating from '../components/Reviews/StarRating'
 
 const catalogueProducts = {
   'hoodies-sweatshirts': {
@@ -214,8 +215,8 @@ const Home = () => {
             </div>
             <div className="arrival__content">
               <div>
+                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['hoodies-sweatshirts'].rating} size={14} /></div>
                 <h4>Hoodies & Sweatshirts</h4>
-                <span className="arrival__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -226,8 +227,8 @@ const Home = () => {
             </div>
             <div className="arrival__content">
               <div>
+                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['coats-parkas'].rating} size={14} /></div>
                 <h4>Coats & Parkas</h4>
-                <span className="arrival__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -238,8 +239,8 @@ const Home = () => {
             </div>
             <div className="arrival__content">
               <div>
+                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['oversized-tshirt'].rating} size={14} /></div>
                 <h4>Oversized T-Shirt</h4>
-                <span className="arrival__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -275,8 +276,8 @@ const Home = () => {
             </div>
             <div className="favourite__content">
               <div>
+                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['instagram-trending'].rating} size={14} /></div>
                 <h4>Trending on Instagram</h4>
-                <span className="favourite__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>
@@ -287,8 +288,8 @@ const Home = () => {
             </div>
             <div className="favourite__content">
               <div>
+                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['under-40'].rating} size={14} /></div>
                 <h4>All under $40</h4>
-                <span className="favourite__explore">Explore Now</span>
               </div>
               <span><i className="ri-arrow-right-line"></i></span>
             </div>

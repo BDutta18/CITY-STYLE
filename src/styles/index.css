@@ -543,10 +543,37 @@ header {
   color: var(--text-light);
   cursor: pointer;
   transition: 0.3s;
+  position: relative;
+  display: inline-block;
+}
+
+.arrival__explore::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
 }
 
 .arrival__explore:hover {
   color: var(--primary-color);
+}
+
+.arrival__card:hover .arrival__explore::after {
+    width: 100%;
+}
+
+/* Star Animations */
+.star-item {
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.star-item:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 5px rgba(229, 210, 65, 0.6));
 }
 
 .arrival__content span {
@@ -683,6 +710,23 @@ header {
   color: var(--text-light);
   cursor: pointer;
   transition: 0.3s;
+  position: relative;
+  display: inline-block;
+}
+
+.favourite__explore::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.favourite__card:hover .favourite__explore::after {
+    width: 100%;
 }
 
 .favourite__explore:hover {
