@@ -20,10 +20,12 @@ import StoreLocation from './pages/StoreLocation'
 import Support from './pages/Support'
 import TermsConditions from './pages/TermsConditions'
 import Under40 from './pages/Under40'
+import BackToTop from './components/BackToTop'
 
 function App() {
   return (
     <Router>
+      <BackToTop />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/size-guide' element={<SizeGuide />} />

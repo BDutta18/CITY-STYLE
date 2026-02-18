@@ -1,0 +1,58 @@
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+}
+
+.back-to-top__button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: var(--text-dark);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.back-to-top__button:hover {
+  background-color: var(--extra-light);
+  color: var(--white);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top__button:active {
+  transform: translateY(-1px);
+}
+
+/* Dark theme support */
+.dark-theme .back-to-top__button {
+  color: var(--text-dark);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .back-to-top__button:hover {
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .back-to-top__button {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+}
