@@ -108,8 +108,14 @@ img {
 .lazy-image__placeholder {
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.1));
-  animation: lazyShimmer 1.4s ease-in-out infinite;
+  background: linear-gradient(90deg, 
+    rgba(230, 230, 230, 0.2) 0%, 
+    rgba(230, 230, 230, 0.5) 20%, 
+    rgba(230, 230, 230, 0.8) 50%, 
+    rgba(230, 230, 230, 0.5) 80%, 
+    rgba(230, 230, 230, 0.2) 100%);
+  background-size: 200% 100%;
+  animation: lazyShimmer 1.5s ease-in-out infinite;
   transition: opacity 0.4s ease;
 }
 
@@ -122,15 +128,19 @@ img {
   width: 100%;
   height: 100%;
   opacity: 0;
-  filter: blur(12px);
   transform: scale(1.02);
   transition: opacity 0.5s ease, filter 0.6s ease, transform 0.6s ease;
 }
 
 .lazy-image__img.is-loaded {
   opacity: 1;
-  filter: blur(0);
+  filter: blur(0) !important;
   transform: scale(1);
+}
+
+.lazy-image__img.has-error {
+  opacity: 0.6;
+  filter: grayscale(100%);
 }
 
 .banner__container .lazy-image__wrapper,
@@ -153,13 +163,10 @@ img {
 
 @keyframes lazyShimmer {
   0% {
-    transform: translateX(-30%);
-  }
-  50% {
-    transform: translateX(30%);
+    background-position: -200% 0;
   }
   100% {
-    transform: translateX(-30%);
+    background-position: 200% 0;
   }
 }
 
@@ -592,6 +599,73 @@ header {
   gap: 1rem;
 }
 
+.nav__auth-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav__profile-link {
+  font-size: 2rem;
+  color: #e5d241;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+.nav__profile-link:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.quick-view-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.25s cubic-bezier(.2,.8,.2,1);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  z-index: 10;
+  background-clip: padding-box;
+}
+
+.arrival__card:hover .quick-view-btn,
+.favourite__card:hover .quick-view-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quick-view-btn:hover {
+  background: #e5d241;
+  color: #fff;
+  border-color: rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .nav__profile-link {
+    font-size: 2.5rem;
+    margin-top: 10px;
+  }
+
+  .quick-view-btn {
+    opacity: 1;
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    bottom: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
 .arrival__content h4 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -606,6 +680,45 @@ header {
 
 .arrival__content a:hover {
   color: var(--primary-color);
+}
+
+.arrival__explore {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  display: inline-block;
+}
+
+.arrival__explore::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.arrival__explore:hover {
+  color: var(--primary-color);
+}
+
+.arrival__card:hover .arrival__explore::after {
+    width: 100%;
+}
+
+/* Star Animations */
+.star-item {
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.star-item:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 5px rgba(229, 210, 65, 0.6));
 }
 
 .arrival__content span {
@@ -733,6 +846,35 @@ header {
 }
 
 .favourite__content a:hover {
+  color: var(--primary-color);
+}
+
+.favourite__explore {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  display: inline-block;
+}
+
+.favourite__explore::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.favourite__card:hover .favourite__explore::after {
+    width: 100%;
+}
+
+.favourite__explore:hover {
   color: var(--primary-color);
 }
 
