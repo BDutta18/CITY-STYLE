@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import '../styles/Profile.css';
 import Breadcrumb from '../components/Breadcrumb';
+import LazyImage from '../components/LazyImage';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -67,9 +68,14 @@ const Profile = () => {
         <aside className="profile-sidebar">
           <div className="user-brief-card">
             <div className="avatar-holder">
-              <img 
-                src={user?.photoURL || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"} 
-                alt="Profile" 
+              <LazyImage
+                src={user?.photoURL || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
+                alt="Profile"
+                width={50}
+                height={50}
+                aspectRatio="1 / 1"
+                objectFit="cover"
+                wrapperStyle={{ borderRadius: '50%' }}
                 referrerPolicy="no-referrer"
               />
             </div>
