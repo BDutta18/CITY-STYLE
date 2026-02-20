@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { auth } from '../firebase' 
-import { onAuthStateChanged } from 'firebase/auth'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import NewsletterForm from '../components/NewsletterForm'
 import LazyImage from '../components/LazyImage'
 import ProductModal from '../components/ProductModal'
@@ -82,7 +81,7 @@ const catalogueProducts = {
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState(null)
+  const { user } = useAuth()
   const [modalProduct, setModalProduct] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate()
@@ -97,11 +96,12 @@ const Home = () => {
     setModalProduct(null)
   }, [])
 
-  useEffect(() => {
+  // Logged-in users land on Shop — the landing page is for visitors only
+  if (user) {
+    return <Navigate to="/shop" replace />
+  }
 
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
+  useEffect(() => {
 
     const scrollRevealOption = {
       origin: "bottom",
@@ -124,7 +124,6 @@ const Home = () => {
       sr.reveal(".favourite__card", { ...scrollRevealOption, interval: 500 });
     }
 
-    return () => unsubscribe(); 
   }, [])
 
   const bannerImages = [
@@ -157,15 +156,15 @@ const Home = () => {
           <li><a href="#fashion">FASHION</a></li>
           <li><a href="#favourite">FAVOURITE</a></li>
           <li><a href="#lifestyle">LIFESTYLE</a></li>
-           <li className="nav__auth-item">
-              {user ? (
-                <Link to="/profile" className="nav__profile-link">
-                  <i className="fa-solid fa-circle-user"></i>
-                </Link>
-              ) : (
-                <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
-              )}
-            </li>
+          <li className="nav__auth-item">
+            {user ? (
+              <Link to="/profile" className="nav__profile-link">
+                <i className="fa-solid fa-circle-user"></i>
+              </Link>
+            ) : (
+              <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
+            )}
+          </li>
         </ul>
       </nav>
 
@@ -226,7 +225,7 @@ const Home = () => {
         <h2 className="section__header">NEW ARRIVALS</h2>
         <div className="arrival__grid">
           <div className="arrival__card">
-            <div className="arrival__image" style={{position: 'relative'}}>
+            <div className="arrival__image" style={{ position: 'relative' }}>
               <LazyImage
                 src="/assets/hoodie.jpg"
                 webpSrc="/assets/optimized/hoodie.webp"
@@ -238,9 +237,9 @@ const Home = () => {
                 height={520}
                 aspectRatio="4 / 5"
                 onClick={() => navigate('/product/hoodies-sweatshirts')}
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
               />
-              <button 
+              <button
                 className="quick-view-btn"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -259,7 +258,7 @@ const Home = () => {
             </div>
           </div>
           <div className="arrival__card">
-            <div className="arrival__image" style={{position: 'relative'}}>
+            <div className="arrival__image" style={{ position: 'relative' }}>
               <LazyImage
                 src="/assets/arrival-2.jpg"
                 webpSrc="/assets/optimized/arrival-2.webp"
@@ -271,9 +270,9 @@ const Home = () => {
                 height={520}
                 aspectRatio="4 / 5"
                 onClick={() => navigate('/product/coats-parkas')}
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
               />
-              <button 
+              <button
                 className="quick-view-btn"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -292,7 +291,7 @@ const Home = () => {
             </div>
           </div>
           <div className="arrival__card">
-            <div className="arrival__image" style={{position: 'relative'}}>
+            <div className="arrival__image" style={{ position: 'relative' }}>
               <LazyImage
                 src="/assets/OVRSIZED.png"
                 webpSrc="/assets/optimized/OVRSIZED.webp"
@@ -302,9 +301,9 @@ const Home = () => {
                 height={520}
                 aspectRatio="4 / 5"
                 onClick={() => navigate('/product/oversized-tshirt')}
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
               />
-              <button 
+              <button
                 className="quick-view-btn"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -358,7 +357,7 @@ const Home = () => {
         <h2 className="section__header">YOUNG'S FAVOURITE</h2>
         <div className="favourite__grid">
           <div className="favourite__card">
-            <div className="favourite__image" style={{position: 'relative'}}>
+            <div className="favourite__image" style={{ position: 'relative' }}>
               <LazyImage
                 src="/assets/Selena Gomez.webp"
                 webpSrc="/assets/optimized/Selena Gomez.webp"
@@ -369,9 +368,9 @@ const Home = () => {
                 height={380}
                 aspectRatio="3 / 2"
                 onClick={() => navigate('/product/instagram-trending')}
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
               />
-              <button 
+              <button
                 className="quick-view-btn"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -390,7 +389,7 @@ const Home = () => {
             </div>
           </div>
           <div className="favourite__card">
-            <div className="favourite__image" style={{position: 'relative'}}>
+            <div className="favourite__image" style={{ position: 'relative' }}>
               <LazyImage
                 src="/assets/favourite-2.jpg"
                 webpSrc="/assets/optimized/favourite-2.webp"
@@ -402,9 +401,9 @@ const Home = () => {
                 height={380}
                 aspectRatio="3 / 2"
                 onClick={() => navigate('/product/under-40')}
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
               />
-              <button 
+              <button
                 className="quick-view-btn"
                 onClick={(e) => {
                   e.stopPropagation();

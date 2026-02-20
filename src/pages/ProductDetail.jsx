@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { auth } from '../firebase'
-import { onAuthStateChanged } from 'firebase/auth'
+import { useAuth } from '../context/AuthContext'
 import Breadcrumb from '../components/Breadcrumb'
 import ReviewForm from '../components/Reviews/ReviewForm'
 import ReviewList from '../components/Reviews/ReviewList'
@@ -151,7 +150,7 @@ const productData = {
 const ProductDetail = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
-  const [user, setUser] = useState(null)
+  const { user } = useAuth()
   const [selectedSize, setSelectedSize] = useState(null)
   const [selectedColor, setSelectedColor] = useState(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -188,11 +187,7 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
-    })
     window.scrollTo(0, 0)
-    return () => unsubscribe()
   }, [slug])
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
@@ -281,8 +276,8 @@ const ProductDetail = () => {
                     i < Math.floor(product.rating)
                       ? 'ri-star-fill'
                       : i < product.rating
-                      ? 'ri-star-half-fill'
-                      : 'ri-star-line'
+                        ? 'ri-star-half-fill'
+                        : 'ri-star-line'
                   }
                 ></i>
               ))}
@@ -304,7 +299,7 @@ const ProductDetail = () => {
                     {Math.round(
                       ((product.originalPrice - product.price) /
                         product.originalPrice) *
-                        100
+                      100
                     )}
                     % OFF
                   </span>
@@ -323,9 +318,8 @@ const ProductDetail = () => {
                   {product.sizes.map((size) => (
                     <button
                       key={size}
-                      className={`product-detail__size ${
-                        selectedSize === size ? 'active' : ''
-                      }`}
+                      className={`product-detail__size ${selectedSize === size ? 'active' : ''
+                        }`}
                       onClick={() => setSelectedSize(size)}
                     >
                       {size}
@@ -345,9 +339,8 @@ const ProductDetail = () => {
                   {product.colors.map((color) => (
                     <button
                       key={color}
-                      className={`product-detail__color-swatch ${
-                        selectedColor === color ? 'active' : ''
-                      }`}
+                      className={`product-detail__color-swatch ${selectedColor === color ? 'active' : ''
+                        }`}
                       style={{ backgroundColor: color }}
                       onClick={() => setSelectedColor(color)}
                       title={color}
@@ -393,15 +386,15 @@ const ProductDetail = () => {
         </div>
 
         <div className="section__container" id="reviews">
-            <h2 className="section__header">Customer Reviews</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', justifyContent: 'center' }}>
-                <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-                  <ReviewList reviews={reviews} />
-                </div>
-                <div style={{ flex: '1 1 300px', minWidth: '300px' }}>
-                  <ReviewForm onSubmit={handleReviewSubmit} />
-                </div>
+          <h2 className="section__header">Customer Reviews</h2>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', justifyContent: 'center' }}>
+            <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
+              <ReviewList reviews={reviews} />
             </div>
+            <div style={{ flex: '1 1 300px', minWidth: '300px' }}>
+              <ReviewForm onSubmit={handleReviewSubmit} />
+            </div>
+          </div>
         </div>
 
         <div className="product-detail__back">
