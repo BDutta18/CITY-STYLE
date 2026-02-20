@@ -5,6 +5,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import NewsletterForm from '../components/NewsletterForm'
 import ProductModal from '../components/ProductModal'
 import StarRating from '../components/Reviews/StarRating'
+import CartIcon from '../components/Cart/CartIcon'
 
 const catalogueProducts = {
   'hoodies-sweatshirts': {

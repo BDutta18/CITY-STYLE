@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useCart } from '../contexts/CartContext'
 import './ProductModal.css'
 
 const ProductModal = ({ product, isOpen, onClose }) => {
+  const { addToCart } = useCart()
+  const [selectedSize, setSelectedSize] = useState('')
+  const [quantity, setQuantity] = useState(1)
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -15,6 +20,13 @@ const ProductModal = ({ product, isOpen, onClose }) => {
   }, [isOpen])
 
   useEffect(() => {
+    if (product && product.sizes && product.sizes.length > 0) {
+      setSelectedSize(product.sizes[0])
+    }
+    setQuantity(1)
+  }, [product, isOpen])
+
+  useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape') onClose()
     }
@@ -23,6 +35,11 @@ const ProductModal = ({ product, isOpen, onClose }) => {
   }, [isOpen, onClose])
 
   if (!isOpen || !product) return null
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity, selectedSize)
+    onClose()
+  }
 
   return (
     <div className="product-modal__overlay" onClick={onClose}>
@@ -77,7 +94,17 @@ const ProductModal = ({ product, isOpen, onClose }) => {
                 <h4>Available Sizes</h4>
                 <div className="product-modal__size-options">
                   {product.sizes.map((size) => (
-                    <span key={size} className="product-modal__size">
+                    <span 
+                      key={size} 
+                      className={`product-modal__size`}
+                      style={{
+                        cursor: 'pointer',
+                        backgroundColor: selectedSize === size ? '#000' : '#fff',
+                        color: selectedSize === size ? '#fff' : '#000',
+                        border: '1px solid #ddd'
+                      }}
+                      onClick={() => setSelectedSize(size)}
+                    >
                       {size}
                     </span>
                   ))}
@@ -101,12 +128,34 @@ const ProductModal = ({ product, isOpen, onClose }) => {
               </div>
             )}
 
-            <div className="product-modal__actions">
+            <div className="product-modal__actions" style={{ display: 'flex', gap: '10px' }}>
+              <div className="quantity-selector" style={{ display: 'flex', alignItems: 'center', border: '1px solid #ddd', borderRadius: '5px' }}>
+                <button 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+                >-</button>
+                <span style={{ padding: '0 0.5rem', fontWeight: 'bold' }}>{quantity}</span>
+                <button 
+                  onClick={() => setQuantity(quantity + 1)}
+                  style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+                >+</button>
+              </div>
+
+              <button 
+                className="btn product-modal__add-btn" 
+                onClick={handleAddToCart}
+                disabled={!selectedSize}
+                style={{ flex: 1, backgroundColor: '#000', color: '#fff' }}
+              >
+                Add to Cart
+              </button>
+
               <Link
                 to={`/product/${product.slug}`}
                 className="btn product-modal__detail-btn"
+                style={{ flex: 1, textAlign: 'center' }}
               >
-                View Full Details
+                Details
               </Link>
             </div>
           </div>
