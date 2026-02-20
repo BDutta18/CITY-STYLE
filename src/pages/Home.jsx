@@ -168,6 +168,9 @@ const Home = () => {
                 <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
               )}
             </li>
+            <li>
+              <CartIcon />
+            </li>
         </ul>
       </nav>
 
