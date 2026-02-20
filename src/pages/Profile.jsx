@@ -10,6 +10,10 @@ const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
   
   const [formData, setFormData] = useState({
     firstName: '',
@@ -58,8 +62,25 @@ const Profile = () => {
           <li><Link to="/#favourite">FAVOURITE</Link></li>
           <li><Link to="/#lifestyle">LIFESTYLE</Link></li>
         </ul>
-        <button onClick={handleLogout} className="logout-btn-nav">LOGOUT</button>
+        <button onClick={handleLogout} className="logout-btn-nav logout-desktop">LOGOUT</button>
+        
+        {/* Mobile Menu Button */}
+        <div className="mobile-menu-btn" onClick={toggleMobileMenu}>
+          <i className={isMobileMenuOpen ? "ri-close-line" : "ri-menu-line"}></i>
+        </div>
       </nav>
+
+      {/* Mobile Navigation */}
+      <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`} onClick={closeMobileMenu}></div>
+      <ul className={`mobile-nav-links ${isMobileMenuOpen ? 'open' : ''}`}>
+        <li><Link to="/#catalogue" onClick={closeMobileMenu}>CATALOGUE</Link></li>
+        <li><Link to="/#fashion" onClick={closeMobileMenu}>FASHION</Link></li>
+        <li><Link to="/#favourite" onClick={closeMobileMenu}>FAVOURITE</Link></li>
+        <li><Link to="/#lifestyle" onClick={closeMobileMenu}>LIFESTYLE</Link></li>
+        <li className="mobile-logout-item">
+          <button onClick={handleLogout} className="mobile-logout-btn">LOGOUT</button>
+        </li>
+      </ul>
       
       <Breadcrumb />
 
