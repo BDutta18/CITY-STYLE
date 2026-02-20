@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../firebase' 
 import { onAuthStateChanged } from 'firebase/auth'
 import NewsletterForm from '../components/NewsletterForm'
+import LazyImage from '../components/LazyImage'
 import ProductModal from '../components/ProductModal'
 import StarRating from '../components/Reviews/StarRating'
 import { getProductBySlug, newArrivals, youngsFavourite } from '../data/products'
@@ -51,21 +52,19 @@ const Home = () => {
       sr.reveal(".favourite__card", { ...scrollRevealOption, interval: 500 });
     }
 
-    
-    const banner = document.querySelector(".banner__container")
-    if (banner && banner.children.length > 0) {
-        const bannerContent = Array.from(banner.children);
-        if(bannerContent.length <= 8) { 
-             bannerContent.forEach((item) => {
-                const duplicateNode = item.cloneNode(true);
-                duplicateNode.setAttribute("aria-hidden", true);
-                banner.appendChild(duplicateNode);
-            });
-        }
-    }
-
     return () => unsubscribe(); 
   }, [])
+
+  const bannerImages = [
+    { src: '/assets/banner-1.png', webp: '/assets/optimized/banner-1.webp' },
+    { src: '/assets/banner-2.png', webp: '/assets/optimized/banner-2.webp' },
+    { src: '/assets/banner-3.png', webp: '/assets/optimized/banner-3.webp' },
+    { src: '/assets/banner-4.png', webp: '/assets/optimized/banner-4.webp' },
+    { src: '/assets/banner-5.png', webp: '/assets/optimized/banner-5.webp' },
+    { src: '/assets/banner-6.png', webp: '/assets/optimized/banner-6.webp' },
+    { src: '/assets/banner-7.png', webp: '/assets/optimized/banner-7.webp' },
+    { src: '/assets/banner-8.png', webp: '/assets/optimized/banner-8.webp' },
+  ]
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
@@ -116,21 +115,38 @@ const Home = () => {
             </div>
           </div>
           <div className="header__image">
-            <img src="/assets/header (1).png" alt="header" />
+            <LazyImage
+              src="/assets/header (1).png"
+              webpSrc="/assets/optimized/header (1).webp"
+              webpSrcSet="/assets/optimized/header (1)-480.webp 480w"
+              srcSet="/assets/optimized/header (1)-480.png 480w"
+              sizes="(max-width: 768px) 100vw, 520px"
+              alt="header"
+              width={520}
+              height={650}
+              aspectRatio="4 / 5"
+              priority
+              fetchPriority="high"
+            />
           </div>
         </div>
       </header>
 
       <section className="banner">
         <div className="banner__container">
-          <img src="/assets/banner-1.png" alt="banner" />
-          <img src="/assets/banner-2.png" alt="banner" />
-          <img src="/assets/banner-3.png" alt="banner" />
-          <img src="/assets/banner-4.png" alt="banner" />
-          <img src="/assets/banner-5.png" alt="banner" />
-          <img src="/assets/banner-6.png" alt="banner" />
-          <img src="/assets/banner-7.png" alt="banner" />
-          <img src="/assets/banner-8.png" alt="banner" />
+          {[...bannerImages, ...bannerImages].map((img, index) => (
+            <LazyImage
+              key={`${img.src}-${index}`}
+              src={img.src}
+              webpSrc={img.webp}
+              alt="banner"
+              width={120}
+              height={30}
+              objectFit="contain"
+              wrapperStyle={{ minHeight: 30 }}
+              aria-hidden={index >= bannerImages.length}
+            />
+          ))}
         </div>
       </section>
 
@@ -173,7 +189,17 @@ const Home = () => {
       <section className="sale" id="fashion">
         <div className="section__container sale__container">
           <div className="sale__image">
-            <img src="/assets/sale.png" alt="sale" />
+            <LazyImage
+              src="/assets/sale.png"
+              webpSrc="/assets/optimized/sale.webp"
+              webpSrcSet="/assets/optimized/sale-480.webp 480w, /assets/optimized/sale-768.webp 768w"
+              srcSet="/assets/optimized/sale-480.png 480w, /assets/optimized/sale-768.png 768w"
+              sizes="(max-width: 768px) 100vw, 520px"
+              alt="sale"
+              width={520}
+              height={520}
+              aspectRatio="1 / 1"
+            />
           </div>
           <div className="sale__content">
             <h2><span>PAYDAY</span><br />SALE NOW</h2>
@@ -227,7 +253,17 @@ const Home = () => {
 
       <section className="section__container download__container" id="lifestyle">
         <div className="download__image">
-          <img src="/assets/download.png" alt="download" />
+          <LazyImage
+            src="/assets/download.png"
+            webpSrc="/assets/optimized/download.webp"
+            webpSrcSet="/assets/optimized/download-480.webp 480w, /assets/optimized/download-768.webp 768w"
+            srcSet="/assets/optimized/download-480.png 480w, /assets/optimized/download-768.png 768w"
+            sizes="(max-width: 768px) 100vw, 500px"
+            alt="download"
+            width={500}
+            height={400}
+            aspectRatio="5 / 4"
+          />
         </div>
         <div className="download__content">
           <h2 className="section__header">DOWNLOAD APP & GET THE VOUCHER!</h2>
@@ -236,10 +272,26 @@ const Home = () => {
           </p>
           <div className="download__links">
             <a href="#">
-              <img src="/assets/google.png" alt="google" />
+              <LazyImage
+                src="/assets/google.png"
+                webpSrc="/assets/optimized/google.webp"
+                alt="google"
+                width={150}
+                height={45}
+                objectFit="contain"
+                wrapperStyle={{ maxWidth: 150 }}
+              />
             </a>
             <a href="#">
-              <img src="/assets/apple.png" alt="apple" />
+              <LazyImage
+                src="/assets/apple.png"
+                webpSrc="/assets/optimized/apple.webp"
+                alt="apple"
+                width={150}
+                height={45}
+                objectFit="contain"
+                wrapperStyle={{ maxWidth: 150 }}
+              />
             </a>
           </div>
         </div>
