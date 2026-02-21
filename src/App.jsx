@@ -1,5 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
 import CartDrawer from './components/Cart/CartDrawer'
 import Home from './pages/Home'
 import SizeGuide from './pages/SizeGuide'
@@ -26,32 +28,37 @@ import BackToTop from './components/BackToTop'
 function App() {
   return (
     <Router>
-      <CartDrawer />
-      <BackToTop />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/size-guide' element={<SizeGuide />} />
-        <Route path='/faq' element={<FAQ />} />
-        
-        {/* Migrated Routes */}
-        <Route path='/about' element={<About />} />
-        <Route path='/auth' element={<Auth />} />
-        <Route path='/career' element={<Career />} />
-        <Route path='/coats-parkas' element={<CoatsParkas />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/hoodies-sweatshirts' element={<HoodiesSweatshirts />} />
-        <Route path='/instagram-trending' element={<InstagramTrending />} />
-        <Route path='/order-tracking' element={<OrderTracking />} />
-        <Route path='/oversized-tshirt' element={<OversizedTShirt />} />
-        <Route path='/privacy' element={<PrivacyPolicy />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/product/:slug' element={<ProductDetail />} />
-        <Route path='/shop' element={<Shop />} />
-        <Route path='/store-location' element={<StoreLocation />} />
-        <Route path='/support' element={<Support />} />
-        <Route path='/terms' element={<TermsConditions />} />
-        <Route path='/under-40' element={<Under40 />} />
-      </Routes>
+      <AuthProvider>
+        <CartDrawer />
+        <BackToTop />
+        <Routes>
+          {/* Public Routes */}
+          <Route path='/' element={<Home />} />
+          <Route path='/size-guide' element={<SizeGuide />} />
+          <Route path='/faq' element={<FAQ />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/auth' element={<Auth />} />
+          <Route path='/career' element={<Career />} />
+          <Route path='/coats-parkas' element={<CoatsParkas />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/hoodies-sweatshirts' element={<HoodiesSweatshirts />} />
+          <Route path='/instagram-trending' element={<InstagramTrending />} />
+          <Route path='/order-tracking' element={<OrderTracking />} />
+          <Route path='/oversized-tshirt' element={<OversizedTShirt />} />
+          <Route path='/privacy' element={<PrivacyPolicy />} />
+          <Route path='/product/:slug' element={<ProductDetail />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='/store-location' element={<StoreLocation />} />
+          <Route path='/support' element={<Support />} />
+          <Route path='/terms' element={<TermsConditions />} />
+          <Route path='/under-40' element={<Under40 />} />
+
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route path='/profile' element={<Profile />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </Router>
   )
 }

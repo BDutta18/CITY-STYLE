@@ -1,4 +1,8 @@
-/* Auth Page Main Wrapper */
+/* ──────────────────────────────────────────────
+   Auth Page Styles
+   ────────────────────────────────────────────── */
+
+/* Main Wrapper */
 .auth-wrapper {
   min-height: 100vh;
   width: 100%;
@@ -12,6 +16,7 @@
   padding: 2rem 1rem;
 }
 
+/* Back Button */
 .auth-back-button {
   position: absolute;
   top: 2rem;
@@ -32,6 +37,7 @@
   transform: translateX(-5px);
 }
 
+/* Glass Card */
 .glass-card {
   background: rgba(255, 255, 255, 0.03) !important;
   backdrop-filter: blur(20px);
@@ -43,13 +49,22 @@
   text-align: center;
 }
 
+/* Title & Subtitle */
 .auth-title {
   font-size: 2rem;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-weight: 700;
 }
 
-/* Form Styles */
+.auth-subtitle {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+/* ── Form ──────────────────────────────────── */
+
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -75,7 +90,47 @@
   border-radius: 12px;
   color: white;
   outline: none;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
+
+.auth-input:focus {
+  border-color: #e5d241;
+}
+
+/* ── Password Field ───────────────────────── */
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .auth-input {
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #e5d241;
+}
+
+/* ── Buttons ──────────────────────────────── */
 
 .login-btn {
   background: #e5d241 !important;
@@ -84,9 +139,62 @@
   padding: 14px;
   border-radius: 12px;
   font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
 }
 
+.login-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Messages ─────────────────────────────── */
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 13px;
+  text-align: left;
+  margin: 0;
+  padding: 10px 14px;
+  background: rgba(255, 107, 107, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid #ff6b6b;
+}
+
+.success-message {
+  color: #51cf66;
+  font-size: 13px;
+  text-align: left;
+  margin: 0;
+  padding: 10px 14px;
+  background: rgba(81, 207, 102, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid #51cf66;
+}
+
+/* ── Forgot Password Link ─────────────────── */
+
+.forgot-link {
+  color: #888;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: right;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+  color: #e5d241;
+}
+
+/* ── Separator ────────────────────────────── */
 
 .separator {
   display: flex;
@@ -105,15 +213,17 @@
 
 .separator span {
   padding: 0 15px;
-  background: transparent !important; 
+  background: transparent !important;
   font-size: 12px;
   font-weight: 700;
 }
 
+/* ── Google Button ────────────────────────── */
+
 .google-btn {
-  background: rgba(255, 255, 255, 0.05) !important; 
+  background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: white !important; 
+  color: white !important;
   padding: 12px;
   border-radius: 12px;
   display: flex;
@@ -122,16 +232,24 @@
   gap: 10px;
   cursor: pointer;
   width: 100%;
-  transition: 0.3s;
+  font-size: 14px;
+  transition: background 0.3s ease;
 }
 
-.google-btn:hover {
+.google-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.google-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .google-btn span {
   color: white !important;
 }
+
+/* ── Toggle Text ──────────────────────────── */
 
 .toggle-text {
   margin-top: 25px;

@@ -1,77 +1,113 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { auth } from '../firebase';
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { updateProfile } from '../firebase';
 import '../styles/Profile.css';
 import Breadcrumb from '../components/Breadcrumb';
 import LazyImage from '../components/LazyImage';
 
 const Profile = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { user, logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
-  
+
+  /* ── Form Data ─────────────────────────────── */
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     mobile: '+91 0000000000',
-    gender: 'Male'
+    gender: 'Male',
   });
 
+  /* Populate form fields from the auth user */
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        const nameParts = currentUser.displayName ? currentUser.displayName.split(' ') : ['User', ''];
-        setFormData(prev => ({
-          ...prev,
-          firstName: nameParts[0],
-          lastName: nameParts.slice(1).join(' '),
-          email: currentUser.email,
-        }));
-      } else {
-        navigate('/auth');
-      }
-    });
-    return () => unsubscribe();
-  }, [navigate]);
+    if (user) {
+      const nameParts = user.displayName
+        ? user.displayName.split(' ')
+        : ['User', ''];
 
+      setFormData((prev) => ({
+        ...prev,
+        firstName: nameParts[0],
+        lastName: nameParts.slice(1).join(' '),
+        email: user.email,
+      }));
+    }
+  }, [user]);
+
+  /* ── Handlers ──────────────────────────────── */
   const handleLogout = async () => {
-    await signOut(auth);
-    navigate('/');
+    await logout();
+    // ProtectedRoute will redirect to /auth automatically
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  /**
+   * Save profile changes to Firebase.
+   * Updates the user's displayName so it persists across sessions.
+   */
+  const handleSave = async () => {
+    if (!isEditing) {
+      setIsEditing(true);
+      return;
+    }
+
+    try {
+      const newDisplayName = `${formData.firstName} ${formData.lastName}`.trim();
+      await updateProfile(user, { displayName: newDisplayName });
+
+      setSaveMessage('Profile updated successfully!');
+      setIsEditing(false);
+
+      // Clear success message after 3 seconds
+      setTimeout(() => setSaveMessage(''), 3000);
+    } catch (error) {
+      setSaveMessage('Failed to update profile. Please try again.');
+      setTimeout(() => setSaveMessage(''), 3000);
+    }
+  };
+
+  /* ── Determine auth provider ───────────────── */
+  const isGoogleUser =
+    user?.providerData?.[0]?.providerId === 'google.com';
 
   return (
     <div className="profile-root">
-      {/* PROFESSIONAL NAVBAR */}
+      {/* NAVBAR */}
       <nav className="glass-nav">
-        <div className="nav__logo"><Link to="/">CITY STYLE</Link></div>
+        <div className="nav__logo">
+          <Link to="/">CITY STYLE</Link>
+        </div>
         <ul className="nav__links_desktop">
           <li><Link to="/#catalogue">CATALOGUE</Link></li>
           <li><Link to="/#fashion">FASHION</Link></li>
           <li><Link to="/#favourite">FAVOURITE</Link></li>
           <li><Link to="/#lifestyle">LIFESTYLE</Link></li>
         </ul>
-        <button onClick={handleLogout} className="logout-btn-nav logout-desktop">LOGOUT</button>
-        
+        <button onClick={handleLogout} className="logout-btn-nav logout-desktop">
+          LOGOUT
+        </button>
+
         {/* Mobile Menu Button */}
         <div className="mobile-menu-btn" onClick={toggleMobileMenu}>
-          <i className={isMobileMenuOpen ? "ri-close-line" : "ri-menu-line"}></i>
+          <i className={isMobileMenuOpen ? 'ri-close-line' : 'ri-menu-line'}></i>
         </div>
       </nav>
 
       {/* Mobile Navigation */}
-      <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`} onClick={closeMobileMenu}></div>
+      <div
+        className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`}
+        onClick={closeMobileMenu}
+      ></div>
       <ul className={`mobile-nav-links ${isMobileMenuOpen ? 'open' : ''}`}>
         <li><Link to="/#catalogue" onClick={closeMobileMenu}>CATALOGUE</Link></li>
         <li><Link to="/#fashion" onClick={closeMobileMenu}>FASHION</Link></li>
@@ -81,7 +117,7 @@ const Profile = () => {
           <button onClick={handleLogout} className="mobile-logout-btn">LOGOUT</button>
         </li>
       </ul>
-      
+
       <Breadcrumb />
 
       <div className="profile-content-grid">
@@ -90,7 +126,7 @@ const Profile = () => {
           <div className="user-brief-card">
             <div className="avatar-holder">
               <LazyImage
-                src={user?.photoURL || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"}
+                src={user?.photoURL || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}
                 alt="Profile"
                 width={50}
                 height={50}
@@ -102,53 +138,88 @@ const Profile = () => {
             </div>
             <div className="brief-info">
               <span className="greeting">Welcome,</span>
-              <h4 className="full-name">{user?.displayName || "User"}</h4>
+              <h4 className="full-name">{user?.displayName || 'User'}</h4>
             </div>
           </div>
 
           <div className="navigation-menu">
-            {/* UPDATED ORDERS SECTION */}
+            {/* Orders Section */}
             <div className="menu-group">
-              <div className="menu-header"><i className="ri-shopping-bag-line"></i> MY ORDERS</div>
+              <div className="menu-header">
+                <i className="ri-shopping-bag-line"></i> MY ORDERS
+              </div>
               <ul className="sub-navigation">
-                <li>Order History</li>
-                <li>In Cart</li>
-                <li>Returns</li>
+                <li className="coming-soon-item">
+                  Order History <span className="coming-soon-badge">Coming Soon</span>
+                </li>
+                <li className="coming-soon-item">
+                  In Cart <span className="coming-soon-badge">Coming Soon</span>
+                </li>
+                <li className="coming-soon-item">
+                  Returns <span className="coming-soon-badge">Coming Soon</span>
+                </li>
               </ul>
             </div>
 
+            {/* Account Settings */}
             <div className="menu-group active">
-              <div className="menu-header"><i className="ri-user-line"></i> ACCOUNT SETTINGS</div>
+              <div className="menu-header">
+                <i className="ri-user-line"></i> ACCOUNT SETTINGS
+              </div>
               <ul className="sub-navigation">
                 <li className="active-link">Profile Information</li>
-                <li>Manage Addresses</li>
+                <li className="coming-soon-item">
+                  Manage Addresses <span className="coming-soon-badge">Coming Soon</span>
+                </li>
               </ul>
             </div>
 
+            {/* Logout */}
             <div className="menu-group logout-trigger" onClick={handleLogout}>
-              <div className="menu-header danger"><i className="ri-logout-circle-r-line"></i> Logout</div>
+              <div className="menu-header danger">
+                <i className="ri-logout-circle-r-line"></i> Logout
+              </div>
             </div>
           </div>
         </aside>
 
         {/* MAIN FORM AREA */}
         <main className="profile-form-area">
+          {/* Save Message */}
+          {saveMessage && (
+            <div className={`profile-message ${saveMessage.includes('Failed') ? 'error' : 'success'}`}>
+              {saveMessage}
+            </div>
+          )}
+
           <div className="form-card">
             <div className="card-top">
               <h3>Personal Information</h3>
-              <button className="edit-toggle-btn" onClick={() => setIsEditing(!isEditing)}>
-                {isEditing ? "SAVE CHANGES" : "EDIT"}
+              <button className="edit-toggle-btn" onClick={handleSave}>
+                {isEditing ? 'SAVE CHANGES' : 'EDIT'}
               </button>
             </div>
 
             <div className="input-grid">
               <div className="input-field">
                 <label>First Name</label>
-                <input type="text" name="firstName" value={formData.firstName} disabled={!isEditing} onChange={handleInputChange} />
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  disabled={!isEditing}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className="input-field">
                 <label>Last Name</label>
-                <input type="text" name="lastName" value={formData.lastName} disabled={!isEditing} onChange={handleInputChange} />
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  disabled={!isEditing}
+                  onChange={handleInputChange}
+                />
               </div>
             </div>
 
@@ -156,11 +227,25 @@ const Profile = () => {
               <p className="field-title">Your Gender</p>
               <div className="radio-controls">
                 <label className="radio-label">
-                  <input type="radio" name="gender" value="Male" checked={formData.gender === "Male"} disabled={!isEditing} onChange={handleInputChange} />
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="Male"
+                    checked={formData.gender === 'Male'}
+                    disabled={!isEditing}
+                    onChange={handleInputChange}
+                  />
                   <span>Male</span>
                 </label>
                 <label className="radio-label">
-                  <input type="radio" name="gender" value="Female" checked={formData.gender === "Female"} disabled={!isEditing} onChange={handleInputChange} />
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="Female"
+                    checked={formData.gender === 'Female'}
+                    disabled={!isEditing}
+                    onChange={handleInputChange}
+                  />
                   <span>Female</span>
                 </label>
               </div>
@@ -170,15 +255,29 @@ const Profile = () => {
           <div className="form-card">
             <h3>Email Address</h3>
             <div className="input-field mt-20">
-              <input type="email" value={formData.email} disabled className="locked-input" />
-              <p className="form-hint">Managed via Google Authentication.</p>
+              <input
+                type="email"
+                value={formData.email}
+                disabled
+                className="locked-input"
+              />
+              <p className="form-hint">
+                Managed via {isGoogleUser ? 'Google' : 'Email'} Authentication.
+              </p>
             </div>
           </div>
 
           <div className="form-card">
             <h3>Mobile Number</h3>
             <div className="input-field mt-20">
-              <input type="text" name="mobile" value={formData.mobile} disabled={!isEditing} onChange={handleInputChange} className="locked-input" />
+              <input
+                type="text"
+                name="mobile"
+                value={formData.mobile}
+                disabled={!isEditing}
+                onChange={handleInputChange}
+                className="locked-input"
+              />
             </div>
           </div>
         </main>
@@ -224,7 +323,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="footer__bar">
-          Copyright © Bodhisatwa Dutta 2026. All rights reserved.
+          Copyright © Bodhisatwa Dutta {new Date().getFullYear()}. All rights reserved.
         </div>
       </footer>
     </div>
