@@ -8,6 +8,28 @@
   align-items: center;
   font-family: 'Poppins', sans-serif;
   color: white;
+  position: relative;
+  padding: 2rem 1rem;
+}
+
+.auth-back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.auth-back-button:hover {
+  color: #e5d241;
+  transform: translateX(-5px);
 }
 
 .glass-card {

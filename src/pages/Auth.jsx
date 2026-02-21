@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { auth, googleProvider, signInWithPopup } from '../firebase';
 import '../styles/Auth.css';
-import Breadcrumb from '../components/Breadcrumb';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -27,9 +26,12 @@ const Auth = () => {
   };
 
   return (
-    <>
-    <Breadcrumb />
     <div className="auth-wrapper">
+      <Link to="/" className="auth-back-button" aria-label="Back to home">
+        <i className="ri-arrow-left-line"></i>
+        <span>Back to Home</span>
+      </Link>
+      
       <div className="glass-card">
         <h2 className="auth-title">{isLogin ? "Welcome Back" : "Create Account"}</h2>
         
@@ -77,7 +79,6 @@ const Auth = () => {
         </p>
       </div>
     </div>
-    </>
   );
 };
 
