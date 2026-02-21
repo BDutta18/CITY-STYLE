@@ -7,14 +7,18 @@ import ReviewForm from '../components/Reviews/ReviewForm'
 import ReviewList from '../components/Reviews/ReviewList'
 import StarRating from '../components/Reviews/StarRating'
 import { getProductBySlug } from '../data/products'
+import { useCart } from '../contexts/CartContext'
+import CartIcon from '../components/Cart/CartIcon'
 import '../styles/ProductDetail.css'
 
 const ProductDetail = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
+  const { addToCart } = useCart()
   const [selectedSize, setSelectedSize] = useState(null)
   const [selectedColor, setSelectedColor] = useState(null)
+  const [quantity, setQuantity] = useState(1)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const product = getProductBySlug(slug)
@@ -53,8 +57,12 @@ const ProductDetail = () => {
       setUser(currentUser)
     })
     window.scrollTo(0, 0)
+    setQuantity(1)
+    if (product?.sizes?.length > 0) setSelectedSize(product.sizes[0])
+    if (product?.colors?.length > 0) setSelectedColor(product.colors[0])
+    
     return () => unsubscribe()
-  }, [slug])
+  }, [slug, product])
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
@@ -112,6 +120,7 @@ const ProductDetail = () => {
               </Link>
             )}
           </li>
+          <li><CartIcon /></li>
         </ul>
       </nav>
 
@@ -218,8 +227,28 @@ const ProductDetail = () => {
               </div>
             )}
 
+            <div className="product-detail__quantity" style={{ marginBottom: '1.5rem' }}>
+              <h4>Quantity</h4>
+              <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #ddd', width: 'fit-content', borderRadius: '4px' }}>
+                <button 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))} 
+                  style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+                >-</button>
+                <span style={{ padding: '0 0.8rem', fontWeight: 'bold' }}>{quantity}</span>
+                <button 
+                  onClick={() => setQuantity(quantity + 1)} 
+                  style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+                >+</button>
+              </div>
+            </div>
+
             <div className="product-detail__actions">
-              <button className="btn product-detail__add-to-cart">
+              <button 
+                className="btn product-detail__add-to-cart" 
+                onClick={() => addToCart({ ...product, slug }, quantity, selectedSize)}
+                disabled={!selectedSize}
+                style={{ opacity: !selectedSize ? 0.7 : 1, cursor: !selectedSize ? 'not-allowed' : 'pointer' }}
+              >
                 <i className="ri-shopping-bag-line"></i> Add to Cart
               </button>
               <button className="product-detail__wishlist-btn">
