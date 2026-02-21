@@ -161,7 +161,13 @@ const Home = () => {
            <li className="nav__auth-item">
               {user ? (
                 <Link to="/profile" className="nav__profile-link">
-                  <i className="fa-solid fa-circle-user"></i>
+                  {typeof user.photoURL === 'string' ? (
+                    <img 
+                      src={user.photoURL} 
+                      alt={user.displayName} 
+                      className="nav__avatar-img"
+                    />
+                  ) : <i className="fa-solid fa-circle-user"></i>}
                 </Link>
               ) : (
                 <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
