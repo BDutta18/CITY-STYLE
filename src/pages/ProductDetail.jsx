@@ -6,149 +6,10 @@ import Breadcrumb from '../components/Breadcrumb'
 import ReviewForm from '../components/Reviews/ReviewForm'
 import ReviewList from '../components/Reviews/ReviewList'
 import StarRating from '../components/Reviews/StarRating'
+import { getProductBySlug } from '../data/products'
 import { useCart } from '../contexts/CartContext'
 import CartIcon from '../components/Cart/CartIcon'
 import '../styles/ProductDetail.css'
-
-const productData = {
-  'hoodies-sweatshirts': {
-    name: 'Hoodies & Sweatshirts',
-    category: 'New Arrivals',
-    image: '/assets/hoodie.jpg',
-    price: 59.99,
-    originalPrice: 89.99,
-    badge: 'Trending',
-    rating: 4.5,
-    reviews: 128,
-    description:
-      'Premium quality hoodies and sweatshirts crafted for ultimate comfort and style. Made from soft, breathable cotton blend fabric with a modern oversized fit. Perfect for layering in cooler weather or wearing as a standalone statement piece.',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#2c3e50', '#8e44ad', '#e5d241', '#ecf0f1'],
-    features: [
-      'Premium 100% organic cotton blend',
-      'Oversized relaxed fit',
-      'Ribbed cuffs and hem',
-      'Kangaroo front pocket',
-      'Machine washable',
-      'Available in 5 colors',
-    ],
-    careInstructions: [
-      'Machine wash cold with like colors',
-      'Tumble dry low',
-      'Do not bleach',
-      'Iron on low heat if needed',
-    ],
-  },
-  'coats-parkas': {
-    name: 'Coats & Parkas',
-    category: 'New Arrivals',
-    image: '/assets/arrival-2.jpg',
-    price: 129.99,
-    originalPrice: 179.99,
-    badge: 'Winter Essential',
-    rating: 4.7,
-    reviews: 96,
-    description:
-      'Stay warm in style with our premium coats and parkas collection. Featuring water-resistant outer shells, insulated lining, and contemporary silhouettes that transition seamlessly from street to occasion.',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#2c3e50', '#7f8c8d', '#c0392b'],
-    features: [
-      'Water-resistant outer shell',
-      'Warm quilted insulation',
-      'Detachable faux-fur hood',
-      'Multiple zippered pockets',
-      'Adjustable drawstring waist',
-      'Wind-proof construction',
-    ],
-    careInstructions: [
-      'Dry clean recommended',
-      'Spot clean minor stains',
-      'Store on a wide hanger',
-      'Do not iron directly on fabric',
-    ],
-  },
-  'oversized-tshirt': {
-    name: 'Oversized T-Shirt',
-    category: 'New Arrivals',
-    image: '/assets/OVRSIZED.webp',
-    price: 34.99,
-    originalPrice: 49.99,
-    badge: 'Best Seller',
-    rating: 4.8,
-    reviews: 256,
-    description:
-      'The ultimate streetwear essential. Our oversized tees feature a dropped shoulder design, premium heavyweight cotton, and a relaxed silhouette that delivers effortless cool. Perfect for everyday wear.',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#ecf0f1', '#e5d241', '#2ecc71', '#3498db'],
-    features: [
-      '240 GSM heavyweight cotton',
-      'Dropped shoulder design',
-      'Reinforced neck ribbing',
-      'Pre-shrunk fabric',
-      'Unisex fit',
-      'Screen-printed graphics',
-    ],
-    careInstructions: [
-      'Machine wash cold inside out',
-      'Hang dry for best results',
-      'Do not bleach',
-      'Iron inside out on low heat',
-    ],
-  },
-  'instagram-trending': {
-    name: 'Trending on Instagram',
-    category: "Young's Favourite",
-    image: '/assets/Selena Gomez.webp',
-    price: 79.99,
-    originalPrice: null,
-    badge: 'Viral',
-    rating: 4.6,
-    reviews: 189,
-    description:
-      'Curated collection of the most-loved pieces trending on Instagram. These are the styles influencers and fashion-forward individuals are wearing right now. Stay ahead of the curve with our hand-picked viral fits.',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['#000000', '#e5d241', '#e74c3c', '#9b59b6'],
-    features: [
-      'Instagram-approved styles',
-      'Limited edition drops',
-      'Celebrity-inspired designs',
-      'Premium quality materials',
-      'Exclusive to CITY STYLE',
-      'New arrivals weekly',
-    ],
-    careInstructions: [
-      'Follow individual garment care labels',
-      'Machine wash cold recommended',
-      'Lay flat to dry',
-    ],
-  },
-  'under-40': {
-    name: 'All Under $40',
-    category: "Young's Favourite",
-    image: '/assets/favourite-2.jpg',
-    price: 29.99,
-    originalPrice: 39.99,
-    badge: 'Value Pick',
-    rating: 4.3,
-    reviews: 312,
-    description:
-      'Style does not have to break the bank. Discover our collection of trend-right pieces all priced under $40. From basics to statement pieces, build your wardrobe without the guilt.',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#ecf0f1', '#2c3e50', '#e5d241'],
-    features: [
-      'All items under $40',
-      'Quality materials guaranteed',
-      'Mix and match essentials',
-      'Seasonal updates',
-      'Free returns within 30 days',
-      'Bundle discounts available',
-    ],
-    careInstructions: [
-      'Follow individual garment care labels',
-      'Machine wash cold recommended',
-    ],
-  },
-}
 
 const ProductDetail = () => {
   const { slug } = useParams()
@@ -160,7 +21,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const product = productData[slug]
+  const product = getProductBySlug(slug)
 
   const [reviews, setReviews] = useState([
     {
