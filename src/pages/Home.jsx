@@ -6,6 +6,7 @@ import NewsletterForm from '../components/NewsletterForm'
 import LazyImage from '../components/LazyImage'
 import ProductModal from '../components/ProductModal'
 import StarRating from '../components/Reviews/StarRating'
+import CartIcon from '../components/Cart/CartIcon'
 
 const catalogueProducts = {
   'hoodies-sweatshirts': {
@@ -165,6 +166,9 @@ const Home = () => {
               ) : (
                 <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
               )}
+            </li>
+            <li>
+              <CartIcon />
             </li>
         </ul>
       </nav>
