@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
+import { useCart } from '../contexts/CartContext'
 import './ProductModal.css'
 
-const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
+const ProductModal = ({ product, isOpen, onClose }) => {
+  const { addToCart } = useCart()
   const modalRef = useRef(null)
+  const [selectedSize, setSelectedSize] = useState('')
+  const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState('')
 
   useEffect(() => {
@@ -19,8 +23,14 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
   }, [isOpen])
 
   useEffect(() => {
-    setSelectedImage((product && (product.images || [product.image])[0]))
-  }, [product])
+    if (product) {
+        if (product.sizes && product.sizes.length > 0) {
+            setSelectedSize(product.sizes[0])
+        }
+        setSelectedImage((product.images || [product.image])[0])
+        setQuantity(1)
+    }
+  }, [product, isOpen])
 
   const handleKey = useCallback(
     (e) => {
@@ -35,6 +45,11 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
   }, [isOpen, handleKey])
 
   if (!isOpen || !product) return null
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity, selectedSize)
+    onClose()
+  }
 
   const images = product.images && product.images.length ? product.images : [product.image]
 
@@ -104,7 +119,20 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
                 <h4>Available Sizes</h4>
                 <div className="product-modal__size-options">
                   {product.sizes.map((size) => (
-                    <button key={size} type="button" className="product-modal__size">{size}</button>
+                    <button 
+                      key={size} 
+                      type="button" 
+                      className={`product-modal__size ${selectedSize === size ? 'active' : ''}`}
+                      style={{
+                        cursor: 'pointer',
+                        backgroundColor: selectedSize === size ? '#000' : '#fff',
+                        color: selectedSize === size ? '#fff' : '#000',
+                        border: '1px solid #ddd'
+                      }}
+                      onClick={() => setSelectedSize(size)}
+                    >
+                      {size}
+                    </button>
                   ))}
                 </div>
               </div>
@@ -126,15 +154,37 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
               </div>
             )}
 
-            <div className="product-modal__actions">
-              <button
-                className="btn add-to-cart-btn"
-                onClick={() => (onAddToCart ? onAddToCart(product) : console.log('Add to cart', product))}
+            <div className="product-modal__actions" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <div className="quantity-selector" style={{ display: 'flex', alignItems: 'center', border: '1px solid #ddd', borderRadius: '5px' }}>
+                <button 
+                  type="button"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+                >-</button>
+                <span style={{ padding: '0 0.5rem', fontWeight: 'bold' }}>{quantity}</span>
+                <button 
+                  type="button"
+                  onClick={() => setQuantity(quantity + 1)}
+                  style={{ padding: '0.5rem 1rem', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+                >+</button>
+              </div>
+
+              <button 
+                className="btn product-modal__add-btn" 
+                onClick={handleAddToCart}
+                disabled={!selectedSize}
+                style={{ flex: 1, backgroundColor: '#000', color: '#fff', minWidth: '120px' }}
               >
                 Add to Cart
               </button>
 
-              <Link to={`/product/${product.slug}`} className="btn product-modal__detail-btn">View Full Details</Link>
+              <Link
+                to={`/product/${product.slug}`}
+                className="btn product-modal__detail-btn"
+                style={{ flex: 1, textAlign: 'center', minWidth: '120px' }}
+              >
+                Details
+              </Link>
             </div>
           </div>
         </div>

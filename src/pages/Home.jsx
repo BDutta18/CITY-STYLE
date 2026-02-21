@@ -1,83 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import CartIcon from '../components/Cart/CartIcon'
 import NewsletterForm from '../components/NewsletterForm'
 import LazyImage from '../components/LazyImage'
 import ProductModal from '../components/ProductModal'
 import StarRating from '../components/Reviews/StarRating'
-
-const catalogueProducts = {
-  'hoodies-sweatshirts': {
-    slug: 'hoodies-sweatshirts',
-    name: 'Hoodies & Sweatshirts',
-    category: 'New Arrivals',
-    image: '/assets/hoodie.jpg',
-    price: 59.99,
-    originalPrice: 89.99,
-    badge: 'Trending',
-    rating: 4.5,
-    reviews: 128,
-    description: 'Premium quality hoodies and sweatshirts crafted for ultimate comfort and style. Made from soft, breathable cotton blend fabric with a modern oversized fit.',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#2c3e50', '#8e44ad', '#e5d241', '#ecf0f1'],
-  },
-  'coats-parkas': {
-    slug: 'coats-parkas',
-    name: 'Coats & Parkas',
-    category: 'New Arrivals',
-    image: '/assets/arrival-2.jpg',
-    price: 129.99,
-    originalPrice: 179.99,
-    badge: 'Winter Essential',
-    rating: 4.7,
-    reviews: 96,
-    description: 'Stay warm in style with our premium coats and parkas collection. Featuring water-resistant outer shells, insulated lining, and contemporary silhouettes.',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#2c3e50', '#7f8c8d', '#c0392b'],
-  },
-  'oversized-tshirt': {
-    slug: 'oversized-tshirt',
-    name: 'Oversized T-Shirt',
-    category: 'New Arrivals',
-    image: '/assets/OVRSIZED.webp',
-    price: 34.99,
-    originalPrice: 49.99,
-    badge: 'Best Seller',
-    rating: 4.8,
-    reviews: 256,
-    description: 'The ultimate streetwear essential. Our oversized tees feature a dropped shoulder design, premium heavyweight cotton, and a relaxed silhouette.',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#ecf0f1', '#e5d241', '#2ecc71', '#3498db'],
-  },
-  'instagram-trending': {
-    slug: 'instagram-trending',
-    name: 'Trending on Instagram',
-    category: "Young's Favourite",
-    image: '/assets/Selena Gomez.webp',
-    price: 79.99,
-    originalPrice: null,
-    badge: 'Viral',
-    rating: 4.6,
-    reviews: 189,
-    description: 'Curated collection of the most-loved pieces trending on Instagram. Stay ahead of the curve with our hand-picked viral fits.',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['#000000', '#e5d241', '#e74c3c', '#9b59b6'],
-  },
-  'under-40': {
-    slug: 'under-40',
-    name: 'All Under $40',
-    category: "Young's Favourite",
-    image: '/assets/favourite-2.jpg',
-    price: 29.99,
-    originalPrice: 39.99,
-    badge: 'Value Pick',
-    rating: 4.3,
-    reviews: 312,
-    description: 'Style does not have to break the bank. Discover our collection of trend-right pieces all priced under $40.',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#000000', '#ecf0f1', '#2c3e50', '#e5d241'],
-  },
-}
+import { getProductBySlug, newArrivals, youngsFavourite } from '../data/products'
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -86,8 +15,8 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate()
 
-  const openProductModal = useCallback((productKey) => {
-    setModalProduct(catalogueProducts[productKey])
+  const openProductModal = useCallback((productSlug) => {
+    setModalProduct(getProductBySlug(productSlug))
     setIsModalOpen(true)
   }, [])
 
@@ -159,11 +88,20 @@ const Home = () => {
           <li className="nav__auth-item">
             {user ? (
               <Link to="/profile" className="nav__profile-link">
-                <i className="fa-solid fa-circle-user"></i>
+                {typeof user.photoURL === 'string' ? (
+                  <img
+                    src={user.photoURL}
+                    alt={user.displayName}
+                    className="nav__avatar-img"
+                  />
+                ) : <i className="fa-solid fa-circle-user"></i>}
               </Link>
             ) : (
               <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
             )}
+          </li>
+          <li>
+            <CartIcon />
           </li>
         </ul>
       </nav>
@@ -224,103 +162,36 @@ const Home = () => {
       <section className="section__container arrival__container" id="catalogue">
         <h2 className="section__header">NEW ARRIVALS</h2>
         <div className="arrival__grid">
-          <div className="arrival__card">
-            <div className="arrival__image" style={{ position: 'relative' }}>
-              <LazyImage
-                src="/assets/hoodie.jpg"
-                webpSrc="/assets/optimized/hoodie.webp"
-                webpSrcSet="/assets/optimized/hoodie-480.webp 480w, /assets/optimized/hoodie-768.webp 768w"
-                srcSet="/assets/optimized/hoodie-480.jpg 480w, /assets/optimized/hoodie-768.jpg 768w"
-                sizes="(max-width: 768px) 100vw, 400px"
-                alt="arrival"
-                width={400}
-                height={520}
-                aspectRatio="4 / 5"
-                onClick={() => navigate('/product/hoodies-sweatshirts')}
-                style={{ cursor: 'pointer' }}
-              />
-              <button
-                className="quick-view-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openProductModal('hoodies-sweatshirts');
-                }}
-              >
-                Quick View
-              </button>
-            </div>
-            <div className="arrival__content">
-              <div>
-                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['hoodies-sweatshirts'].rating} size={14} /></div>
-                <h4>Hoodies & Sweatshirts</h4>
+          {newArrivals.map((product) => (
+            <div className="arrival__card" key={product.slug}>
+              <div className="arrival__image" style={{ position: 'relative' }}>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  onClick={() => navigate(`/product/${product.slug}`)}
+                  style={{ cursor: 'pointer' }}
+                />
+                <button
+                  className="quick-view-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openProductModal(product.slug);
+                  }}
+                >
+                  Quick View
+                </button>
               </div>
-              <span><i className="ri-arrow-right-line"></i></span>
-            </div>
-          </div>
-          <div className="arrival__card">
-            <div className="arrival__image" style={{ position: 'relative' }}>
-              <LazyImage
-                src="/assets/arrival-2.jpg"
-                webpSrc="/assets/optimized/arrival-2.webp"
-                webpSrcSet="/assets/optimized/arrival-2-480.webp 480w"
-                srcSet="/assets/optimized/arrival-2-480.jpg 480w"
-                sizes="(max-width: 768px) 100vw, 400px"
-                alt="arrival"
-                width={400}
-                height={520}
-                aspectRatio="4 / 5"
-                onClick={() => navigate('/product/coats-parkas')}
-                style={{ cursor: 'pointer' }}
-              />
-              <button
-                className="quick-view-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openProductModal('coats-parkas');
-                }}
-              >
-                Quick View
-              </button>
-            </div>
-            <div className="arrival__content">
-              <div>
-                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['coats-parkas'].rating} size={14} /></div>
-                <h4>Coats & Parkas</h4>
+              <div className="arrival__content">
+                <div>
+                  <div style={{ marginBottom: '5px' }}>
+                    <StarRating rating={product.rating} size={14} />
+                  </div>
+                  <h4>{product.name}</h4>
+                </div>
+                <span><i className="ri-arrow-right-line"></i></span>
               </div>
-              <span><i className="ri-arrow-right-line"></i></span>
             </div>
-          </div>
-          <div className="arrival__card">
-            <div className="arrival__image" style={{ position: 'relative' }}>
-              <LazyImage
-                src="/assets/OVRSIZED.png"
-                webpSrc="/assets/optimized/OVRSIZED.webp"
-                srcSet="/assets/OVRSIZED.png"
-                alt="arrival"
-                width={400}
-                height={520}
-                aspectRatio="4 / 5"
-                onClick={() => navigate('/product/oversized-tshirt')}
-                style={{ cursor: 'pointer' }}
-              />
-              <button
-                className="quick-view-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openProductModal('oversized-tshirt');
-                }}
-              >
-                Quick View
-              </button>
-            </div>
-            <div className="arrival__content">
-              <div>
-                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['oversized-tshirt'].rating} size={14} /></div>
-                <h4>Oversized T-Shirt</h4>
-              </div>
-              <span><i className="ri-arrow-right-line"></i></span>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -356,71 +227,36 @@ const Home = () => {
       <section className="section__container favourite__container" id="favourite">
         <h2 className="section__header">YOUNG'S FAVOURITE</h2>
         <div className="favourite__grid">
-          <div className="favourite__card">
-            <div className="favourite__image" style={{ position: 'relative' }}>
-              <LazyImage
-                src="/assets/Selena Gomez.webp"
-                webpSrc="/assets/optimized/Selena Gomez.webp"
-                webpSrcSet="/assets/optimized/Selena Gomez-480.webp 480w, /assets/optimized/Selena Gomez-768.webp 768w, /assets/optimized/Selena Gomez-1024.webp 1024w"
-                sizes="(max-width: 768px) 100vw, 575px"
-                alt="favourite"
-                width={575}
-                height={380}
-                aspectRatio="3 / 2"
-                onClick={() => navigate('/product/instagram-trending')}
-                style={{ cursor: 'pointer' }}
-              />
-              <button
-                className="quick-view-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openProductModal('instagram-trending');
-                }}
-              >
-                Quick View
-              </button>
-            </div>
-            <div className="favourite__content">
-              <div>
-                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['instagram-trending'].rating} size={14} /></div>
-                <h4>Trending on Instagram</h4>
+          {youngsFavourite.map((product) => (
+            <div className="favourite__card" key={product.slug}>
+              <div className="favourite__image" style={{ position: 'relative' }}>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  onClick={() => navigate(`/product/${product.slug}`)}
+                  style={{ cursor: 'pointer' }}
+                />
+                <button
+                  className="quick-view-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openProductModal(product.slug);
+                  }}
+                >
+                  Quick View
+                </button>
               </div>
-              <span><i className="ri-arrow-right-line"></i></span>
-            </div>
-          </div>
-          <div className="favourite__card">
-            <div className="favourite__image" style={{ position: 'relative' }}>
-              <LazyImage
-                src="/assets/favourite-2.jpg"
-                webpSrc="/assets/optimized/favourite-2.webp"
-                webpSrcSet="/assets/optimized/favourite-2-480.webp 480w"
-                srcSet="/assets/optimized/favourite-2-480.jpg 480w"
-                sizes="(max-width: 768px) 100vw, 575px"
-                alt="favourite"
-                width={575}
-                height={380}
-                aspectRatio="3 / 2"
-                onClick={() => navigate('/product/under-40')}
-                style={{ cursor: 'pointer' }}
-              />
-              <button
-                className="quick-view-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openProductModal('under-40');
-                }}
-              >
-                Quick View
-              </button>
-            </div>
-            <div className="favourite__content">
-              <div>
-                <div style={{ marginBottom: '5px' }}><StarRating rating={catalogueProducts['under-40'].rating} size={14} /></div>
-                <h4>All under $40</h4>
+              <div className="favourite__content">
+                <div>
+                  <div style={{ marginBottom: '5px' }}>
+                    <StarRating rating={product.rating} size={14} />
+                  </div>
+                  <h4>{product.name}</h4>
+                </div>
+                <span><i className="ri-arrow-right-line"></i></span>
               </div>
-              <span><i className="ri-arrow-right-line"></i></span>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 

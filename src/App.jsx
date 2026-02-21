@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import CartDrawer from './components/Cart/CartDrawer'
 import Home from './pages/Home'
 import SizeGuide from './pages/SizeGuide'
 import FAQ from './pages/FAQ'
@@ -28,6 +29,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
+        <CartDrawer />
         <BackToTop />
         <Routes>
           {/* Public Routes */}
