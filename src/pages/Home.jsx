@@ -7,6 +7,7 @@ import LazyImage from '../components/LazyImage'
 import ProductModal from '../components/ProductModal'
 import StarRating from '../components/Reviews/StarRating'
 import { getProductBySlug, newArrivals, youngsFavourite } from '../data/products'
+import CartIcon from '../components/Cart/CartIcon'
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
