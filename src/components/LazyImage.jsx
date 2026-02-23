@@ -125,7 +125,7 @@ const LazyImage = ({
   const handleError = () => {
     setHasError(true)
     setIsLoaded(true)
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.warn(`Failed to load image: ${src}`)
     }
   }
