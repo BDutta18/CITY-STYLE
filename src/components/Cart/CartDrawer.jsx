@@ -1,11 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import CartItem from './CartItem';
 import { formatCurrency } from '../../utils/cartHelpers';
 import './Cart.css';
 
 const CartDrawer = () => {
+  const navigate = useNavigate();
   const { cartItems, isCartOpen, toggleCart, cartTotal, clearCart } = useCart();
+
+  const handleCheckout = () => {
+    toggleCart();
+    navigate('/cart');
+  };
 
   return (
     <>
@@ -39,7 +46,7 @@ const CartDrawer = () => {
                 <span>{formatCurrency(cartTotal)}</span>
               </div>
               <p className="shipping-note">Shipping & taxes calculated at checkout</p>
-              <button className="checkout-btn">Proceed to Checkout</button>
+              <button className="checkout-btn" onClick={handleCheckout}>View Cart</button>
               <button className="clear-cart-btn" onClick={clearCart}>
                 Clear Cart
               </button>

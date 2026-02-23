@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { updateProfile } from '../firebase';
 import '../styles/Profile.css';
@@ -8,6 +8,7 @@ import LazyImage from '../components/LazyImage';
 
 const Profile = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
@@ -149,11 +150,11 @@ const Profile = () => {
                 <i className="ri-shopping-bag-line"></i> MY ORDERS
               </div>
               <ul className="sub-navigation">
-                <li className="coming-soon-item">
-                  Order History <span className="coming-soon-badge">Coming Soon</span>
+                <li onClick={() => navigate('/orders')} style={{ cursor: 'pointer' }}>
+                  Order History
                 </li>
-                <li className="coming-soon-item">
-                  In Cart <span className="coming-soon-badge">Coming Soon</span>
+                <li onClick={() => navigate('/cart')} style={{ cursor: 'pointer' }}>
+                  In Cart
                 </li>
                 <li className="coming-soon-item">
                   Returns <span className="coming-soon-badge">Coming Soon</span>
