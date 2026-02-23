@@ -1,5 +1,7 @@
 import React, { Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
 import CartDrawer from './components/Cart/CartDrawer'
 import BackToTop from './components/BackToTop'
 

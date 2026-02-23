@@ -1,0 +1,287 @@
+/* ──────────────────────────────────────────────
+   Shop Page Styles
+   ────────────────────────────────────────────── */
+
+.shop-root {
+    min-height: 100vh;
+    background: #f6f7f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ── Navbar ───────────────────────────────── */
+
+.shop-nav {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    background: rgba(18, 18, 28, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 30px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.shop-nav__logo a {
+    color: #fff;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.shop-nav__links {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.shop-nav__links a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+.shop-nav__links a:hover {
+    color: #fff;
+}
+
+/* ── Right Side Actions ───────────────────── */
+
+.shop-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.shop-nav__profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #fff;
+    transition: opacity 0.2s ease;
+}
+
+.shop-nav__profile:hover {
+    opacity: 0.8;
+}
+
+.shop-nav__profile img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #e5d241;
+    object-fit: cover;
+}
+
+.shop-nav__username {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.shop-nav__logout {
+    background: #e5d241;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    letter-spacing: 0.5px;
+}
+
+.shop-nav__logout:hover {
+    opacity: 0.85;
+}
+
+/* ── Mobile Toggle ────────────────────────── */
+
+.shop-nav__mobile-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ── Mobile Nav ───────────────────────────── */
+
+.shop-mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.shop-mobile-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.shop-mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(18, 18, 28, 0.97);
+    backdrop-filter: blur(25px);
+    list-style: none;
+    padding: 5rem 2rem 2rem;
+    margin: 0;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.shop-mobile-nav.open {
+    transform: translateX(0);
+}
+
+.shop-mobile-nav li a {
+    display: block;
+    padding: 1rem 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: color 0.2s ease;
+}
+
+.shop-mobile-nav li a:hover {
+    color: #e5d241;
+}
+
+.shop-mobile-logout {
+    margin-top: 1.5rem;
+    padding: 0.7rem 1.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: rgba(229, 210, 65, 0.15);
+    border: 1px solid rgba(229, 210, 65, 0.3);
+    color: #e5d241;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.shop-mobile-logout:hover {
+    background: #e5d241;
+    color: #000;
+}
+
+/* ── Main Content ─────────────────────────── */
+
+.shop-main {
+    padding-top: 100px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Coming Soon State ────────────────────── */
+
+.shop-coming-soon {
+    text-align: center;
+    padding: 40px 20px;
+    max-width: 600px;
+}
+
+.shop-coming-soon__icon {
+    font-size: 4rem;
+    color: #e5d241;
+    margin-bottom: 20px;
+}
+
+.shop-coming-soon h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 12px;
+}
+
+.shop-coming-soon p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 36px;
+}
+
+.shop-coming-soon__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.shop-cat-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.shop-cat-btn:hover {
+    background: #e5d241;
+    border-color: #e5d241;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(229, 210, 65, 0.3);
+}
+
+/* ── Responsive ───────────────────────────── */
+
+@media (max-width: 900px) {
+    .shop-nav__links {
+        display: none;
+    }
+
+    .shop-nav__actions {
+        display: none;
+    }
+
+    .shop-nav__mobile-btn {
+        display: flex;
+    }
+
+    .shop-mobile-overlay {
+        display: block;
+    }
+
+    .shop-mobile-nav {
+        display: block;
+    }
+}
