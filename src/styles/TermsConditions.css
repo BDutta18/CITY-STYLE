@@ -1,0 +1,121 @@
+.terms-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .terms-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.terms-sidebar {
+  flex: 1;
+  position: sticky;
+  top: 100px;
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--extra-light);
+}
+
+.terms-sidebar h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.terms-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.terms-sidebar li {
+  margin-bottom: 0.5rem;
+}
+
+.terms-sidebar a {
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.terms-sidebar a:hover,
+.terms-sidebar a.active {
+  color: var(--text-dark);
+  background-color: var(--primary-color);
+  font-weight: 500;
+}
+
+.terms-content {
+  flex: 3;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--extra-light);
+}
+
+.terms-content h1 {
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.terms-content .last-updated {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.terms-section {
+  margin-bottom: 2.5rem;
+}
+
+.terms-section h2 {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.terms-section p {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.terms-section ul {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.terms-section li {
+  margin-bottom: 0.5rem;
+}
+
+/* Dark theme support */
+.dark-theme .terms-sidebar,
+.dark-theme .terms-content {
+  background-color: var(--extra-light);
+  border-color: var(--text-light);
+}
+
+.dark-theme .terms-sidebar a:hover,
+.dark-theme .terms-sidebar a.active {
+  color: var(--text-dark);
+}
