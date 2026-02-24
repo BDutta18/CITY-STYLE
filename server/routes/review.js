@@ -4,6 +4,7 @@ import Review from '../models/Rate.js'
 import User from '../models/User.js'
 
 const router = express.Router()
+const reviewIndexesReady = Review.init()
 
 const publicReviewFilter = (productSlug) => ({
   productSlug: String(productSlug).trim().toLowerCase(),
@@ -66,7 +67,7 @@ router.get('/:productSlug/summary', async (req, res) => {
 
 router.post('/submit', authenticateUser, async (req, res) => {
   try {
-    console.log(req.user.firebaseUid, req.user.email)
+    await reviewIndexesReady
     const { productSlug, rating, title, comment, sizePurchased, imageUrl, recommended } = req.body
     const normalizedProductSlug = String(productSlug || '').trim().toLowerCase()
     const normalizedUserId = String(req.user.firebaseUid || '').trim()
