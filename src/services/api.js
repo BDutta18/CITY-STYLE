@@ -8,6 +8,14 @@ const getAuthHeaders = (user) => {
   };
 };
 
+const parseResponse = async (response) => {
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data?.error || 'Request failed');
+  }
+  return data;
+};
+
 export const cartAPI = {
   async getCart(user) {
     const response = await fetch(`${API_URL}/cart`, {
@@ -16,8 +24,7 @@ export const cartAPI = {
         ...getAuthHeaders(user)
       }
     });
-    if (!response.ok) throw new Error('Failed to fetch cart');
-    return response.json();
+    return parseResponse(response);
   },
 
   async syncCart(user, items) {
@@ -29,8 +36,7 @@ export const cartAPI = {
       },
       body: JSON.stringify({ items })
     });
-    if (!response.ok) throw new Error('Failed to sync cart');
-    return response.json();
+    return parseResponse(response);
   },
 
   async updateCart(user, items) {
@@ -42,8 +48,7 @@ export const cartAPI = {
       },
       body: JSON.stringify({ items })
     });
-    if (!response.ok) throw new Error('Failed to update cart');
-    return response.json();
+    return parseResponse(response);
   },
 
   async clearCart(user) {
@@ -54,8 +59,7 @@ export const cartAPI = {
         ...getAuthHeaders(user)
       }
     });
-    if (!response.ok) throw new Error('Failed to clear cart');
-    return response.json();
+    return parseResponse(response);
   }
 };
 
@@ -69,8 +73,7 @@ export const orderAPI = {
       },
       body: JSON.stringify(orderData)
     });
-    if (!response.ok) throw new Error('Failed to create order');
-    return response.json();
+    return parseResponse(response);
   },
 
   async getOrders(user) {
@@ -80,8 +83,7 @@ export const orderAPI = {
         ...getAuthHeaders(user)
       }
     });
-    if (!response.ok) throw new Error('Failed to fetch orders');
-    return response.json();
+    return parseResponse(response);
   },
 
   async getOrder(user, orderId) {
@@ -91,8 +93,7 @@ export const orderAPI = {
         ...getAuthHeaders(user)
       }
     });
-    if (!response.ok) throw new Error('Failed to fetch order');
-    return response.json();
+    return parseResponse(response);
   },
 
   async cancelOrder(user, orderId, reason) {
@@ -104,8 +105,7 @@ export const orderAPI = {
       },
       body: JSON.stringify({ reason })
     });
-    if (!response.ok) throw new Error('Failed to cancel order');
-    return response.json();
+    return parseResponse(response);
   }
 };
 
@@ -119,8 +119,7 @@ export const userAPI = {
       },
       body: JSON.stringify(userData)
     });
-    if (!response.ok) throw new Error('Failed to sync user');
-    return response.json();
+    return parseResponse(response);
   },
 
   async getAddresses(user) {
@@ -130,8 +129,7 @@ export const userAPI = {
         ...getAuthHeaders(user)
       }
     });
-    if (!response.ok) throw new Error('Failed to fetch addresses');
-    return response.json();
+    return parseResponse(response);
   },
 
   async addAddress(user, addressData) {
@@ -143,8 +141,7 @@ export const userAPI = {
       },
       body: JSON.stringify(addressData)
     });
-    if (!response.ok) throw new Error('Failed to add address');
-    return response.json();
+    return parseResponse(response);
   },
 
   async updateAddress(user, addressId, addressData) {
@@ -156,8 +153,7 @@ export const userAPI = {
       },
       body: JSON.stringify(addressData)
     });
-    if (!response.ok) throw new Error('Failed to update address');
-    return response.json();
+    return parseResponse(response);
   },
 
   async deleteAddress(user, addressId) {
@@ -168,7 +164,34 @@ export const userAPI = {
         ...getAuthHeaders(user)
       }
     });
-    if (!response.ok) throw new Error('Failed to delete address');
-    return response.json();
+    return parseResponse(response);
+  }
+};
+
+export const reviewAPI = {
+  async getByProduct(productSlug) {
+    const response = await fetch(`${API_URL}/reviews/${productSlug}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return parseResponse(response);
+  },
+
+  async submitReview(user, reviewData) {
+    const response = await fetch(`${API_URL}/reviews/submit`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(user)
+      },
+      body: JSON.stringify(reviewData)
+    });
+    return parseResponse(response);
+  },
+
+  async getSummary(productSlug) {
+    const response = await fetch(`${API_URL}/reviews/${productSlug}/summary`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return parseResponse(response);
   }
 };

@@ -4,10 +4,10 @@ import { useAuth } from '../context/AuthContext'
 import Breadcrumb from '../components/Breadcrumb'
 import ReviewForm from '../components/Reviews/ReviewForm'
 import ReviewList from '../components/Reviews/ReviewList'
-import StarRating from '../components/Reviews/StarRating'
 import { getProductBySlug } from '../data/products'
 import { useCart } from '../contexts/CartContext'
 import CartIcon from '../components/Cart/CartIcon'
+import { reviewAPI } from '../services/api'
 import '../styles/ProductDetail.css'
 
 const ProductDetail = () => {
@@ -19,37 +19,77 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [reviews, setReviews] = useState([])
+  const [reviewSummary, setReviewSummary] = useState({ averageRating: 0, totalReviews: 0 })
+  const [reviewsLoading, setReviewsLoading] = useState(false)
+  const [reviewError, setReviewError] = useState('')
+  const [submitError, setSubmitError] = useState('')
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false)
 
   const product = getProductBySlug(slug)
 
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      userName: 'Alex M.',
-      rating: 5,
-      date: '2025-01-15T10:00:00Z',
-      title: 'Absolutely love it!',
-      content: 'I was skeptical at first, but this product exceeded my expectations. The quality is top-notch and it arrived faster than expected.',
-      verified: true,
-      recommended: true,
-      size: 'L'
-    },
-    {
-      id: 2,
-      userName: 'Sarah K.',
-      rating: 4,
-      date: '2025-02-02T14:30:00Z',
-      title: 'Great, but size runs small',
-      content: 'Really nice material. I usually wear M but ordered L for an oversized fit and it was perfect. Just keep in mind check the size guide.',
-      verified: true,
-      recommended: true,
-      size: 'L'
-    }
-  ]);
+  const normalizeReview = (review) => ({
+    id: review._id || review.id,
+    userName: review.userName || review?.user?.name || 'Anonymous',
+    rating: review.rating,
+    date: review.date || review.createdAt,
+    title: review.title,
+    content: review.content || review.comment,
+    verified: Boolean(review.verified),
+    recommended: review.recommended,
+    size: review.size || review.sizePurchased,
+    image: review.image || review.imageUrl
+  })
 
-  const handleReviewSubmit = (newReview) => {
-    setReviews([newReview, ...reviews]);
-  };
+  const fetchReviews = async () => {
+    if (!slug) return
+
+    try {
+      setReviewsLoading(true)
+      setReviewError('')
+      const data = await reviewAPI.getByProduct(slug)
+      setReviews((data.reviews || []).map(normalizeReview))
+      setReviewSummary({
+        averageRating: data.averageRating || 0,
+        totalReviews: data.totalReviews || 0
+      })
+    } catch (error) {
+      setReviewError(error.message || 'Failed to load reviews')
+      setReviews([])
+      setReviewSummary({ averageRating: 0, totalReviews: 0 })
+    } finally {
+      setReviewsLoading(false)
+    }
+  }
+
+  const handleReviewSubmit = async (newReview) => {
+    if (!user) {
+      navigate('/auth')
+      return false
+    }
+
+    setSubmitError('')
+    setIsSubmittingReview(true)
+
+    try {
+      await reviewAPI.submitReview(user, {
+        productSlug: slug,
+        rating: newReview.rating,
+        title: newReview.title,
+        comment: newReview.content,
+        sizePurchased: newReview.size,
+        recommended: newReview.recommend
+      })
+
+      await fetchReviews()
+      return true
+    } catch (error) {
+      setSubmitError(error.message || 'Failed to submit review')
+      return false
+    } finally {
+      setIsSubmittingReview(false)
+    }
+  }
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -57,6 +97,10 @@ const ProductDetail = () => {
     if (product?.sizes?.length > 0) setSelectedSize(product.sizes[0])
     if (product?.colors?.length > 0) setSelectedColor(product.colors[0])
   }, [slug, product])
+
+  useEffect(() => {
+    fetchReviews()
+  }, [slug])
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
@@ -81,6 +125,9 @@ const ProductDetail = () => {
       </>
     )
   }
+
+  const displayedRating = reviewSummary.totalReviews > 0 ? reviewSummary.averageRating : product.rating
+  const displayedReviewCount = reviewSummary.totalReviews > 0 ? reviewSummary.totalReviews : product.reviews
 
   return (
     <>
@@ -142,16 +189,16 @@ const ProductDetail = () => {
                 <i
                   key={i}
                   className={
-                    i < Math.floor(product.rating)
+                    i < Math.floor(displayedRating)
                       ? 'ri-star-fill'
-                      : i < product.rating
+                      : i < displayedRating
                         ? 'ri-star-half-fill'
                         : 'ri-star-line'
                   }
                 ></i>
               ))}
               <span>
-                {product.rating} ({product.reviews} reviews)
+                {displayedRating} ({displayedReviewCount} reviews)
               </span>
             </div>
 
@@ -276,12 +323,26 @@ const ProductDetail = () => {
 
         <div className="section__container" id="reviews">
           <h2 className="section__header">Customer Reviews</h2>
+          {reviewError && (
+            <p style={{ color: '#c0392b', marginBottom: '1rem' }}>{reviewError}</p>
+          )}
+          {submitError && (
+            <p style={{ color: '#c0392b', marginBottom: '1rem' }}>{submitError}</p>
+          )}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', justifyContent: 'center' }}>
             <div style={{ flex: '1 1 400px', minWidth: '300px' }}>
-              <ReviewList reviews={reviews} />
+              {reviewsLoading ? (
+                <p>Loading reviews...</p>
+              ) : (
+                <ReviewList reviews={reviews} summary={reviewSummary} />
+              )}
             </div>
             <div style={{ flex: '1 1 300px', minWidth: '300px' }}>
-              <ReviewForm onSubmit={handleReviewSubmit} />
+              <ReviewForm
+                onSubmit={handleReviewSubmit}
+                isSubmitting={isSubmittingReview}
+                isLoggedIn={Boolean(user)}
+              />
             </div>
           </div>
         </div>

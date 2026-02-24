@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReviewCard from './ReviewCard';
 import StarRating from './StarRating';
 
-const ReviewList = ({ reviews }) => {
+const ReviewList = ({ reviews, summary }) => {
   const [filterRating, setFilterRating] = useState('all');
   const [sortOption, setSortOption] = useState('recent');
 
@@ -20,7 +20,7 @@ const ReviewList = ({ reviews }) => {
       case 'recent':
       default:
         // Use getTime() for safer date comparison
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return new Date(b.date || b.createdAt).getTime() - new Date(a.date || a.createdAt).getTime();
     }
   });
 
@@ -28,9 +28,10 @@ const ReviewList = ({ reviews }) => {
       return <div>No reviews yet. Be the first to review!</div>;
   }
 
-  const averageRating = (
-    reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
-  ).toFixed(1);
+  const averageRating = summary?.averageRating
+    ? Number(summary.averageRating).toFixed(1)
+    : (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1);
+  const totalReviews = summary?.totalReviews ?? reviews.length;
 
   return (
     <div className="review-list">
@@ -39,7 +40,7 @@ const ReviewList = ({ reviews }) => {
             <h2 style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>{averageRating}</h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <StarRating rating={parseFloat(averageRating)} size={24} />
-                <span style={{ color: '#666', fontSize: '0.9rem' }}>Based on {reviews.length} reviews</span>
+                <span style={{ color: '#666', fontSize: '0.9rem' }}>Based on {totalReviews} reviews</span>
             </div>
          </div>
          
