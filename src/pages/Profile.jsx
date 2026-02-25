@@ -44,7 +44,7 @@ const Profile = () => {
   /* ── Handlers ──────────────────────────────── */
   const handleLogout = async () => {
     await logout();
-    // ProtectedRoute will redirect to /auth automatically
+    navigate('/'); // Redirect to home page after logout
   };
 
   const handleInputChange = (e) => {

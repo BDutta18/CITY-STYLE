@@ -17,7 +17,12 @@ const AUTH_ERRORS = {
 };
 
 const getErrorMessage = (error) => {
-  return AUTH_ERRORS[error.code] || 'Something went wrong. Please try again.';
+  // If it's a known Firebase error, return friendly message
+  if (AUTH_ERRORS[error.code]) {
+      return AUTH_ERRORS[error.code];
+  }
+  // Otherwise return the backend/standard error message
+  return error.message || 'Something went wrong. Please try again.';
 };
 
 /* ──────────────────────────────────────────────
@@ -47,6 +52,8 @@ const Auth = () => {
   const [resetEmail, setResetEmail] = useState('');
   const [resetMessage, setResetMessage] = useState('');
 
+  const [successMessage, setSuccessMessage] = useState('');
+
   /* ── Helpers ────────────────────────────────── */
   const clearForm = () => {
     setFullName('');
@@ -55,6 +62,7 @@ const Auth = () => {
     setConfirmPassword('');
     setError('');
     setShowPassword(false);
+    setSuccessMessage('');
   };
 
   const switchMode = () => {
@@ -98,6 +106,7 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
 
     if (!validateForm()) return;
 
@@ -106,10 +115,20 @@ const Auth = () => {
     try {
       if (isLogin) {
         await login(email, password);
+        navigate('/profile');
       } else {
         await register(fullName.trim(), email, password);
+        // Show success message
+        setSuccessMessage('Account created successfully! Switching to Login...');
+        
+        // Wait briefly to show the success message, then switch to login mode automatically
+        setTimeout(() => {
+          setSuccessMessage('');
+          setIsLogin(true); // Switch to login form
+          setPassword('');  // Clear sensitive fields
+          setConfirmPassword('');
+        }, 1500);
       }
-      navigate('/shop');
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {
@@ -124,7 +143,7 @@ const Auth = () => {
 
     try {
       await loginWithGoogle();
-      navigate('/shop');
+      navigate('/profile');
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {
@@ -292,6 +311,8 @@ const Auth = () => {
 
           {/* Error Message */}
           {error && <p className="error-message">{error}</p>}
+          {/* Success Message */}
+          {successMessage && <p className="success-message" style={{color: 'green', margin: '10px 0'}}>{successMessage}</p>}
 
           {/* Submit Button */}
           <button type="submit" className="login-btn" disabled={loading}>

@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import rateLimit from 'express-rate-limit'
 import { connectDB } from './config/database.js'
+import authRoutes from './routes/auth.js'
 import newsletterRoutes from './routes/newsletter.js'
 import cartRoutes from './routes/cart.js'
 import orderRoutes from './routes/orders.js'
@@ -16,6 +17,7 @@ connectDB()
 
 app.use(cors({ origin: true }))
 app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -24,6 +26,7 @@ const limiter = rateLimit({
 })
 app.use('/api/newsletter', limiter)
 
+app.use('/api/auth', authRoutes)
 app.use('/api/newsletter', newsletterRoutes)
 app.use('/api/cart', cartRoutes)
 app.use('/api/orders', orderRoutes)

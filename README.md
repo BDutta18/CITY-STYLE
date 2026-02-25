@@ -42,11 +42,40 @@ Perfect for fashion bloggers, style enthusiasts, designers, and anyone passionat
 
 Before you begin, ensure you have the following installed:
 
-- **Web Browser**: Chrome 80+, Firefox 75+, Safari 13+, or Edge 80+
-- **Code Editor** (optional): VS Code, Atom, or Sublime Text
-- **Local Server** (recommended): Live Server extension or Python's built-in server
+- **Node.js**: v14.0.0 or higher
+- **npm**: v6.0.0 or higher
+- **MongoDB**: A running MongoDB instance (local or Atlas)
 
 ### ⚡ Quick Start
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/BDutta18/CITY-STYLE.git
+    cd CITY-STYLE
+    ```
+
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Environment Configuration**
+    Create a `.env` file in the root directory and add your MongoDB URI and JWT Secret:
+    ```env
+    MONGODB_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret_key
+    PORT=3001
+    ```
+
+4.  **Run the Application**
+    To run both the frontend and backend concurrently:
+    ```bash
+    npm run dev:all
+    ```
+    
+    Or run them separately:
+    - **Frontend**: `npm run dev` (http://localhost:5173)
+    - **Backend**: `npm run server` (http://localhost:3001)
 
 1. **Clone the repository**
    ```bash
