@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { auth } from '../firebase' 
-import { onAuthStateChanged } from 'firebase/auth'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import CartIcon from '../components/Cart/CartIcon'
 import NewsletterForm from '../components/NewsletterForm'
 import LazyImage from '../components/LazyImage'
 import ProductModal from '../components/ProductModal'
 import StarRating from '../components/Reviews/StarRating'
 import { getProductBySlug, newArrivals, youngsFavourite } from '../data/products'
-import CartIcon from '../components/Cart/CartIcon'
 
 const Home = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState(null)
+  const { user } = useAuth()
   const [modalProduct, setModalProduct] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate()
@@ -26,11 +25,12 @@ const Home = () => {
     setModalProduct(null)
   }, [])
 
-  useEffect(() => {
+  // Logged-in users land on Shop — the landing page is for visitors only
+  if (user) {
+    return <Navigate to="/shop" replace />
+  }
 
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
+  useEffect(() => {
 
     const scrollRevealOption = {
       origin: "bottom",
@@ -53,7 +53,6 @@ const Home = () => {
       sr.reveal(".favourite__card", { ...scrollRevealOption, interval: 500 });
     }
 
-    return () => unsubscribe(); 
   }, [])
 
   const bannerImages = [
@@ -86,24 +85,24 @@ const Home = () => {
           <li><a href="#fashion">FASHION</a></li>
           <li><a href="#favourite">FAVOURITE</a></li>
           <li><a href="#lifestyle">LIFESTYLE</a></li>
-           <li className="nav__auth-item">
-              {user ? (
-                <Link to="/profile" className="nav__profile-link">
-                  {typeof user.photoURL === 'string' ? (
-                    <img 
-                      src={user.photoURL} 
-                      alt={user.displayName} 
-                      className="nav__avatar-img"
-                    />
-                  ) : <i className="fa-solid fa-circle-user"></i>}
-                </Link>
-              ) : (
-                <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
-              )}
-            </li>
-            <li>
-              <CartIcon />
-            </li>
+          <li className="nav__auth-item">
+            {user ? (
+              <Link to="/profile" className="nav__profile-link">
+                {typeof user.photoURL === 'string' ? (
+                  <img
+                    src={user.photoURL}
+                    alt={user.displayName}
+                    className="nav__avatar-img"
+                  />
+                ) : <i className="fa-solid fa-circle-user"></i>}
+              </Link>
+            ) : (
+              <Link to="/auth" className="btn signup-btn">SIGN UP</Link>
+            )}
+          </li>
+          <li>
+            <CartIcon />
+          </li>
         </ul>
       </nav>
 
@@ -165,14 +164,14 @@ const Home = () => {
         <div className="arrival__grid">
           {newArrivals.map((product) => (
             <div className="arrival__card" key={product.slug}>
-              <div className="arrival__image" style={{position: 'relative'}}>
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
+              <div className="arrival__image" style={{ position: 'relative' }}>
+                <img
+                  src={product.image}
+                  alt={product.name}
                   onClick={() => navigate(`/product/${product.slug}`)}
-                  style={{cursor: 'pointer'}}
+                  style={{ cursor: 'pointer' }}
                 />
-                <button 
+                <button
                   className="quick-view-btn"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -230,14 +229,14 @@ const Home = () => {
         <div className="favourite__grid">
           {youngsFavourite.map((product) => (
             <div className="favourite__card" key={product.slug}>
-              <div className="favourite__image" style={{position: 'relative'}}>
-                <img 
-                  src={product.image} 
-                  alt={product.name} 
+              <div className="favourite__image" style={{ position: 'relative' }}>
+                <img
+                  src={product.image}
+                  alt={product.name}
                   onClick={() => navigate(`/product/${product.slug}`)}
-                  style={{cursor: 'pointer'}}
+                  style={{ cursor: 'pointer' }}
                 />
-                <button 
+                <button
                   className="quick-view-btn"
                   onClick={(e) => {
                     e.stopPropagation();

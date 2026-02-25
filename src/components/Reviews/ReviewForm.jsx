@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import StarRating from './StarRating';
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ onSubmit, isSubmitting = false, isLoggedIn = true }) => {
   const [formData, setFormData] = useState({
     rating: 0,
     title: '',
@@ -42,15 +42,12 @@ const ReviewForm = ({ onSubmit }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
       const reviewData = {
         ...formData,
-        date: new Date().toISOString(),
-        id: Date.now(),
-        userName: 'You',
-        verified: false // New reviews are not verified automatically
+        date: new Date().toISOString()
       };
 
       // Create object URL for local image preview if a file was selected
@@ -58,7 +55,8 @@ const ReviewForm = ({ onSubmit }) => {
           reviewData.image = URL.createObjectURL(formData.image);
       }
 
-      onSubmit(reviewData);
+      const success = await onSubmit(reviewData);
+      if (!success) return;
 
       // Reset form
       setFormData({
@@ -75,6 +73,9 @@ const ReviewForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} style={{ border: '1px solid #ddd', padding: '20px', borderRadius: '8px', backgroundColor: '#fdfdfd' }}>
       <h3 style={{ marginTop: 0 }}>Write a Review</h3>
+      {!isLoggedIn && (
+        <p style={{ color: '#666', marginTop: '-4px' }}>Please sign in to submit a review.</p>
+      )}
       
       <div style={{ marginBottom: '15px' }}>
         <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Rating *</label>
@@ -167,19 +168,21 @@ const ReviewForm = ({ onSubmit }) => {
 
       <button 
         type="submit" 
+        disabled={isSubmitting || !isLoggedIn}
         style={{ 
             backgroundColor: '#000', 
             color: '#fff', 
             padding: '10px 20px', 
             border: 'none', 
             borderRadius: '4px', 
-            cursor: 'pointer', 
+            cursor: isSubmitting || !isLoggedIn ? 'not-allowed' : 'pointer', 
             fontSize: '1rem',
             fontWeight: 'bold',
-            width: '100%'
+            width: '100%',
+            opacity: isSubmitting || !isLoggedIn ? 0.7 : 1
         }}
       >
-        Submit Review
+        {isSubmitting ? 'Submitting...' : 'Submit Review'}
       </button>
     </form>
   );
