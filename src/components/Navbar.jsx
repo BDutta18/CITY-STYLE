@@ -36,6 +36,7 @@ const Navbar = () => {
         </div>
       </div>
       <ul className={`nav__links ${isMenuOpen ? "open" : ""}`} id="nav-links" onClick={closeMenu}>
+        <li><Link to="/shop">SHOP</Link></li>
         <li><a href={getHashLink("#catalogue")}>CATALOGUE</a></li>
         <li><a href={getHashLink("#fashion")}>FASHION</a></li>
         <li><a href={getHashLink("#favourite")}>FAVOURITE</a></li>
@@ -44,9 +45,9 @@ const Navbar = () => {
           {user ? (
             <Link to="/profile" className="nav__profile-link">
               {user.photoURL ? (
-                <img 
-                  src={user.photoURL} 
-                  alt={user.displayName} 
+                <img
+                  src={user.photoURL}
+                  alt={user.displayName}
                   className="nav__avatar-img"
                 />
               ) : <i className="fa-solid fa-circle-user"></i>}

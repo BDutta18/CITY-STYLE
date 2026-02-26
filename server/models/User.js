@@ -19,11 +19,20 @@ const userSchema = new mongoose.Schema({
   displayName: String,
   photoURL: String,
   addresses: [addressSchema],
+  preferences: {
+    gender: { type: String },
+    ageRange: { type: String },
+    style: [{ type: String }],
+    fit: { type: String },
+    budget: { type: String },
+    categories: [{ type: String }],
+    onboardingCompleted: { type: Boolean, default: false }
+  },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
 
-userSchema.pre('save', function() {
+userSchema.pre('save', function () {
   this.updatedAt = Date.now();
 });
 
