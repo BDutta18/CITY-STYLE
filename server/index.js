@@ -8,6 +8,7 @@ import cartRoutes from './routes/cart.js'
 import orderRoutes from './routes/orders.js'
 import userRoutes from './routes/users.js'
 import reviewRoutes from './routes/review.js'
+import productRoutes from './routes/products.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -29,6 +30,7 @@ app.use('/api/cart', cartRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/reviews', reviewRoutes)
+app.use('/api/products', productRoutes)
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' })
 })

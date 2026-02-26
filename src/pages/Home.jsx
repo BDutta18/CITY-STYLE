@@ -81,6 +81,7 @@ const Home = () => {
           </div>
         </div>
         <ul className={`nav__links ${isMenuOpen ? "open" : ""}`} id="nav-links" onClick={closeMenu}>
+          <li><Link to="/shop">SHOP</Link></li>
           <li><a href="#catalogue">CATALOGUE</a></li>
           <li><a href="#fashion">FASHION</a></li>
           <li><a href="#favourite">FAVOURITE</a></li>

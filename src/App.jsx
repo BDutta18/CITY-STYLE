@@ -22,6 +22,7 @@ const LegalNotice = lazy(() => import('./pages/LegalNotice'))
 const Profile = lazy(() => import('./pages/Profile'))
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 const Shop = lazy(() => import('./pages/Shop'))
+const Onboarding = lazy(() => import('./pages/Onboarding'))
 const StoreLocation = lazy(() => import('./pages/StoreLocation'))
 const Support = lazy(() => import('./pages/Support'))
 const TermsConditions = lazy(() => import('./pages/TermsConditions'))
@@ -45,7 +46,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/size-guide' element={<SizeGuide />} />
               <Route path='/faq' element={<FAQ />} />
-              
+
               {/* Migrated Routes */}
               <Route path='/about' element={<About />} />
               <Route path='/auth' element={<Auth />} />
@@ -60,6 +61,7 @@ function App() {
               <Route path='/profile' element={<Profile />} />
               <Route path='/product/:slug' element={<ProductDetail />} />
               <Route path='/shop' element={<Shop />} />
+              <Route path='/onboarding' element={<Onboarding />} />
               <Route path='/store-location' element={<NotFound />} />
               <Route path='/support' element={<Support />} />
               <Route path='/terms' element={<TermsConditions />} />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { getAdditionalUserInfo } from 'firebase/auth';
 import '../styles/Auth.css';
 
 /* ──────────────────────────────────────────────
@@ -106,10 +107,11 @@ const Auth = () => {
     try {
       if (isLogin) {
         await login(email, password);
+        navigate('/shop');
       } else {
         await register(fullName.trim(), email, password);
+        navigate('/onboarding');
       }
-      navigate('/shop');
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {
@@ -123,8 +125,13 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      await loginWithGoogle();
-      navigate('/shop');
+      const result = await loginWithGoogle();
+      const additionalInfo = getAdditionalUserInfo(result);
+      if (additionalInfo?.isNewUser) {
+        navigate('/onboarding');
+      } else {
+        navigate('/shop');
+      }
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {
