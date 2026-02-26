@@ -57,7 +57,11 @@ function App() {
               <Route path='/order-tracking' element={<NotFound />} />
               <Route path='/oversized-tshirt' element={<NotFound />} />
               <Route path='/privacy' element={<NotFound />} />
-              <Route path='/profile' element={<Profile />} />
+              
+              <Route element={<ProtectedRoute />}>
+                <Route path='/profile' element={<Profile />} />
+              </Route>
+
               <Route path='/product/:slug' element={<ProductDetail />} />
               <Route path='/shop' element={<Shop />} />
               <Route path='/store-location' element={<NotFound />} />
@@ -68,10 +72,12 @@ function App() {
 
               {/* Upstream Routes */}
               <Route path='/cart' element={<Cart />} />
-              <Route path='/checkout' element={<Checkout />} />
-              <Route path='/orders' element={<Orders />} />
-              <Route path='/orders/:orderId' element={<OrderDetail />} />
-              <Route path='/order-confirmation/:orderId' element={<OrderConfirmation />} />
+              <Route element={<ProtectedRoute />}>
+                  <Route path='/checkout' element={<Checkout />} />
+                  <Route path='/orders' element={<Orders />} />
+                  <Route path='/orders/:orderId' element={<OrderDetail />} />
+                  <Route path='/order-confirmation/:orderId' element={<OrderConfirmation />} />
+              </Route>
             </Routes>
           </Suspense>
         </CartProvider>

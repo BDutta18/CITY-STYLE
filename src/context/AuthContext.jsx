@@ -35,34 +35,102 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    /* Single listener — replaces the duplicate listeners
-       that were scattered across Home, Profile, and ProductDetail */
+    /* Check for token in localStorage on mount */
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
+        const checkUser = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    // Update this to your deployed backend URL in production
+                    const response = await fetch('http://localhost:3001/api/auth/me', {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    if (response.ok) {
+                        const userData = await response.json();
+                        setUser(userData);
+                    } else {
+                        localStorage.removeItem('token');
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch user", error);
+                    localStorage.removeItem('token');
+                }
+            } else {
+                // If no token in local storage, check Firebase (e.g. for Google Sign In users)
+                // We need to wait for Firebase to initialize before setting loading=false
+                await new Promise(resolve => {
+                    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+                        if (currentUser) {
+                            setUser(currentUser);
+                        }
+                        unsubscribe(); // Unsubscribe immediately after first callback
+                        resolve();
+                    });
+                });
+                
+                // Set up a permanent listener for auth state changes
+                onAuthStateChanged(auth, (currentUser) => {
+                     // Only update user state if we are not using our custom backend token
+                     if (!localStorage.getItem('token')) {
+                        setUser(currentUser);
+                     }
+                });
+            }
             setLoading(false);
-        });
-
-        return () => unsubscribe();
+        };
+        checkUser();
     }, []);
 
     /* ── Auth Actions ─────────────────────────── */
 
     /**
-     * Register a new user with email and password.
-     * Automatically sets the display name so Profile works immediately.
+     * Register a new user with email and password via Backend API.
      */
     const register = async (fullName, email, password) => {
-        const result = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(result.user, { displayName: fullName });
-        return result;
+        try {
+            const response = await fetch('http://localhost:3001/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: fullName, email, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Registration failed');
+            }
+
+            // DO NOT auto-login (store token) here if redirect to login is desired.
+            // Just return success.
+            return data;
+        } catch (error) {
+           throw error;
+        }
     };
 
     /**
-     * Login with email and password.
+     * Login with email and password via Backend API.
      */
     const login = async (email, password) => {
-        return await signInWithEmailAndPassword(auth, email, password);
+        try {
+            const response = await fetch('http://localhost:3001/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Login failed');
+            }
+
+            localStorage.setItem('token', data.token);
+            setUser(data);
+            return data;
+        } catch (error) {
+            throw error;
+        }
     };
 
     /**
@@ -76,7 +144,9 @@ export const AuthProvider = ({ children }) => {
      * Logout the current user.
      */
     const logout = async () => {
-        return await signOut(auth);
+        localStorage.removeItem('token');
+        setUser(null);
+        await signOut(auth);
     };
 
     /**
